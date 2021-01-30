@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,34 +14,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Login
+Route::get('login',[AuthController::class,'showFormlogin'])->name('showFormLogin');
+Route::post('login',[AuthController::class,'login'])->name('login');
+
+Route::middleware('auth')->prefix('/')->group(function (){
+//    Logout
+    Route::get('logout',[AuthController::class,'logout'])->name('logout');
+
+    Route::get('/', function () {
+        return view('managers/home/home');
+    })->name('home');
+
+    Route::get('tables', function () {
+        return view('managers/tables/table');
+    })->name('tables');
+
+    Route::get('products', function () {
+        return view('managers/products/product');
+    })->name('products');
+
+    Route::get('resources', function () {
+        return view('managers/resources/resource');
+    })->name('resources');
+
+    Route::get('invoices', function () {
+        return view('managers/invoices/invoice');
+    })->name('invoices');
+
+    Route::get('reports', function () {
+        return view('managers/reports/report');
+    })->name('reports');
+
+
 });
+//
+//Route::get('/', function () {
+//    return view('managers/layout/master');
+//})->name('admin.dashboard');
 
-Route::get('index', function () {
-    return view('managers/layout/master');
-});
 
-Route::get('tables', function () {
-    return view('managers/tables/table');
-})->name('tables');
-
-Route::get('products', function () {
-    return view('managers/products/product');
-})->name('products');
-
-Route::get('resources', function () {
-    return view('managers/resources/resource');
-})->name('resources');
-
-Route::get('invoices', function () {
-    return view('managers/invoices/invoice');
-})->name('invoices');
-
-Route::get('/', function () {
-    return view('managers/home/home');
-})->name('home');
-
-Route::get('reports', function () {
-    return view('managers/reports/report');
-})->name('reports');
