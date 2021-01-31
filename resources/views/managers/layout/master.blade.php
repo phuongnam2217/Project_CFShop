@@ -45,7 +45,7 @@
                         </div>
                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user-alt"></i> Tài khoản</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                            <li><a class="dropdown-item" href="{{route('logout')}}"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
                         </ul>
                     </div>
                 </li>
