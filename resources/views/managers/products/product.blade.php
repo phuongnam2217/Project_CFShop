@@ -24,6 +24,7 @@
                 <div class="search-name" style="height: 200px">
                     <form action="">
                         <label for="" class="search-name-text">Nhóm hàng</label>
+                        <div style="float: right; color: #0090da; cursor: pointer" data-bs-toggle="modal" data-bs-target="#addGroup"><i class="fas fa-plus-circle"></i></div>
                         <input type="text" class="input" placeholder="Theo tên nhóm hàng, ..." />
                     </form>
                     <br />
@@ -36,6 +37,28 @@
                         <div><input type="checkbox" /> <label for="">Bánh ngọt</label></div>
                     </form>
                 </div>
+
+                <div class="modal fade" id="addGroup" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm nhóm hàng</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="search-name" style="height: 130px">
                     <form action="">
                         <p class="search-name-text">Trạng thái</p>
@@ -138,7 +161,9 @@
 
                     </div>
                 </div>
-                <div class="subTable"></div>
+                <div class="subTable">
+
+                </div>
             </div>
         </div>
     </section>

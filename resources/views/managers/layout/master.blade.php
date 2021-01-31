@@ -14,9 +14,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
 
-    <!--  -->
-    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
-
     <base href="/admin_resource/resource">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -69,7 +66,7 @@
                     <i class="fas fa-people-carry"></i> Nguyên liệu
                 </a>
                 <a id="tables" class="element" href="{{route('tables')}}">
-                    <i class="bx bx-category-alt"></i> Phòng bàn
+                    <i class="fas fa fa-table"></i> Phòng bàn
                 </a>
                 <a id="invoices" class="element" href="{{route('invoices')}}">
                     <i class="fas fa-file-invoice-dollar"></i> Hóa đơn
