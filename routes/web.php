@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,14 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::get('/', function () {
         return view('managers/home/home');
     })->name('home');
+
+    Route::prefix('users')->group(function (){
+        Route::get('/',[UserController::class,'index'])->name('users.index');
+        Route::get('{id}',[UserController::class,'show'])->name('users.show');
+        Route::post('/',[UserController::class,'store'])->name('users.store');
+        Route::put('{id}',[UserController::class,'update'])->name('users.update');
+        Route::get('{id}/delete',[UserController::class,'destroy'])->name('users.destroy');
+    });
 
     Route::get('tables', function () {
         return view('managers/tables/table');
