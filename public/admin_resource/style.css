@@ -62,7 +62,7 @@
   }
   .cashier {
     padding: 15px;
-    margin-left: 200px;
+    margin-left: 150px;
   }
   .cashier:hover {
     background-color: #00588b;
@@ -95,7 +95,7 @@
       height: 100px;
       background-color: white;
       border-radius: 10px;
-      box-shadow: 3px 6px #bdc3c7;
+      box-shadow: 3px 6px 3px #bdc3c7;
       padding: 10px;
   }
   .search-name-text {
@@ -103,7 +103,33 @@
       font-size: 14px;
   }
 
+    .search-group {
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 3px 6px 3px #bdc3c7;
+    padding: 10px;
+    height: auto;
+    }
+    .search-group-text {
+    font-weight: bold;
+    font-size: 14px;
+    }
+.search-group a {
+    color: #1a202c;
+    float: right;
+    cursor: pointer;
+    padding-right: 5px;
+}
+
   /* Table */
+.table a {
+    color: #1a202c;
+    cursor: pointer;
+    padding-right: 5px;
+}
   .table {
       width: 100%;
       /*margin-right: 10%;*/
@@ -136,8 +162,8 @@
   .subTable {
       margin-top: 10px;
       width: 100%;
-      background-color: thistle;
-      height: 200px;
+      background-color: white;
+      height: auto;
   }
 
   /* Input */
