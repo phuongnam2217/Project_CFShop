@@ -14,6 +14,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
 
+    {{--     --}}
     <base href="/admin_resource/resource">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -59,13 +60,13 @@
                 <a id="home" class="element" href="{{route('home')}}">
                     <i class="fas fas fa-eye"></i> Tổng quan
                 </a>
-                <a id="products" class="element" href="{{route('products')}}">
+                <a id="products" class="element" href="{{route('product.index')}}">
                     <i class="fas fa-box-open"></i> Hàng hóa
                 </a>
                 <a id="resources" class="element" href="{{route('resources')}}">
                     <i class="fas fa-people-carry"></i> Nguyên liệu
                 </a>
-                <a id="tables" class="element" href="{{route('tables')}}">
+                <a id="tables" class="element" href="{{route('table.index')}}">
                     <i class="fas fa fa-table"></i> Phòng bàn
                 </a>
                 <a id="invoices" class="element" href="{{route('invoices')}}">
@@ -93,6 +94,8 @@
     </script>
     <script src="main.js"></script>
     @yield("js")
+
+    @yield("ajax")
 </body>
 
 </html>

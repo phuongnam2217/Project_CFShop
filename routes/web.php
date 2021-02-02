@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,13 +30,26 @@ Route::middleware('auth')->prefix('/')->group(function (){
         return view('managers/home/home');
     })->name('home');
 
-    Route::get('tables', function () {
-        return view('managers/tables/table');
-    })->name('tables');
+    Route::get('tables', [TableController::class, 'index'])->name('table.index');
 
-    Route::get('products', function () {
-        return view('managers/products/product');
-    })->name('products');
+    Route::prefix('group')->group(function (){
+        Route::post('/add', [GroupController::class, 'store']);
+        Route::put('/update/{id}', [GroupController::class, 'update']);
+        Route::delete('/delete/{id}', [GroupController::class, 'delete']);
+    });
+
+    Route::prefix('product')->group(function (){
+        Route::get('/', [ProductController::class, 'index'])->name('product.index');
+        Route::post('/add', [ProductController::class, 'store']);
+        Route::put('/update/{id}', [ProductController::class, 'update']);
+        Route::delete('/delete/{id}', [ProductController::class, 'delete']);
+    });
+
+    Route::prefix('category')->group(function (){
+    Route::post('/add', [CategoryController::class, 'store']);
+    Route::put('/update/{id}', [CategoryController::class, 'update']);
+    Route::delete('/delete/{id}', [CategoryController::class, 'delete']);
+    });
 
     Route::get('resources', function () {
         return view('managers/resources/resource');
@@ -48,9 +65,5 @@ Route::middleware('auth')->prefix('/')->group(function (){
 
 
 });
-//
-//Route::get('/', function () {
-//    return view('managers/layout/master');
-//})->name('admin.dashboard');
 
 
