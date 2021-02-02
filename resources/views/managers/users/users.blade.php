@@ -126,11 +126,10 @@
             });
 
             var table = $('.data-table').DataTable({
-                dom: "<''<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
-                    "<''<'col-xs-12't>>"+
-                    "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
                 processing: true,
                 serverSide: true,
+                searching: false,
+                retrieve: true,
                 ajax: {
                     url: '{{route('users.index')}}',
                     data: function (d) {
@@ -143,7 +142,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'username', name: 'username'},
                     {data: 'role_id',name: 'role_id'},
-                    {data: 'active', name: 'active'},
+                    {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
@@ -318,6 +317,27 @@
                         }
                     });
             })
+
+            $('body').on('click','.changeActive',function (){
+                let id = $(this).attr('data-id');
+                console.log(id)
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('users.index')}}"+"/"+id+"/changeActive",
+                    dataType: "json",
+                    success: function (data){
+                        table.draw();
+                        swal(data, {
+                            icon: "success",
+                        });
+                    },
+                    error: function (data){
+                        console.log(data)
+                    }
+                })
+            })
+
+
         })
     </script>
 @endsection

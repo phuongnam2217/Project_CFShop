@@ -29,6 +29,7 @@ class ProductController extends Controller
         $product->menu_id = $request->menu_id;
 
         $product->save();
+
     }
 
     public function delete($id) {
