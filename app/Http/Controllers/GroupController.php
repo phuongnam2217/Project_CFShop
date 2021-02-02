@@ -13,11 +13,12 @@ class GroupController extends Controller
     }
 
     public function store(Request $request) {
-        $groups = new Group();
-
-        $groups->name = $request->input('name');
-
-        $groups->save();
+        $group = new Group();
+        $group->name = $request->input('name');
+        $group->save();
+        $groups = Group::all();
+        $html = view('managers.view-ajax.group-table',compact('groups'))->render();
+        return response()->json($html);
     }
 
     public function delete($id) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\UserActiveConstant;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
@@ -19,15 +20,19 @@ class UserController extends Controller
         if ($request->ajax()) {
             $data = User::select('*');
             return DataTables::of($data)
+                ->addColumn('status',function ($row){
+                    $active = '<span data-id="'.$row->id.'" class="changeActive badge '.($row->active ? 'bg-success': 'bg-danger').'">' . ($row->active ? 'Đang hoạt động': 'Ngưng hoạt động') . '</span>';
+                    return $active;
+                })
                 ->addColumn('role_id',function ($row){
                     $role = '<span class="badge bg-success">' . $row->role->name . '</span>';
                   return $role;
                 })
                 ->addColumn('action', function($row){
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit-user"><i class="fas fa-edit"></i></a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit edit-user"><i class="fas fa-pencil-alt"></i></a>';
 
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm delete-user">Delete</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete-user"><i class="fas fa-trash-alt"></i></a>';
 
                     return $btn;
                 })
@@ -37,7 +42,7 @@ class UserController extends Controller
                         $query->where('name', 'like', "%{$request->get('name')}%");
                     }
                 })
-                ->rawColumns(['role_id','action'])
+                ->rawColumns(['role_id','status','action'])
                 ->make(true);
         }
         $roles = Roles::all();
@@ -102,6 +107,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->active = !$user->active;
         $user->save();
-        return response()->json('Đổi trạng thái hoạt động người dùng thành công');
+        return response()->json("Thay đổi trạng thái người dùng thành công");
     }
 }
