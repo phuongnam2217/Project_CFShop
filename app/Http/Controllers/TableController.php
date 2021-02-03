@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TableRequest;
 use App\Models\Group;
 use App\Models\Table;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class TableController extends Controller
                         $query->where('active','=',"{$request->get('active')}");
                     }
                     if ($request->has('group_id')) {
-                        $query->where('group_id','=',"{$request->get('group_id')}");
+                        $query->where('group_id',"{$request->get('group_id')}");
                     }
                 })
                 ->rawColumns(['group_id','status','action'])
@@ -49,7 +50,7 @@ class TableController extends Controller
         return view('managers.tables.table', compact('groups', 'tables'));
     }
 
-    public function store(Request $request){
+    public function store(TableRequest $request){
         $table = new Table();
         $table->name = $request->name;
         $table->note = $request->note;
@@ -65,7 +66,7 @@ class TableController extends Controller
         return response()->json($table);
     }
 
-    public function update(Request $request,$id){
+    public function update(TableRequest $request,$id){
         $table = Table::findOrFail($id);
         $table->name = $request->name;
         $table->note = $request->note;

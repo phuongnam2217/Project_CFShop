@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -94,6 +95,9 @@ Route::middleware('auth')->prefix('/')->group(function (){
         return view('managers/reports/report');
     })->name('reports');
 
+    Route::prefix('orders')->group(function (){
+        Route::get('/',[OrderController::class,'index'])->name('orders.index');
+    });
 
 });
 
