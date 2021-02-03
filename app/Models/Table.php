@@ -10,8 +10,16 @@ class Table extends Model
     use HasFactory;
     protected $table = 'tables';
     protected $fillable = [
-        'name'
+        'name',
+        'chair',
+        'active',
+        'group_id',
+        'note'
     ];
 
     public $timestamps = false;
+
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
 }

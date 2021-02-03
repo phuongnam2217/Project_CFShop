@@ -16,22 +16,50 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input('name');
         $group->save();
-        $groups = Group::all();
-        $html = view('managers.view-ajax.group-table',compact('groups'))->render();
-        return response()->json($html);
+        $html = $this->view();
+        $viewSelect = $this->viewSelect();
+        return response()->json(['view'=>$html,'message'=>'Thêm nhóm bàn nhóm bàn thành công','viewSelect'=>$viewSelect]);
     }
 
     public function delete($id) {
-        $groups = Group::find($id);
-        $groups->delete();
-        return $groups;
+        $group = Group::findOrFail($id);
+
+        if(count($group->tables)){
+            $html = $this->view();
+            $viewSelect = $this->viewSelect();
+            return response()->json(['view'=>$html,'message'=>'Bạn nên xóa các bàn trước khi xóa nhóm bàn này','viewSelect'=>$viewSelect]);
+        }else{
+            $html = $this->view();
+            $viewSelect = $this->viewSelect();
+            $group->delete();
+            return response()->json(['view'=>$html,'message'=>'Xóa nhóm bàn thành công','viewSelect'=>$viewSelect]);
+        }
     }
 
+    public function show($id){
+        $group = Group::findOrFail($id);
+        return response()->json($group);
+    }
     public function update(Request $request, $id) {
-        $groups = Group::find($id);
+        $groups = Group::findOrFail($id);
 
         $groups->name = $request->input('name');
 
         $groups->save();
+        $html = $this->view();
+        $viewSelect = $this->viewSelect();
+        return response()->json(['view'=>$html,'message'=>'Cập nhât nhóm bàn thành công','viewSelect'=>$viewSelect]);
+    }
+
+    public function view()
+    {
+        $groups = Group::all();
+        $html = view('managers.view-ajax.group.group-table',compact('groups'))->render();
+        return $html;
+    }
+    public function viewSelect(){
+        $groups = Group::all();
+        $select = view('managers.view-ajax.group.select-group',compact('groups'))->render();
+        return $select;
     }
 }

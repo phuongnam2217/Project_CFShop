@@ -62,7 +62,7 @@
   }
   .cashier {
     padding: 15px;
-    margin-left: 150px;
+    /*margin-left: 150px;*/
   }
   .cashier:hover {
     background-color: #00588b;
@@ -85,8 +85,7 @@
 
   /* Search */
   .search {
-      width: 20%;
-      margin-left: 10%;
+      width: 30%;
   }
   .search-name {
       width: 80%;
