@@ -13,6 +13,10 @@ class Group extends Model
         'name'
     ];
 
+    function tables() {
+        return $this->hasMany(Table::class);
+    }
+
     public $timestamps = false;
 
     public function tables(){

@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->boolean('active');
             $table->boolean('isPortable');
             $table->string('image');
+//            image nullable
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('menu_id');
             $table->foreign('category_id')->references('id')->on('categories');

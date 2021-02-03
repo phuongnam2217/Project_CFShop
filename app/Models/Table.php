@@ -15,7 +15,16 @@ class Table extends Model
         'active',
         'group_id',
         'note'
+        'group_id',
+        'chair',
+        'note',
+        'active',
+        'order_id',
     ];
+
+    function group() {
+        return $this->belongsTo(Group::class);
+    }
 
     public $timestamps = false;
 

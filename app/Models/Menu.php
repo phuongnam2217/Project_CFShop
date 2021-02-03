@@ -13,5 +13,9 @@ class Menu extends Model
         'name'
     ];
 
+    function products() {
+        return $this->hasMany(Product::class);
+    }
+
     public $timestamps = false;
 }
