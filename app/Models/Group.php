@@ -19,7 +19,4 @@ class Group extends Model
 
     public $timestamps = false;
 
-    public function tables(){
-        return $this->hasMany(Table::class);
-    }
 }

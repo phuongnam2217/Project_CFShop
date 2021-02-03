@@ -14,7 +14,7 @@ class Table extends Model
         'chair',
         'active',
         'group_id',
-        'note'
+        'note',
         'group_id',
         'chair',
         'note',
@@ -28,7 +28,4 @@ class Table extends Model
 
     public $timestamps = false;
 
-    public function group(){
-        return $this->belongsTo(Group::class);
-    }
 }
