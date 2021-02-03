@@ -189,3 +189,6 @@
 .w-5.h-5 {
     display: none;
 }
+.changeActive{
+    cursor: pointer;
+}

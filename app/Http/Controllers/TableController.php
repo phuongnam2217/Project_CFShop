@@ -13,4 +13,6 @@ class TableController extends Controller
         $tables = Table::all();
         return view('managers.tables.table', compact('groups', 'tables'));
     }
+
+
 }

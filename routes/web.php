@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GroupController;
@@ -38,12 +39,19 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('/',[UserController::class,'store'])->name('users.store');
         Route::put('{id}',[UserController::class,'update'])->name('users.update');
         Route::get('{id}/delete',[UserController::class,'destroy'])->name('users.destroy');
+        Route::get('{id}/changeActive',[UserController::class,'changeActive'])->name('users.changeActive');
+    });
+
+    Route::prefix('profile')->group(function (){
+        Route::get('/',[ProfileController::class,'show'])->name('profile.show');
+        Route::post('/',[ProfileController::class,'update'])->name('profile.update');
+        Route::post('changPassword',[ProfileController::class,'changePassword'])->name('profile.changePassword');
     });
 
     Route::get('tables', [TableController::class, 'index'])->name('table.index');
 
     Route::prefix('group')->group(function (){
-        Route::post('/add', [GroupController::class, 'store']);
+        Route::post('/', [GroupController::class, 'store'])->name('group.store');
         Route::put('/update/{id}', [GroupController::class, 'update']);
         Route::delete('/delete/{id}', [GroupController::class, 'delete']);
     });

@@ -35,6 +35,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categoryProduct = Product::findOrFail($id)->category;
         return response()->json(['product'=>$product,'category'=>$categoryProduct]);
+        $product->save();
+
     }
 
     public function delete($id) {

@@ -24,7 +24,7 @@
                 <input type="text" class="input" placeholder="Theo tên nhóm hàng, ..." />
             </form>
             <br/>
-            <form action="">
+            <form action="" id="group-table-form">
                 @foreach($groups as $group)
                     <div>
                         <label hidden>{{$group->id}}</label>
@@ -175,17 +175,15 @@
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: "/group/add",
+                    url: "{{route('group.store')}}",
                     data: $('#addform').serialize(),
                     success: function (response) {
                         console.log(response)
+                        $('#group-table-form').html(response);
                         $('#addGroup').modal('hide')
-                        alert("Thêm mới nhóm bàn thành công !");
-                        location.reload();
                     },
                     error: function (error) {
-                        console.log(error)
-                        alert("Tên nhóm bàn không được để trống !");
+                        console.log(error.responseJSON)
                     }
                 })
             });
