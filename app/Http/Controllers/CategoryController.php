@@ -13,24 +13,40 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request) {
-        $categories = new Category;
+        $categorie = new Category;
 
-        $categories->name = $request->input('name');
+        $categorie->name = $request->input('name');
 
-        $categories->save();
+        $categorie->save();
+
+        $categories = Category::all();
+        $html = view('managers.products.category-table-form', compact('categories'))->render();
+        $select = view('managers.products.select-category', compact('categories'))->render();
+        return response()->json(['view'=>$html, 'select'=>$select]);
     }
 
     public function delete($id) {
-        $categories = Category::find($id);
-        $categories->delete();
-        return $categories;
+        $category = Category::find($id);
+        if(count($category->products)){
+            return response()->json("Bạn nên xóa tát cả các sản phẩm trong nhóm hàng này");
+        }
+        $category->delete();
+        $categories = Category::all();
+        $html = view('managers.products.category-table-form', compact('categories'))->render();
+        $select = view('managers.products.select-category', compact('categories'))->render();
+        return response()->json(['view'=>$html, 'select'=>$select]);
     }
 
     public function update(Request $request, $id) {
-        $categories = Category::find($id);
+        $category = Category::find($id);
 
-        $categories->name = $request->input('name');
+        $category->name = $request->input('name');
 
-        $categories->save();
+        $category->save();
+
+        $categories = Category::all();
+        $html = view('managers.products.category-table-form', compact('categories'))->render();
+        $select = view('managers.products.select-category', compact('categories'))->render();
+        return response()->json(['view'=>$html, 'select'=>$select]);
     }
 }
