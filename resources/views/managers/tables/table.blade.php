@@ -58,6 +58,7 @@
                                         <lable>Tên nhóm bàn</lable>
                                         <input type="text" id="group-name" class="form-control" name="name"
                                                placeholder="Tên nhóm bàn ..">
+                                        <div class="text-danger text-center group-name-err"></div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -101,6 +102,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" name="name" class="form-control" id="name-table"
                                                            value="">
+                                                    <div class="text-danger text-center name-table-err"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group d-flex mb-2 justify-content-around">
@@ -109,6 +111,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="number" name="chair" class="form-control"
                                                            id="chair-table" placeholder="">
+                                                    <div class="text-danger text-center chair-table-err"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group d-flex justify-content-around mb-2">
@@ -222,7 +225,16 @@
                 $('.modal-title').html("Thêm bàn");
                 $(':input[type="submit"]').html('Thêm mới')
                 $(':input[type="submit"]').val('create')
-                $('table-form').trigger('reset')
+                $('#table-form').trigger('reset')
+                $('#note-table').html('')
+                const inputs = $('.form-control');
+                const errors = $('.text-danger');
+                $.each(inputs,function (idx,input){
+                    $(input).removeClass('is-invalid');
+                });
+                $.each(errors,function (idx,error){
+                    $(error).html('');
+                });
                 let options = $('.option-group');
                 $.each(options, function (idx, option) {
                     $(option).removeAttr('selected', 'selected');
@@ -244,7 +256,15 @@
                             swal('Success!', data, "success");
                         },
                         error: function (xhr) {
-                            console.log(xhr.responseJSON)
+                            let errors = xhr.responseJSON.errors;
+                            if(errors.name){
+                                $('#name-table').addClass('is-invalid');
+                                $('.name-table-err').html(errors.name)
+                            }
+                            if(errors.chair){
+                                $('#chair-table').addClass('is-invalid');
+                                $('.chair-table-err').html(errors.chair)
+                            }
                         }
                     })
                 }
@@ -261,7 +281,15 @@
                             swal('Success!', data, "success");
                         },
                         error: function (xhr) {
-                            console.log(xhr.responseJSON)
+                            let errors = xhr.responseJSON.errors;
+                            if(errors.name){
+                                $('#name-table').addClass('is-invalid');
+                                $('.name-table-err').html(errors.name)
+                            }
+                            if(errors.chair){
+                                $('#chair-table').addClass('is-invalid');
+                                $('.chair-table-err').html(errors.chair)
+                            }
                         }
                     })
                 }
@@ -273,6 +301,14 @@
                 $('.modal-title').html("Chỉnh sửa thông tin bàn");
                 $(':input[type="submit"]').html('Cập nhật')
                 $(':input[type="submit"]').val('update')
+                const inputs = $('.form-control');
+                const errors = $('.text-danger');
+                $.each(inputs,function (idx,input){
+                    $(input).removeClass('is-invalid');
+                });
+                $.each(errors,function (idx,error){
+                    $(error).html('');
+                });
                 $('table-form').trigger('reset')
                 $.ajax({
                     type: "GET",
@@ -339,6 +375,14 @@
                 $('#addform').trigger('reset');
                 $(':input[type="submit"]').val('create');
                 $(':input[type="submit"]').html('Thêm mới');
+                const inputs = $('.form-control');
+                const errors = $('.text-danger');
+                $.each(inputs,function (idx,input){
+                    $(input).removeClass('is-invalid');
+                });
+                $.each(errors,function (idx,error){
+                    $(error).html('');
+                });
                 $('#modal-group').modal('show');
             })
             //Thêm nhóm bàn
@@ -359,8 +403,10 @@
                                 icon: "success",
                             });
                         },
-                        error: function (error) {
-                            console.log(error.responseJSON)
+                        error: function (xhr) {
+                            let errors = xhr.responseJSON.errors
+                            $('#group-name').addClass('is-invalid');
+                            $('.group-name-err').html(errors.name)
                         }
                     })
                 }
@@ -379,8 +425,10 @@
                                 icon: "success",
                             });
                         },
-                        error: function (error) {
-                            console.log(error.responseJSON)
+                        error: function (xhr) {
+                            let errors = xhr.responseJSON.errors
+                            $('#group-name').addClass('is-invalid');
+                            $('.group-name-err').html(errors.name)
                         }
                     })
                 }
@@ -391,6 +439,14 @@
                 $('.modal-title').html('Chỉnh sửa nhóm bàn')
                 $(':input[type="submit"]').html('Chỉnh sửa');
                 $(':input[type="submit"]').val('update');
+                const inputs = $('.form-control');
+                const errors = $('.text-danger');
+                $.each(inputs,function (idx,input){
+                    $(input).removeClass('is-invalid');
+                });
+                $.each(errors,function (idx,error){
+                    $(error).html('');
+                });
                 $.ajax({
                     type: 'GET',
                     url: "{{route('group.index')}}" + "/" + id,

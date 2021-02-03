@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GroupRequest;
 use App\Models\Group;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class GroupController extends Controller
         return view('managers.tables.table', compact('groups'));
     }
 
-    public function store(Request $request) {
+    public function store(GroupRequest $request) {
         $group = new Group();
         $group->name = $request->input('name');
         $group->save();
@@ -40,7 +41,7 @@ class GroupController extends Controller
         $group = Group::findOrFail($id);
         return response()->json($group);
     }
-    public function update(Request $request, $id) {
+    public function update(GroupRequest $request, $id) {
         $groups = Group::findOrFail($id);
 
         $groups->name = $request->input('name');
