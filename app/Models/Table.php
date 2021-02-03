@@ -11,6 +11,10 @@ class Table extends Model
     protected $table = 'tables';
     protected $fillable = [
         'name',
+        'chair',
+        'active',
+        'group_id',
+        'note'
         'group_id',
         'chair',
         'note',
@@ -23,4 +27,8 @@ class Table extends Model
     }
 
     public $timestamps = false;
+
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
 }
