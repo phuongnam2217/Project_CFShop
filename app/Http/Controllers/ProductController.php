@@ -2,53 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Http\Services\ProductService;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     public function index() {
         $categories = Category::all();
-        $products = Product::all();
-        $menus = Menu::all();
+        $products   = Product::paginate(10);
+        $menus      = Menu::all();
         return view('managers.products.product', compact('categories', 'products', 'menus'));
     }
 
-    public function store(Request $request) {
-        $product = new Product();
+    public function store(ProductRequest $request) {
+        $this->productService->add($request);
+        return $this->returnView();
+    }
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->active = 1;
-        $product->isPortable = $request->isPortable;
-        $product->image = $request->image;
-        $product->category_id = $request->category_id;
-        $product->menu_id = $request->menu_id;
-
-        $product->save();
+    public function show($id){
+        $product = Product::findOrFail($id);
+        $categoryProduct = Product::findOrFail($id)->category;
+        return response()->json(['product'=>$product,'category'=>$categoryProduct]);
     }
 
     public function delete($id) {
-        $products = Product::find($id);
-        $products->delete();
-        return $products;
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return $this->returnView();
     }
 
-    public function update(Request $request, $id) {
-        $product = Product::find($id);
+    public function update(ProductRequest $request, $id) {
+        $product  = $this->productService->findById($id);
+        $this->productService->update($request, $product);
+        return $this->returnView();
+    }
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->active = 1;
-        $product->isPortable = $request->isPortable;
-        $product->image = $request->image;
-        $product->category_id = $request->category_id;
-        $product->menu_id = $request->menu_id;
+    public function search(Request $request) {
+        $search = $request->input('search');
+        $products = Product::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
 
-        $product->save();
+        $html = view('managers.products.product-table-form', compact('products'))->render();
+        return response()->json(['view'=>$html]);
+    }
+
+
+    public function returnView() {
+        $products = Product::all();
+        $html = view('managers.products.product-table-form', compact('products'))->render();
+        return response()->json(['view'=>$html]);
     }
 }

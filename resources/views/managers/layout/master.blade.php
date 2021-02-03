@@ -19,13 +19,9 @@
 {{--    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">--}}
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
-<<<<<<< HEAD
     <!--  -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/>
 
-=======
-    {{--     --}}
->>>>>>> 7d657c127483f4128ed29a4596665963d6b3b88e
     <base href="/admin_resource/resource">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -103,7 +99,6 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous">
-<<<<<<< HEAD
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
@@ -112,15 +107,10 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 
-{{--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>--}}
-@yield("js")
-=======
-    </script>
     <script src="main.js"></script>
     @yield("js")
 
     @yield("ajax")
->>>>>>> 7d657c127483f4128ed29a4596665963d6b3b88e
 </body>
 
 </html>

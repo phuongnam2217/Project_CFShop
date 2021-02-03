@@ -53,6 +53,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('/add', [ProductController::class, 'store']);
         Route::put('/update/{id}', [ProductController::class, 'update']);
         Route::delete('/delete/{id}', [ProductController::class, 'delete']);
+        Route::get('{id}',[ProductController::class,'show']);
+        Route::post('/search', [ProductController::class, 'search'])->name('product.search');
     });
 
     Route::prefix('category')->group(function (){
