@@ -82,8 +82,6 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::get('reports', function () {
         return view('managers/reports/report');
     })->name('reports');
-
-
 });
 
 
