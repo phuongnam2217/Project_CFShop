@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -48,12 +49,23 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('changPassword',[ProfileController::class,'changePassword'])->name('profile.changePassword');
     });
 
-    Route::get('tables', [TableController::class, 'index'])->name('table.index');
+    Route::prefix('tables')->group(function (){
+        Route::get('/', [TableController::class, 'index'])->name('table.index');
+        Route::post('/',[TableController::class,'store'])->name('table.store');
+        Route::get('{id}',[TableController::class,'show'])->name('table.show');
+        Route::put('{id}/update',[TableController::class,'update'])->name('table.update');
+        Route::get('{id}/delete',[TableController::class,'delete'])->name('table.destroy');
+        Route::get('{id}/changeActive',[TableController::class,'changeActive'])->name('table.changeActive');
+    });
+
 
     Route::prefix('group')->group(function (){
+        Route::get('/',[GroupController::class,'index'])->name('group.index');
         Route::post('/', [GroupController::class, 'store'])->name('group.store');
-        Route::put('/update/{id}', [GroupController::class, 'update']);
-        Route::delete('/delete/{id}', [GroupController::class, 'delete']);
+        Route::get('view-select',[GroupController::class,'viewSelect'])->name('group.select');
+        Route::get('{id}',[GroupController::class,'show'])->name('group.show');
+        Route::put('{id}/update', [GroupController::class, 'update'])->name('group.update');
+        Route::get('{id}/delete', [GroupController::class, 'delete'])->name('group.destroy');
     });
 
     Route::prefix('product')->group(function (){
@@ -82,6 +94,10 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::get('reports', function () {
         return view('managers/reports/report');
     })->name('reports');
+
+    Route::prefix('orders')->group(function (){
+        Route::get('/',[OrderController::class,'index'])->name('orders.index');
+    });
 });
 
 

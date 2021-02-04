@@ -147,7 +147,7 @@
                 ]
             });
 
-            $('#search-form').on('submit', function(e) {
+            $('#search-form').on('submit change', function(e) {
                 e.preventDefault();
                 table.draw();
             })
@@ -188,7 +188,6 @@
                             $(role).removeAttr('selected');
                         })
                         $(".role"+data.role_id).attr('selected','selected')
-
                         $('.modal-title').html('Cập nhật thông tin người dùng')
                         $('#submit').html('Cập nhật')
                         $('#submit').val('edit-user');
@@ -259,7 +258,6 @@
                         },
                         error: function (xhr){
                             let errors = xhr.responseJSON.errors;
-                            console.log(errors)
                             if(errors.name){
                                 $('.nameErr').html(errors.name[0]);
                                 $('#name').addClass('is-invalid');

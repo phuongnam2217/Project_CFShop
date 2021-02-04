@@ -11,11 +11,10 @@ class Table extends Model
     protected $table = 'tables';
     protected $fillable = [
         'name',
-        'group_id',
         'chair',
-        'note',
         'active',
-        'order_id',
+        'group_id',
+        'note',
     ];
 
     function group() {
@@ -23,4 +22,5 @@ class Table extends Model
     }
 
     public $timestamps = false;
+
 }

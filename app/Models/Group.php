@@ -18,4 +18,5 @@ class Group extends Model
     }
 
     public $timestamps = false;
+
 }
