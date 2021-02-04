@@ -8,8 +8,7 @@
                     <form id="searchform">
                         @csrf
                         <label for="" class="search-name-text">Tìm kiếm</label>
-                        <input type="text" id="search" name="search" class="input" placeholder="Theo mã, tên hàng, .."/>
-{{--                        <button type="submit" class="btn btn-primary">Tìm</button>--}}
+                        <input type="text" id="search" name="search" class="input" placeholder="Theo tên hàng, .."/>
                     </form>
                 </div>
                 <div class="search-name" style="height: 130px">
@@ -128,10 +127,20 @@
 
                 {{--Trang thai--}}
                 <div class="search-name" style="height: 130px">
-                    <form action="">
-                        <p class="search-name-text">Trạng thái</p>
-                        <div><input type="checkbox"/> <label for="">Đang kinh doanh</label></div>
-                        <div><input type="checkbox"/> <label for="">Ngừng kinh doanh</label></div>
+                    <p class="search-name-text">Trạng thái</p>
+                    <form action="" id="statusform">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="1" value="1" checked>
+                            <label class="form-check-label" for="1">
+                                Đang kinh doanh
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="2" value="2">
+                            <label class="form-check-label" for="2">
+                                Ngừng kinh doanh
+                            </label>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -330,7 +339,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Nhóm hàng</lable>
-                                                <select name="category_id" id="categoryProduct_id" class="form-select select-category"
+                                                <select name="category_id" id="categoryProduct_id"
+                                                        class="form-select select-category"
                                                         aria-label="Default select example">
                                                     @foreach($categories as $category)
                                                         <option
@@ -376,8 +386,8 @@
                                     <div class="modal-body detailProduct">
                                         <p hidden id="detailProduct_id">
                                         <div style="float: left; width: 50%">
-                                        <div id="detailImage">
-                                        </div>
+                                            <div id="detailImage">
+                                            </div>
                                         </div>
                                         <div style="float: right; width: 50%">
                                             <div>
@@ -434,27 +444,27 @@
                         </thead>
                         <tbody>
                         @if ($products)
-                        @foreach($products as $key => $product)
-                            <tr>
-                                <td hidden>{{$product->id}}</td>
-                                <td>{{++$key}}</td>
-                                <td>{{$product->name}}</td>
-                                <td hidden>{{$product->image}}</td>
-                                <td>{{$product->stock}}</td>
-                                <td>{{$product->price}}</td>
-                                <td hidden>{{$product->category_id}}</td>
-                                <td>{{$product->category->name}}</td>
-                                <td hidden>{{$product->menu_id}}</td>
-                                <td hidden>{{$product->isPortable}}</td>
-                                <td hidden>{{$product->active}}</td>
-                                <td>{{$product->active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh"}}</td>
-                                <td>
-                                    <a><i data-id="{{$product->id}}" class="fas fas fa-eye detailProduct"></i></a>
-                                    <a><i class="fas fa-pencil-alt updateProduct"></i></a>
-                                    <a><i class="fas fa-trash-alt deleteProduct"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($products as $key => $product)
+                                <tr>
+                                    <td hidden>{{$product->id}}</td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$product->name}}</td>
+                                    <td hidden>{{$product->image}}</td>
+                                    <td>{{$product->stock}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <td hidden>{{$product->category_id}}</td>
+                                    <td>{{$product->category->name}}</td>
+                                    <td hidden>{{$product->menu_id}}</td>
+                                    <td hidden>{{$product->isPortable}}</td>
+                                    <td hidden>{{$product->active}}</td>
+                                    <td>{{$product->active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh"}}</td>
+                                    <td>
+                                        <a><i data-id="{{$product->id}}" class="fas fas fa-eye detailProduct"></i></a>
+                                        <a><i class="fas fa-pencil-alt updateProduct"></i></a>
+                                        <a><i class="fas fa-trash-alt deleteProduct"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endif
                         </tbody>
                     </table>
@@ -483,15 +493,14 @@
                     url: "/category/add",
                     data: $('#addform').serialize(),
                     success: function (response) {
-                        console.log(response.select)
                         $('#addCategory').modal('hide')
                         $('#category-table-form').html(response.view);
                         $('.select-category').html(response.select);
+                        swal("Success", "Thêm mới thành công !", "success");
                     },
                     error: function (error) {
                         $(".name-category").addClass("is-invalid");
                         $(".addNameCategory").html("* Tên nhóm hàng không được để trống !");
-                        console.log(error.responseJSON)
                     }
                 })
             });
@@ -504,8 +513,6 @@
                 var data = $div.children("label").map(function () {
                     return $(this).text();
                 }).get();
-
-                console.log(data);
 
                 $('#delete_id').val(data[0]);
             })
@@ -524,6 +531,7 @@
                         $('#categoryDeleteModal').modal('hide')
                         $('#category-table-form').html(response.view);
                         $('.select-category').html(response.select);
+                        swal("Success", "Xóa nhóm hàng thành công !", "success");
                     },
                     error: function (error) {
                         console.log(error.responseJSON)
@@ -541,8 +549,6 @@
                     return $(this).text();
                 }).get();
 
-                console.log(data);
-
                 $('#edit_id').val(data[0]);
                 $('#name').val(data[1]);
             })
@@ -557,13 +563,12 @@
                     url: "/category/update/" + id,
                     data: $('#editFormId').serialize(),
                     success: function (response) {
-                        console.log(response)
                         $('#categoryEditModal').modal('hide');
                         $('#category-table-form').html(response.view);
                         $('.select-category').html(response.select);
+                        swal("Success", "Cập nhật thành công !", "success");
                     },
                     error: function (error) {
-                        console.log(error)
                         $(".name-editCategory").addClass("is-invalid");
                         $(".editNameCategory").html("* Tên nhóm hàng không được để trống !");
                     }
@@ -578,9 +583,9 @@
                     url: "/product/add",
                     data: $('#addformproduct').serialize(),
                     success: function (response) {
-                        console.log(response)
                         $('#addProduct').modal('hide');
                         $('#product-table-form').html(response.view);
+                        swal("Success", "Thêm mới thành công !", "success");
                     },
                     error: function (xhr) {
                         let error = xhr.responseJSON.errors;
@@ -613,8 +618,6 @@
                     return $(this).text();
                 }).get();
 
-                console.log(data);
-
                 $('#product_id').val(data[0]);
             })
 
@@ -628,14 +631,11 @@
                     url: "/product/delete/" + id,
                     data: $('#deleteFormProduct').serialize(),
                     success: function (response) {
-                        console.log(response)
                         $('#productDeleteModal').modal('hide');
                         $('#product-table-form').html(response.view);
-                        // alert("Xóa sản phẩm thành công !");
-                        // location.reload();
+                        swal("Success", "Xóa sản phẩm thành công !", "success");
                     },
                     error: function (error) {
-                        console.log(error)
                         alert("Data not save !");
                     }
                 })
@@ -649,8 +649,6 @@
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-
-                console.log(data);
 
                 $('#editProduct_id').val(data[0]);
                 $('#nameProduct').val(data[2]);
@@ -673,7 +671,6 @@
                     url: "/product/update/" + id,
                     data: $('#updateformproduct').serialize(),
                     success: function (response) {
-                        console.log(response)
                         $('#updateProduct').modal('hide');
                         $('#product-table-form').html(response.view);
                         swal("Success", "Cập nhật thành công !", "success");
@@ -707,7 +704,6 @@
                     type: 'GET',
                     url: "{{route('product.index')}}" + "/" + id,
                     success: function (data) {
-                        console.log(data.product.image);
                         $('#detailProduct').modal('show');
 
                         $('#detailName').html(data.product.name);
@@ -730,13 +726,13 @@
             })
 
             //Search
-            $('#searchform').on('submit', function (e){
+            $('#searchform').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
                     url: "/product/search",
                     data: $('#searchform').serialize(),
-                    success:function(response){
+                    success: function (response) {
                         $('#product-table-form').html(response.view);
                     },
                     error: function (xhr) {
@@ -744,7 +740,12 @@
                     }
                 })
             });
-            $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+
+            //Status
+            $('input[type="radio"]').click(function(){
+                let data = $(this).val();
+                console.log(data);
+            })
         })
     </script>
 @endsection
