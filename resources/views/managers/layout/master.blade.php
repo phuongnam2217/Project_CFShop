@@ -131,8 +131,8 @@
                         <div class="text-danger text-center phone-profile-err"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="inputState" class="form-label">Vai trò :</label><span style="margin-left: 10px"
-                                                                                          id="role-profile"></span>
+                        <label for="inputState" class="form-label">Vai trò :</label>
+                        <span style="margin-left: 10px" class="badge {{(Auth::user()->role->id == \App\Constants\RoleConstant::ROLE_ADMIN ? 'bg-success' : (Auth::user()->role->id == \App\Constants\RoleConstant::ROLE_STOCKER? 'bg-primary' : 'bg-info' ))}}" id="role-profile">{{\Illuminate\Support\Facades\Auth::user()->role->name}}</span>
                     </div>
                     <div class="col-12 justify-content-end d-flex">
                         <button id="submit" type="submit" class="btn btn-success">Cập nhật</button>
@@ -231,7 +231,7 @@
                     $('#username-profile').val(data.user.username);
                     $('#email-profile').val(data.user.email);
                     $('#phone-profile').val(data.user.phone);
-                    $('#role-profile').html(data.role.name);
+                    // $('#role-profile').html(data.role.name);
                     $("#modalProfile").modal('show');
                 },
                 error: function (data) {
@@ -249,8 +249,8 @@
                 data: $('#profile-form').serialize(),
                 dataType: 'json',
                 success: function (data) {
-                    swal('Success!', data, "success");
                     $('#profile-form').modal('hide');
+                    swal('Success!', data, "success");
                 },
                 error: function (xhr) {
                     let errors = xhr.responseJSON.errors
@@ -282,7 +282,8 @@
                 dataType: 'json',
                 url: "{{route('profile.changePassword')}}",
                 success: function (data){
-                    console.log(data);
+                    swal('Success!', data, "success");
+                    $('#modalProfile').modal('hide');
                 },
                 error: function (xhr){
                     let errors = xhr.responseJSON.errors

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -34,6 +35,10 @@ class ProfileController extends Controller
 
     public function changePassword(ChangePasswordRequest $request)
     {
-        return response()->json($request->all());
+        $id = Auth::user()->id;
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json("Đổi mật khẩu thành công");
     }
 }
