@@ -13,10 +13,18 @@
                     </div>
                     <div class="search-name" style="height: 130px">
                         <p class="search-name-text">Trạng thái</p>
-                        <div><input id="status-active" name="active" value="1" type="radio" checked/> <label
-                                for="status-active">Đang hoạt động</label></div>
-                        <div><input id="status-disable" name="active" value="0" type="radio"/> <label
-                                for="status-disable">Ngừng hoạt động</label></div>
+                        <div>
+                            <input id="status-all" name="active" value="2" type="radio" checked/>
+                            <label for="status-all">Tất cả</label>
+                        </div>
+                        <div>
+                            <input id="status-active" name="active" value="1" type="radio"/>
+                            <label for="status-active">Đang hoạt động</label>
+                        </div>
+                        <div>
+                            <input id="status-disable" name="active" value="0" type="radio"/>
+                            <label for="status-disable">Ngừng hoạt động</label>
+                        </div>
                     </div>
                     <div class="search-group">
                         <div class="">
@@ -29,8 +37,9 @@
                         <div id="group-table-form">
                             @foreach($groups as $group)
                                 <div>
-                                    <input class="group" id="{{$group->name}}" name="group_id" value="{{$group->id}}" type="checkbox"/>
-                                    <label for="{{$group->name}}">{{$group->name}}</label>
+                                    <input class="group" id="group-{{$group->id}}" name="group_id[]" value="{{$group->id}}"
+                                           type="checkbox"/>
+                                    <label for="group-{{$group->id}}">{{$group->name}}</label>
                                     <a><i data-id="{{$group->id}}" class="fas fa-trash-alt deletegroup"></i></a>
                                     <a><i data-id="{{$group->id}}" class="fas fa-pencil-alt editgroup"></i></a>
                                 </div>
@@ -192,6 +201,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            var searchIDs = $(".group:checked").map(function(){
+                return +$(this).val();
+            }).get(); // <----
+            console.log(searchIDs);
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -202,7 +215,9 @@
                     data: function (d) {
                         d.name = $(':input[name="name"]').val();
                         d.active = $(':input[name="active"]:checked').val();
-                        d.group_id = $(':input[name="group_id"]:checked').val();
+                        d.group_id = $(".group:checked").map(function(){
+                            return +$(this).val();
+                        }).get();
                     }
                 },
                 columns: [
@@ -229,10 +244,10 @@
                 $('#note-table').html('')
                 const inputs = $('.form-control');
                 const errors = $('.text-danger');
-                $.each(inputs,function (idx,input){
+                $.each(inputs, function (idx, input) {
                     $(input).removeClass('is-invalid');
                 });
-                $.each(errors,function (idx,error){
+                $.each(errors, function (idx, error) {
                     $(error).html('');
                 });
                 let options = $('.option-group');
@@ -257,11 +272,11 @@
                         },
                         error: function (xhr) {
                             let errors = xhr.responseJSON.errors;
-                            if(errors.name){
+                            if (errors.name) {
                                 $('#name-table').addClass('is-invalid');
                                 $('.name-table-err').html(errors.name)
                             }
-                            if(errors.chair){
+                            if (errors.chair) {
                                 $('#chair-table').addClass('is-invalid');
                                 $('.chair-table-err').html(errors.chair)
                             }
@@ -282,11 +297,11 @@
                         },
                         error: function (xhr) {
                             let errors = xhr.responseJSON.errors;
-                            if(errors.name){
+                            if (errors.name) {
                                 $('#name-table').addClass('is-invalid');
                                 $('.name-table-err').html(errors.name)
                             }
-                            if(errors.chair){
+                            if (errors.chair) {
                                 $('#chair-table').addClass('is-invalid');
                                 $('.chair-table-err').html(errors.chair)
                             }
@@ -303,10 +318,10 @@
                 $(':input[type="submit"]').val('update')
                 const inputs = $('.form-control');
                 const errors = $('.text-danger');
-                $.each(inputs,function (idx,input){
+                $.each(inputs, function (idx, input) {
                     $(input).removeClass('is-invalid');
                 });
-                $.each(errors,function (idx,error){
+                $.each(errors, function (idx, error) {
                     $(error).html('');
                 });
                 $('table-form').trigger('reset')
@@ -358,16 +373,27 @@
             //Thay đổi trạng thái
             $('body').on('click', '.changeActive', function () {
                 let id = $(this).attr('data-id');
-                $.ajax({
-                    type: "get",
-                    url: "{{route('table.index')}}" + "/" + id + "/changeActive",
-                    success: function (data) {
-                        table.draw();
-                        swal(data, {
-                            icon: "success",
-                        });
-                    }
-                })
+                swal({
+                    title: "Are you sure?",
+                    text: "Bạn có chắc bật/tắt hoạt động kinh doanh của bàn này !",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                type: "get",
+                                url: "{{route('table.index')}}" + "/" + id + "/changeActive",
+                                success: function (data) {
+                                    table.draw();
+                                    swal(data, {
+                                        icon: "success",
+                                    });
+                                }
+                            })
+                        }
+                    });
+
             })
 
             $('#show-modal-group').click(function () {
@@ -377,10 +403,10 @@
                 $(':input[type="submit"]').html('Thêm mới');
                 const inputs = $('.form-control');
                 const errors = $('.text-danger');
-                $.each(inputs,function (idx,input){
+                $.each(inputs, function (idx, input) {
                     $(input).removeClass('is-invalid');
                 });
-                $.each(errors,function (idx,error){
+                $.each(errors, function (idx, error) {
                     $(error).html('');
                 });
                 $('#modal-group').modal('show');
@@ -441,10 +467,10 @@
                 $(':input[type="submit"]').val('update');
                 const inputs = $('.form-control');
                 const errors = $('.text-danger');
-                $.each(inputs,function (idx,input){
+                $.each(inputs, function (idx, input) {
                     $(input).removeClass('is-invalid');
                 });
-                $.each(errors,function (idx,error){
+                $.each(errors, function (idx, error) {
                     $(error).html('');
                 });
                 $.ajax({

@@ -34,11 +34,16 @@ class TableController extends Controller
                     if ($request->has('name')) {
                         $query->where('name', 'like', "%{$request->get('name')}%");
                     }
-                    if ($request->has('active')) {
-                        $query->where('active','=',"{$request->get('active')}");
-                    }
                     if ($request->has('group_id')) {
-                        $query->where('group_id',"{$request->get('group_id')}");
+//                        $query->where('group_id','=',"{$request->get('group_id')}");
+                        $query->whereIn('group_id',$request->get('group_id'));
+                    }
+                    if ($request->has('active')) {
+                        if($request->get('active') == '2'){
+                            $query->whereIn('active',[0,1]);
+                        }else{
+                            $query->where('active','=',"{$request->get('active')}");
+                        }
                     }
                 })
                 ->rawColumns(['group_id','status','action'])
