@@ -34,11 +34,16 @@ class TableController extends Controller
                     if ($request->has('name')) {
                         $query->where('name', 'like', "%{$request->get('name')}%");
                     }
-                    if ($request->has('active')) {
-                        $query->where('active','=',"{$request->get('active')}");
-                    }
                     if ($request->has('group_id')) {
-                        $query->where('group_id',"{$request->get('group_id')}");
+//                        $query->where('group_id','=',"{$request->get('group_id')}");
+                        $query->whereIn('group_id',$request->get('group_id'));
+                    }
+                    if ($request->has('active')) {
+                        if($request->get('active') == '2'){
+                            $query->whereIn('active',[0,1]);
+                        }else{
+                            $query->where('active','=',"{$request->get('active')}");
+                        }
                     }
                 })
                 ->rawColumns(['group_id','status','action'])
@@ -89,4 +94,14 @@ class TableController extends Controller
         return response()->json("Thay đổi trạng thái thành công");
     }
 
+    public function getViewTable($group_id){
+        if($group_id == 0){
+            $tables = Table::all();
+            $html = view('managers.view-ajax.table.table-ajax',compact('tables'))->render();
+            return response()->json($html);
+        }
+        $tables = Table::where('group_id',$group_id)->get();
+        $html = view('managers.view-ajax.table.table-ajax',compact('tables'))->render();
+        return response()->json($html);
+    }
 }
