@@ -14,12 +14,9 @@
                 <div class="search-name" style="height: 130px">
                     <form action="">
                         <p class="search-name-text">Loại thực đơn</p>
-                        <div>
-                            <input type="checkbox"/>
-                            <label for="">Đồ ăn</label>
-                        </div>
-                        <div><input type="checkbox"/> <label for="">Đồ uống</label></div>
-                        <div><input type="checkbox"/> <label for="">Khác</label></div>
+                        <div><input type="checkbox" name="type" value="1"/> <label for="">Đồ uống</label></div>
+                        <div><input type="checkbox" name="type" value="2"/> <label for="">Đồ ăn</label></div>
+                        <div><input type="checkbox" name="type" value="3"/> <label for="">Khác</label></div>
                     </form>
                 </div>
                 <div class="search-group">
@@ -130,15 +127,21 @@
                     <p class="search-name-text">Trạng thái</p>
                     <form action="" id="statusform">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="search" id="1" value="1" checked>
+                            <input class="form-check-input" type="radio" name="search" id="1" value="1">
                             <label class="form-check-label" for="1">
                                 Đang kinh doanh
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="search" id="2" value="2">
-                            <label class="form-check-label" for="2">
+                            <input class="form-check-input" type="radio" name="search" id="0" value="0">
+                            <label class="form-check-label" for="0">
                                 Ngừng kinh doanh
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="2" value="2" checked>
+                            <label class="form-check-label" for="2">
+                                Tất cả
                             </label>
                         </div>
                     </form>
@@ -213,10 +216,11 @@
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
                                                 <input type="text" class="form-control" name="image">
+                                                {{--                                                <input name="image" type="file" class="form-control">--}}
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
-                                                <select name="isPortable" id="" class="form-select"
+                                                <select name="isPortable" class="form-select" id="multi-selectbox"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
                                                     <option value="2">Hàng dịch vụ</option>
@@ -228,7 +232,7 @@
                                                        placeholder="Giá bán ..">
                                                 <p class="text-danger addPriceProduct"></p>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id="stock-product">
                                                 <lable>Tồn kho</lable>
                                                 <input type="text" class="form-control stockProduct" name="stock"
                                                        placeholder="Tồn kho ..">
@@ -236,7 +240,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Nhóm hàng</lable>
-                                                <select name="category_id" id="111" class="form-select select-category"
+                                                <select name="category_id" class="form-select select-category"
                                                         aria-label="Default select example">
                                                     @foreach($categories as $category)
                                                         <option
@@ -314,6 +318,7 @@
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
                                                 <input type="text" class="form-control" id="imageProduct" name="image">
+                                                {{--                                                <input name="image" type="file" id="imageProduct" class="form-control">--}}
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
@@ -330,12 +335,12 @@
                                                        placeholder="Giá bán ..">
                                                 <p class="text-danger updatePriceProduct"></p>
                                             </div>
-                                            <div class="form-group">
-                                                <lable>Tồn kho</lable>
-                                                <input type="text" class="form-control stockProduct" id="stockProduct"
-                                                       name="stock"
-                                                       placeholder="Tồn kho ..">
-                                                <p class="text-danger updateStockProduct"></p>
+                                            <div class="form-group" id="stock-product-update">
+                                                {{--                                                <lable>Tồn kho</lable>--}}
+                                                {{--                                                <input type="text" class="form-control stockProduct" id="stockProduct"--}}
+                                                {{--                                                       name="stock"--}}
+                                                {{--                                                       placeholder="Hàng dịch vụ để trống tồn kho ..">--}}
+                                                {{--                                                <p class="text-danger updateStockProduct"></p>--}}
                                             </div>
                                             <div class="form-group">
                                                 <lable>Nhóm hàng</lable>
@@ -354,14 +359,6 @@
                                                     @foreach($menus as $menu)
                                                         <option value="{{ $menu->id }}">{{ $menu->name }}</option>
                                                     @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <lable>Trạng thái</lable>
-                                                <select name="active" id="activeProduct" class="form-select"
-                                                        aria-label="Default select example">
-                                                    <option value="1">Đang kinh doanh</option>
-                                                    <option value="2">Ngừng kinh doanh</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -390,25 +387,25 @@
                                             </div>
                                         </div>
                                         <div style="float: right; width: 50%">
-                                            <div>
+                                            <div style="font-size: 25px; font-weight: bold">
                                                 <span>Tên hàng hóa:</span>
                                                 <span id="detailName"></span>
-                                            </div>
-                                            <div>
-                                                <span>Loại hàng hóa:</span>
-                                                <span id="detailIsPortable"></span>
-                                            </div>
-                                            <div>
-                                                <span>Giá bán:</span>
-                                                <span id="detailPrice"></span>
-                                            </div>
-                                            <div>
-                                                <span>Tồn kho:</span>
-                                                <span id="detailStock"></span>
                                             </div>
                                             <div class="form-group">
                                                 <span>Nhóm hàng:</span>
                                                 <span id="detailCategory_id"></span>
+                                            </div>
+                                            <div style="font-size: 18px; font-style: italic">
+                                                <span>Giá bán:</span>
+                                                <span id="detailPrice"></span>
+                                            </div>
+                                            <div style="font-size: 18px; font-style: italic">
+                                                <span>Tồn kho:</span>
+                                                <span id="detailStock"></span>
+                                            </div>
+                                            <div>
+                                                <span>Loại hàng hóa:</span>
+                                                <span id="detailIsPortable"></span>
                                             </div>
                                             <div>
                                                 <span>Loại thực đơn:</span>
@@ -451,16 +448,22 @@
                                     <td>{{$product->name}}</td>
                                     <td hidden>{{$product->image}}</td>
                                     <td>{{$product->stock}}</td>
-                                    <td>{{$product->price}}</td>
+                                    <td>{{number_format($product->price)}} đ</td>
                                     <td hidden>{{$product->category_id}}</td>
                                     <td>{{$product->category->name}}</td>
                                     <td hidden>{{$product->menu_id}}</td>
                                     <td hidden>{{$product->isPortable}}</td>
                                     <td hidden>{{$product->active}}</td>
-                                    <td>{{$product->active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh"}}</td>
+                                    <td hidden>{{$product->price}}</td>
+                                    <td>
+                                        <span class="form-check-input changeActive activeProduct {{ ($product->active == 1) ? 'active-style': 'inactive-style' }}" active-id="{{$product->id}}" name="active">
+                                            {{ ($product->active == 1) ? 'Đang kinh doanh': 'Ngừng kinh doanh' }}
+                                        </span>
+                                    </td>
                                     <td>
                                         <a><i data-id="{{$product->id}}" class="fas fas fa-eye detailProduct"></i></a>
-                                        <a><i class="fas fa-pencil-alt updateProduct"></i></a>
+                                        <a><i isPortableUpdate="{{$product->isPortable}}"
+                                              class="fas fa-pencil-alt updateProduct"></i></a>
                                         <a><i class="fas fa-trash-alt deleteProduct"></i></a>
                                     </td>
                                 </tr>
@@ -477,13 +480,11 @@
     </section>
 @endsection
 @section('js')
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#products").addClass("active");
         });
-    </script>
 
-    <script type="text/javascript">
         $(document).ready(function () {
             // Category Ajax
             $('#addform').on('submit', function (e) {
@@ -531,7 +532,11 @@
                         $('#categoryDeleteModal').modal('hide')
                         $('#category-table-form').html(response.view);
                         $('.select-category').html(response.select);
-                        swal("Success", "Xóa nhóm hàng thành công !", "success");
+                        if (response.message) {
+                            swal("Error", response.message, "error");
+                        } else {
+                            swal("Success", "Xóa nhóm hàng thành công !", "success");
+                        }
                     },
                     error: function (error) {
                         console.log(error.responseJSON)
@@ -566,6 +571,7 @@
                         $('#categoryEditModal').modal('hide');
                         $('#category-table-form').html(response.view);
                         $('.select-category').html(response.select);
+                        $('#product-table-form').html(response.products);
                         swal("Success", "Cập nhật thành công !", "success");
                     },
                     error: function (error) {
@@ -578,6 +584,13 @@
             //  Product Ajax
             $('#addformproduct').on('submit', function (e) {
                 e.preventDefault();
+
+                // <div class="form-group">
+                //     <lable>Tồn kho</lable>
+                //     <input type="text" class="form-control stockProduct" name="stock"
+                //            placeholder="Tồn kho ..">
+                //         <p class="text-danger addStockProduct"></p>
+                // </div>
                 $.ajax({
                     type: "POST",
                     url: "/product/add",
@@ -599,17 +612,16 @@
                             $(".priceProduct").addClass("is-invalid");
                         }
                         ;
-                        if (error.stock) {
-                            $(".addStockProduct").html(error.stock);
-                            $(".stockProduct").addClass("is-invalid");
-                        }
-                        ;
+                        // if (error.stock) {
+                        //     $(".addStockProduct").html(error.stock);
+                        //     $(".stockProduct").addClass("is-invalid");
+                        // }
+                        // ;
                     }
                 })
             });
 
             $('body').on('click', '.deleteProduct', function () {
-                // $('.deleteProduct').on('click', function () {
                 $('#productDeleteModal').modal('show');
 
                 $tr = $(this).closest('tr');
@@ -633,7 +645,7 @@
                     success: function (response) {
                         $('#productDeleteModal').modal('hide');
                         $('#product-table-form').html(response.view);
-                        swal("Success", "Xóa sản phẩm thành công !", "success");
+                        swal("Success", "Xóa sản phẩm thành công!", "success");
                     },
                     error: function (error) {
                         alert("Data not save !");
@@ -644,8 +656,17 @@
             $('body').on('click', '.updateProduct', function () {
                 $('#updateProduct').modal('show');
 
-                $tr = $(this).closest('tr')
+                let id = $(this).attr('isPortableUpdate');
+                console.log(id);
+                if (id == 1) {
+                    $('#stock-product-update').html("<lable>Tồn kho</lable>" +
+                        '<input placeholder="Tồn kho ..." id="stockProduct" type="text" class="form-control stockProduct" name="stock">' +
+                        '<p class="text-danger updatePriceProduct"></p>');
+                } else {
+                    $('#stock-product-update').html(" ");
+                }
 
+                $tr = $(this).closest('tr')
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
@@ -654,7 +675,7 @@
                 $('#nameProduct').val(data[2]);
                 $('#imageProduct').val(data[3]);
                 $('#isPortableProduct').val(data[9]);
-                $('#priceProduct').val(data[5]);
+                $('#priceProduct').val(data[11]);
                 $('#stockProduct').val(data[4]);
                 $('#categoryProduct_id').val(data[6]);
                 $('#menuProduct_id').val(data[8]);
@@ -687,11 +708,11 @@
                             $(".priceProduct").addClass("is-invalid");
                         }
                         ;
-                        if (error.stock) {
-                            $(".updateStockProduct").html("* Tồn kho không được để trống !");
-                            $(".stockProduct").addClass("is-invalid");
-                        }
-                        ;
+                        // if (error.stock) {
+                        //     $(".updateStockProduct").html("* Tồn kho không được để trống !");
+                        //     $(".stockProduct").addClass("is-invalid");
+                        // }
+                        // ;
                     }
                 })
             });
@@ -708,15 +729,24 @@
 
                         $('#detailName').html(data.product.name);
                         $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
+                        {{--                        <img style="width: 100px"--}}
+                        {{--                             src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')--}}
+                        {{--                                 https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg--}}
+                        {{--@else--}}
+                        {{--                             {{$product->getProductImage()}}--}}
+                        {{--                             @endif"--}}
+                        {{--                             class="img-border-radius avatar-40 img-fluid">--}}
                         $('#detailIsPortable').html(data.product.isPortable === 1 ? "Hàng hóa" : "Dịch vụ");
-                        $('#detailPrice').html(format2(data.product.price, ' VNĐ'));
+                        $('#detailPrice').html(new Intl.NumberFormat().format(data.product.price) + " đ");
                         $('#detailStock').html(data.product.stock);
                         $('#detailCategory_id').html(data.category.name);
                         $('#detailMenu_id').html(data.product.menu_id === 1 ? "Đồ uống" : data.product.menu_id === 2 ? "Đồ ăn" : "Khác");
                         $('#detailActive').html(data.product.active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh");
-
-                        function format2(n, currency) {
-                            return n.toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + currency;
+                        console.log(data.product.active);
+                        if (data.product.active === 1) {
+                            $("#detailActive").removeClass("inactive-style").addClass("active-style");
+                        } else {
+                            $("#detailActive").removeClass("active-style").addClass("inactive-style");
                         }
                     },
                     error: function (data) {
@@ -742,10 +772,60 @@
             });
 
             //Status
-            $('input[type="radio"]').click(function(){
-                let data = $(this).val();
-                console.log(data);
+            $('input[type="radio"]').click(function () {
+                let id = $(this).val();
+                console.log(id);
+                $.ajax({
+                    type: "get",
+                    url: "/product/active/" + id,
+                    success: function (response) {
+                        $('#product-table-form').html(response.view);
+                    },
+                    error: function (error) {
+                        alert("Data not save !");
+                    }
+                })
             })
+
+            //Menu - not yet
+
+            //Active
+            $('body').on('click', '.activeProduct', function () {
+                let id = $(this).attr('active-id');
+                $.ajax({
+                    type: "get",
+                    url: "{{route('product.index')}}" + "/" + id + "/changeActive",
+                    success: function (response) {
+                        $('#product-table-form').html(response.view);
+                    }
+                })
+            })
+
+            //Portable
+            $(document).ready(function () {
+                $('#multi-selectbox').change(function () {
+                    let id = $('#multi-selectbox').val();
+                    if (id == 1) {
+                        $('#stock-product').html("<lable>Tồn kho</lable>" +
+                            '<input placeholder="Tồn kho ..." id="stock-product-input" type="text" class="form-control stockProduct" name="stock">' +
+                            '<p class="text-danger addStockProduct"></p>');
+                    } else {
+                        $('#stock-product').html(" ");
+                    }
+                });
+            });
+            $(document).ready(function () {
+                $('#isPortableProduct').change(function () {
+                    let id = $('#isPortableProduct').val();
+                    if (id == 1) {
+                        $('#stock-product-update').html("<lable>Tồn kho</lable>" +
+                            '<input placeholder="Tồn kho ..." id="stockProduct" type="text" class="form-control stockProduct" name="stock">' +
+                            '<p class="text-danger updatePriceProduct"></p>');
+                    } else {
+                        $('#stock-product-update').html(" ");
+                    }
+                });
+            });
         })
     </script>
 @endsection

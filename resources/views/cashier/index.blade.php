@@ -54,7 +54,6 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <!-- Table -->
-
                 <div
                     class="tables tab-pane fade show active"
                     id="pills-home"
@@ -72,14 +71,14 @@
                                 >
                             </li>
                             @foreach($groups as $group)
-                            <li class="wrap__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-group-id="{{$group->id}}"
-                                    class="wrap__link"
-                                >{{$group->name}}</a
-                                >
-                            </li>
+                                <li class="wrap__item">
+                                    <a
+                                        href="javascript:void(0)"
+                                        data-group-id="{{$group->id}}"
+                                        class="wrap__link"
+                                    >{{$group->name}}</a
+                                    >
+                                </li>
                             @endforeach
                         </ul>
                         <div class="wrap__form">
@@ -96,15 +95,16 @@
                     </div>
                     <div class="tables__list">
                         @foreach($tables as $table)
-                        <div
-                            class="tables__item"
-                            title="{{$table->name}}"
-                        >
-                            <div class="tables__icon">
-                                <i class="fas fa-chair"></i>
+                            <div
+                                class="tables__item"
+                                title="{{$table->name}}"
+                                table-id="{{$table->id}}"
+                            >
+                                <div class="tables__icon">
+                                    <i class="fas fa-chair"></i>
+                                </div>
+                                <div class="tables__content">{{$table->name}}</div>
                             </div>
-                            <div class="tables__content">{{$table->name}}</div>
-                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -128,49 +128,41 @@
                                 >
                             </li>
                             @foreach($categories as $category)
-                            <li class="category__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-category-id="{{$category->id}}"
-                                    class="category__link"
-                                >{{$category->name}}</a
-                                >
-                            </li>
+                                <li class="category__item">
+                                    <a
+                                        href="javascript:void(0)"
+                                        data-category-id="{{$category->id}}"
+                                        class="category__link"
+                                    >{{$category->name}}</a
+                                    >
+                                </li>
                             @endforeach
                         </ul>
                         <div class="category__form">
-                            <form action="">
-                                <div class="category__group">
+                            <form action=""  id="searcher">
+                                @csrf
                                     <input
+                                        id="searcher" name="searcher"
                                         type="text"
-                                        class="form-control category__input"
-                                        placeholder="Tìm thực đơn"
+                                        class="form-control wrap__input"
+                                        placeholder="Tìm sản phẩm .."
                                     />
-                                </div>
                             </form>
                         </div>
                     </div>
                     <!-- Product List -->
-                    <div class="product__list">
-                        <div class="product__item" title="Bàn 1">
-                            <div class="product__img">
-                                <img src="" alt=""/>
+                    <div class="product__list" id="product-category-list">
+                        @foreach($products as $product)
+                            <div class="product__item detailProduct" table-id="{{$table->id}}">
+                                <div style="height: 100px" class="product__img">
+                                    <img src="{{$product->image}}" alt=""/>
+                                </div>
+                                <div class="product__content">
+                                    <p class="product__name">{{$product->name}}</p>
+                                    <p class="product__price">{{number_format($product->price)}} đ</p>
+                                </div>
                             </div>
-                            <div class="product__content">
-                                <p class="product__name">Coca</p>
-                                <p class="product__price">12.000</p>
-                            </div>
-                        </div>
-
-                        <div class="product__item">
-                            <div class="product__img">
-                                <img src="" alt=""/>
-                            </div>
-                            <div class="product__content">
-                                <p class="product__name">Coca</p>
-                                <p class="product__price">12.000</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -403,5 +395,6 @@
 ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{asset('cashier/js/cashier.js')}}"></script>
+<script src="{{asset('cashier/js/menu.js')}}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -28,7 +29,7 @@ class CategoryController extends Controller
     public function delete($id) {
         $category = Category::find($id);
         if(count($category->products)){
-            return response()->json("Bạn nên xóa tát cả các sản phẩm trong nhóm hàng này");
+            return response()->json(['message'=>"Bạn nên xóa tất cả các sản phẩm trong nhóm hàng này"]);
         }
         $category->delete();
         $categories = Category::all();
@@ -45,8 +46,10 @@ class CategoryController extends Controller
         $category->save();
 
         $categories = Category::all();
+        $products   = Product::paginate(10);
         $html = view('managers.products.category-table-form', compact('categories'))->render();
         $select = view('managers.products.select-category', compact('categories'))->render();
-        return response()->json(['view'=>$html, 'select'=>$select]);
+        $html_table = view('managers.products.product-table-form', compact('products'))->render();
+        return response()->json(['view'=>$html, 'select'=>$select, 'products'=>$html_table]);
     }
 }
