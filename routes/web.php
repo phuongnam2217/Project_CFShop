@@ -56,6 +56,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::put('{id}/update',[TableController::class,'update'])->name('table.update');
         Route::get('{id}/delete',[TableController::class,'delete'])->name('table.destroy');
         Route::get('{id}/changeActive',[TableController::class,'changeActive'])->name('table.changeActive');
+        Route::get('{id}/viewTable',[TableController::class,'getViewTable'])->name('table.viewTable');
     });
 
 

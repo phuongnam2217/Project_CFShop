@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
     <link
         rel="stylesheet"
@@ -54,7 +55,6 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <!-- Table -->
-
                 <div
                     class="tables tab-pane fade show active"
                     id="pills-home"
@@ -66,8 +66,8 @@
                             <li class="wrap__item">
                                 <a
                                     href="javascript:void(0)"
-                                    data-group-id="1"
-                                    class="wrap__link active-table"
+                                    data-group-id="0"
+                                    class="wrap__link group active-table"
                                 >Tất cả</a
                                 >
                             </li>
@@ -76,7 +76,7 @@
                                 <a
                                     href="javascript:void(0)"
                                     data-group-id="{{$group->id}}"
-                                    class="wrap__link"
+                                    class="wrap__link group"
                                 >{{$group->name}}</a
                                 >
                             </li>
@@ -94,11 +94,13 @@
                             </form>
                         </div>
                     </div>
-                    <div class="tables__list">
+                    <div id="table-list" class="tables__list">
                         @foreach($tables as $table)
                         <div
-                            class="tables__item"
+                            class="tables__item tables__item{{$table->id}}"
                             title="{{$table->name}}"
+                            data-order-id="{{$table->order_id}}"
+                            data-table-id="{{$table->id}}"
                         >
                             <div class="tables__icon">
                                 <i class="fas fa-chair"></i>
@@ -403,5 +405,90 @@
 ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{asset('cashier/js/cashier.js')}}"></script>
+<script>
+    $(document).ready(function (){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        const getViewTable = function (id){
+            $.ajax({
+                type: 'get',
+                url: "tables/"+id+"/viewTable",
+                dataType: 'json',
+                success: function (data){
+                    $('#table-list').html('').append(data);
+                    let table_id = localStorage.getItem('table_id');
+                    $('.tables__item'+table_id).addClass('tables__focus');
+                }
+            })
+        }
+
+        // Active wrap link
+        const wrap_links = $('.wrap__link')
+        $.each(wrap_links, function (indexInArray, valueOfElement) {
+            $(valueOfElement).on('click',function () {
+                $.each(wrap_links, function (indexInArray, valueOfElement) {
+                    $(this).removeClass('active-table');
+                });
+                $(this).addClass('active-table');
+            })
+        });
+
+// Gọi ajax thay đổi html tables list
+        $('.wrap__link').on('click',function(){
+            const groupId = $(this).attr('data-group-id');
+            getViewTable(groupId);
+        })
+
+
+        // Active wrap link và gọi ajax
+        $('body').on('click','.tables__item',function(){
+            const tables__links = $('.tables__item')
+            $.each(tables__links, function (indexInArray, valueOfElement) {
+                $(this).removeClass('tables__focus');
+            });
+            $(this).addClass('tables__focus');
+            let id = $(this).attr('data-table-id');
+            localStorage.setItem('table_id',id);
+            let table_id = localStorage.getItem('table_id');
+            console.log(table_id);
+
+            // $('#pills-home-tab').removeClass('active');
+            // $('#pills-profile-tab').addClass('active');
+            // $('#pills-home').removeClass('show');
+            // $('#pills-home').removeClass('active');
+            // $('#pills-profile').addClass('show');
+            // $('#pills-profile').addClass('active');
+        })
+
+//    Active category_link
+        const category_links = $('.category__link')
+
+        $('.category__link').on('click',function(){
+
+            $.each(category_links, function (indexInArray, valueOfElement) {
+                $(valueOfElement).removeClass('active-table');
+            });
+            const categoryId = $(this).attr('data-category-id');
+            $(this).addClass('active-table')
+            //   Gọi ajax để thay đổi html products
+
+        })
+
+        // Action
+        $('#icon').on('click',function(){
+            console.log(1)
+        })
+
+        // Modal Payment
+        $('.bill__pay').on('click',function(){
+            $('#modalPayment').show();
+            $('.payment__content').addClass('payment__content-right');
+        })
+
+    })
+</script>
 </body>
 </html>
