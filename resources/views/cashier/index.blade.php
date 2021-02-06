@@ -212,9 +212,9 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Quản lí</a></li>
+                                <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Đăng xuất</a>
+                                    <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                                 </li>
                             </ul>
                         </div>
