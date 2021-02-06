@@ -147,7 +147,7 @@ img {
     flex-direction: row;
     padding: 1rem;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .tables__item {
