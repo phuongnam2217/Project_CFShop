@@ -55,58 +55,27 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <!-- Table -->
-                <div
-                    class="tables tab-pane fade show active"
-                    id="pills-home"
-                    role="tabpanel"
-                    aria-labelledby="pills-home-tab"
-                >
+                <div class="tables tab-pane fade show active" id="pills-home" role="tabpanel"
+                     aria-labelledby="pills-home-tab">
                     <div class="wrap__filter">
                         <ul class="wrap__list">
-                            <li class="wrap__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-group-id="0"
-                                    class="wrap__link group active-table"
-                                >Tất cả</a
-                                >
-                            </li>
-                            @foreach($groups as $group)
-                            <li class="wrap__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-group-id="{{$group->id}}"
-                                    class="wrap__link group"
-                                >{{$group->name}}</a
-                                >
-                            </li>
-                            @endforeach
-                        </ul>
+                            <li class="wrap__item"><a href="javascript:void(0)" data-group-id="1"
+                                                      class="wrap__link active-table">Tất cả</a>
+                            </li> @foreach($groups as $group)
+                                <li class="wrap__item"><a href="javascript:void(0)" data-group-id="{{$group->id}}"
+                                                          class="wrap__link">{{$group->name}}</a></li> @endforeach </ul>
                         <div class="wrap__form">
                             <form action="">
-                                <div class="wrap__group">
-                                    <input
-                                        type="text"
-                                        class="form-control wrap__input"
-                                        placeholder="Tìm bàn"
-                                    />
-                                </div>
+                                <div class="wrap__group"><input type="text" class="form-control wrap__input"
+                                                                placeholder="Tìm bàn"/></div>
                             </form>
                         </div>
                     </div>
-                    <div id="table-list" class="tables__list">
-                        @foreach($tables as $table)
-                        <div
-                            class="tables__item tables__item{{$table->id}}"
-                            title="{{$table->name}}"
-                            data-order-id="{{$table->order_id}}"
-                            data-table-id="{{$table->id}}"
-                        >
-                            <div class="tables__icon">
-                                <i class="fas fa-chair"></i>
-                            </div>
-                        @endforeach
-                    </div>
+                    <div class="tables__list"> @foreach($tables as $table)
+                            <div class="tables__item" title="{{$table->name}}" table-id="{{$table->id}}">
+                                <div class="tables__icon"><i class="fas fa-chair"></i></div>
+                                <div class="tables__content">{{$table->name}}</div>
+                            </div> @endforeach </div>
                 </div>
 
                 <!-- Product -->
@@ -139,14 +108,14 @@
                             @endforeach
                         </ul>
                         <div class="category__form">
-                            <form action=""  id="searcher">
+                            <form action="" id="searcher">
                                 @csrf
-                                    <input
-                                        id="searcher" name="searcher"
-                                        type="text"
-                                        class="form-control wrap__input"
-                                        placeholder="Tìm sản phẩm .."
-                                    />
+                                <input
+                                    id="searcher" name="searcher"
+                                    type="text"
+                                    class="form-control wrap__input"
+                                    placeholder="Tìm sản phẩm .."
+                                />
                             </form>
                         </div>
                     </div>
@@ -395,22 +364,23 @@
 ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{asset('cashier/js/cashier.js')}}"></script>
+<script src="{{asset('cashier/js/menu.js')}}"></script>
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        const getViewTable = function (id){
+        const getViewTable = function (id) {
             $.ajax({
                 type: 'get',
-                url: "tables/"+id+"/viewTable",
+                url: "tables/" + id + "/viewTable",
                 dataType: 'json',
-                success: function (data){
+                success: function (data) {
                     $('#table-list').html('').append(data);
                     let table_id = localStorage.getItem('table_id');
-                    $('.tables__item'+table_id).addClass('tables__focus');
+                    $('.tables__item' + table_id).addClass('tables__focus');
                 }
             })
         }
@@ -418,7 +388,7 @@
         // Active wrap link
         const wrap_links = $('.wrap__link')
         $.each(wrap_links, function (indexInArray, valueOfElement) {
-            $(valueOfElement).on('click',function () {
+            $(valueOfElement).on('click', function () {
                 $.each(wrap_links, function (indexInArray, valueOfElement) {
                     $(this).removeClass('active-table');
                 });
@@ -427,21 +397,21 @@
         });
 
 // Gọi ajax thay đổi html tables list
-        $('.wrap__link').on('click',function(){
+        $('.wrap__link').on('click', function () {
             const groupId = $(this).attr('data-group-id');
             getViewTable(groupId);
         })
 
 
         // Active wrap link và gọi ajax
-        $('body').on('click','.tables__item',function(){
+        $('body').on('click', '.tables__item', function () {
             const tables__links = $('.tables__item')
             $.each(tables__links, function (indexInArray, valueOfElement) {
                 $(this).removeClass('tables__focus');
             });
             $(this).addClass('tables__focus');
             let id = $(this).attr('data-table-id');
-            localStorage.setItem('table_id',id);
+            localStorage.setItem('table_id', id);
             let table_id = localStorage.getItem('table_id');
             console.log(table_id);
 
@@ -456,7 +426,7 @@
 //    Active category_link
         const category_links = $('.category__link')
 
-        $('.category__link').on('click',function(){
+        $('.category__link').on('click', function () {
 
             $.each(category_links, function (indexInArray, valueOfElement) {
                 $(valueOfElement).removeClass('active-table');
@@ -468,12 +438,12 @@
         })
 
         // Action
-        $('#icon').on('click',function(){
+        $('#icon').on('click', function () {
             console.log(1)
         })
 
         // Modal Payment
-        $('.bill__pay').on('click',function(){
+        $('.bill__pay').on('click', function () {
             $('#modalPayment').show();
             $('.payment__content').addClass('payment__content-right');
         })
