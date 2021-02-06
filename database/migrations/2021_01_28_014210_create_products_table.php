@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('price');
             $table->integer('stock');
+//            stock nullable
             $table->boolean('active');
             $table->boolean('isPortable');
             $table->string('image');

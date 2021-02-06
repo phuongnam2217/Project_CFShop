@@ -19,12 +19,9 @@
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 {{--    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
 
+
     <!--  -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/>
-
-
-<!--  -->
-
 
     {{--     --}}
     <base href="/admin_resource/resource">

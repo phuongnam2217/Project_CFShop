@@ -193,3 +193,19 @@
 .changeActive{
     cursor: pointer;
 }
+.active-style{
+    color: white;
+    background-color: #4BAC4D !important;
+    border-radius: 50px;
+    padding: 5px;
+    font-style: normal !important;
+    box-shadow: 6px 3px 6px #bdc3c7;
+}
+.inactive-style{
+    color: white;
+    background-color: #E73A3A !important;
+    border-radius: 50px;
+    padding: 5px;
+    font-style: normal !important;
+    box-shadow: 6px 3px 6px #bdc3c7;
+}

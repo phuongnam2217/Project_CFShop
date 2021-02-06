@@ -35,8 +35,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categoryProduct = Product::findOrFail($id)->category;
         return response()->json(['product'=>$product,'category'=>$categoryProduct]);
-        $product->save();
-
     }
 
     public function delete($id) {
@@ -59,9 +57,24 @@ class ProductController extends Controller
         return response()->json(['view'=>$html]);
     }
 
+    public function changeActive($id){
+        $product = Product::findOrFail($id);
+        $product->active = !$product->active;
+        $product->save();
+        return $this->returnView();
+    }
 
     public function returnView() {
-        $products = Product::all();
+        $products = Product::paginate(10);
+        $html = view('managers.products.product-table-form', compact('products'))->render();
+        return response()->json(['view'=>$html]);
+    }
+
+    public function showActive($id) {
+        if($id == 2){
+            return $this->returnView();
+        }
+        $products = Product::where('active', 'like', $id)->paginate(10);
         $html = view('managers.products.product-table-form', compact('products'))->render();
         return response()->json(['view'=>$html]);
     }

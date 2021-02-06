@@ -105,8 +105,6 @@
                             <div class="tables__icon">
                                 <i class="fas fa-chair"></i>
                             </div>
-                            <div class="tables__content">{{$table->name}}</div>
-                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -130,49 +128,41 @@
                                 >
                             </li>
                             @foreach($categories as $category)
-                            <li class="category__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-category-id="{{$category->id}}"
-                                    class="category__link"
-                                >{{$category->name}}</a
-                                >
-                            </li>
+                                <li class="category__item">
+                                    <a
+                                        href="javascript:void(0)"
+                                        data-category-id="{{$category->id}}"
+                                        class="category__link"
+                                    >{{$category->name}}</a
+                                    >
+                                </li>
                             @endforeach
                         </ul>
                         <div class="category__form">
-                            <form action="">
-                                <div class="category__group">
+                            <form action=""  id="searcher">
+                                @csrf
                                     <input
+                                        id="searcher" name="searcher"
                                         type="text"
-                                        class="form-control category__input"
-                                        placeholder="Tìm thực đơn"
+                                        class="form-control wrap__input"
+                                        placeholder="Tìm sản phẩm .."
                                     />
-                                </div>
                             </form>
                         </div>
                     </div>
                     <!-- Product List -->
-                    <div class="product__list">
-                        <div class="product__item" title="Bàn 1">
-                            <div class="product__img">
-                                <img src="" alt=""/>
+                    <div class="product__list" id="product-category-list">
+                        @foreach($products as $product)
+                            <div class="product__item detailProduct" table-id="{{$table->id}}">
+                                <div style="height: 100px" class="product__img">
+                                    <img src="{{$product->image}}" alt=""/>
+                                </div>
+                                <div class="product__content">
+                                    <p class="product__name">{{$product->name}}</p>
+                                    <p class="product__price">{{number_format($product->price)}} đ</p>
+                                </div>
                             </div>
-                            <div class="product__content">
-                                <p class="product__name">Coca</p>
-                                <p class="product__price">12.000</p>
-                            </div>
-                        </div>
-
-                        <div class="product__item">
-                            <div class="product__img">
-                                <img src="" alt=""/>
-                            </div>
-                            <div class="product__content">
-                                <p class="product__name">Coca</p>
-                                <p class="product__price">12.000</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

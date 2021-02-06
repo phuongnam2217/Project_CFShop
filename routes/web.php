@@ -59,7 +59,6 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::get('{id}/viewTable',[TableController::class,'getViewTable'])->name('table.viewTable');
     });
 
-
     Route::prefix('group')->group(function (){
         Route::get('/',[GroupController::class,'index'])->name('group.index');
         Route::post('/', [GroupController::class, 'store'])->name('group.store');
@@ -76,6 +75,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::delete('/delete/{id}', [ProductController::class, 'delete']);
         Route::get('{id}',[ProductController::class,'show']);
         Route::post('/search', [ProductController::class, 'search'])->name('product.search');
+        Route::get('{id}/changeActive',[ProductController::class,'changeActive'])->name('product.changeActive');
+        Route::get('/active/{id}',[ProductController::class, 'showActive']);
     });
 
     Route::prefix('category')->group(function (){
@@ -98,6 +99,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
 
     Route::prefix('orders')->group(function (){
         Route::get('/',[OrderController::class,'index'])->name('orders.index');
+        Route::get('/{id}',[OrderController::class,'showProduct']);
+        Route::post('/search', [OrderController::class, 'search']);
     });
 });
 

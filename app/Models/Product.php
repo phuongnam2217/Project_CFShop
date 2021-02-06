@@ -34,5 +34,9 @@ class Product extends Model
         return $this->belongsTo(Menu::class);
     }
 
+    public function getProductImage() {
+        return "https://quangvoc8.s3.amazonaws.com/".$this->image;
+    }
+
     public $timestamps = false;
 }
