@@ -70,7 +70,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
 
     Route::prefix('product')->group(function (){
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
-        Route::post('/add', [ProductController::class, 'store']);
+        Route::post('/add', [ProductController::class, 'store'])->name('product.store');
         Route::put('/update/{id}', [ProductController::class, 'update']);
         Route::delete('/delete/{id}', [ProductController::class, 'delete']);
         Route::get('{id}',[ProductController::class,'show']);
@@ -101,6 +101,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::get('/',[OrderController::class,'index'])->name('orders.index');
         Route::get('/{id}',[OrderController::class,'showProduct']);
         Route::post('/search', [OrderController::class, 'search']);
+        Route::get('{id}/viewCard',[OrderController::class,'viewCart']);
+        Route::post('add',[OrderController::class,'add'])->name('orders.add');
     });
 });
 

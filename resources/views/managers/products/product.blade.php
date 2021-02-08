@@ -606,12 +606,10 @@
                             $(".addNameProduct").html(error.name);
                             $(".nameProduct").addClass("is-invalid");
                         }
-                        ;
                         if (error.price) {
                             $(".addPriceProduct").html(error.price);
                             $(".priceProduct").addClass("is-invalid");
-                        }
-                        ;
+                        };
                         // if (error.stock) {
                         //     $(".addStockProduct").html(error.stock);
                         //     $(".stockProduct").addClass("is-invalid");

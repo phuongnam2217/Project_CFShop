@@ -96,11 +96,11 @@ class TableController extends Controller
 
     public function getViewTable($group_id){
         if($group_id == 0){
-            $tables = Table::all();
+            $tables = Table::where('active','1')->get();
             $html = view('managers.view-ajax.table.table-ajax',compact('tables'))->render();
             return response()->json($html);
         }
-        $tables = Table::where('group_id',$group_id)->get();
+        $tables = Table::where('group_id',$group_id)->where('active','1')->get();
         $html = view('managers.view-ajax.table.table-ajax',compact('tables'))->render();
         return response()->json($html);
     }
