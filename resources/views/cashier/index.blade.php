@@ -59,11 +59,18 @@
                      aria-labelledby="pills-home-tab">
                     <div class="wrap__filter">
                         <ul class="wrap__list">
-                            <li class="wrap__item"><a href="javascript:void(0)" data-group-id="1"
+                            <li class="wrap__item"><a href="javascript:void(0)" data-group-id="0"
                                                       class="wrap__link active-table">Tất cả</a>
-                            </li> @foreach($groups as $group)
-                                <li class="wrap__item"><a href="javascript:void(0)" data-group-id="{{$group->id}}"
-                                                          class="wrap__link">{{$group->name}}</a></li> @endforeach </ul>
+                            </li>
+                            @foreach($groups as $group)
+                                <li class="wrap__item">
+                                    <a href="javascript:void(0)"
+                                       data-group-id="{{$group->id}}"
+                                       class="wrap__link">{{$group->name}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
                         <div class="wrap__form">
                             <form action="">
                                 <div class="wrap__group"><input type="text" class="form-control wrap__input"
@@ -71,11 +78,20 @@
                             </form>
                         </div>
                     </div>
-                    <div class="tables__list"> @foreach($tables as $table)
-                            <div class="tables__item" title="{{$table->name}}" table-id="{{$table->id}}">
-                                <div class="tables__icon"><i class="fas fa-chair"></i></div>
+                    <div class="tables__list">
+                        @foreach($tables as $table)
+                            <div
+                                class="tables__item tables__item{{$table->id}} {{$table->order_id ? 'tables__active':''}}"
+                                title="{{$table->name}}" data-order-id="{{$table->order_id}}"
+                                data-table-id="{{$table->id}}"
+                            >
+                                <div class="tables__icon">
+                                    <i class="fas fa-chair"></i>
+                                </div>
                                 <div class="tables__content">{{$table->name}}</div>
-                            </div> @endforeach </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 <!-- Product -->
@@ -122,7 +138,7 @@
                     <!-- Product List -->
                     <div class="product__list" id="product-category-list">
                         @foreach($products as $product)
-                            <div class="product__item detailProduct" table-id="{{$table->id}}">
+                            <div class="product__item detailProduct" table-id="{{$table->id}}" product-id="{{$product->id}}">
                                 <div style="height: 100px" class="product__img">
                                     <img src="{{$product->image}}" alt=""/>
                                 </div>
@@ -137,180 +153,180 @@
             </div>
         </div>
 
-        <div class="col-6" class="header">
+        <div class="col-6" class="header" id="cart">
             <!-- header__left -->
-            <div class="header__left">
-                <ul class="header__left__list">
-                    <li class="nav-item header__left__item" role="presentation">
-                        <a
-                            class="nav-link active header__left__link"
-                            id="pills-home-tab"
-                            data-bs-toggle="pill"
-                            href="javascript:void(0)"
-                            role="tab"
-                            aria-controls="pills-home"
-                            aria-selected="true"
-                        >
-                            Hóa đơn 1</a
-                        >
-                    </li>
-                </ul>
-                <ul class="action">
-                    <li class="action__item">admin</li>
-                    <li class="action__item">
-                        <div class="dropdown">
-                            <a
-                                class="btn"
-                                href="#"
-                                role="button"
-                                id="dropdownMenuLink"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                <i class="action__icon fas fa-bars"></i>
-                            </a>
+{{--            <div class="header__left">--}}
+{{--                <ul class="header__left__list">--}}
+{{--                    <li class="nav-item header__left__item" role="presentation">--}}
+{{--                        <a--}}
+{{--                            class="nav-link active header__left__link"--}}
+{{--                            id="pills-home-tab"--}}
+{{--                            data-bs-toggle="pill"--}}
+{{--                            href="javascript:void(0)"--}}
+{{--                            role="tab"--}}
+{{--                            aria-controls="pills-home"--}}
+{{--                            aria-selected="true"--}}
+{{--                        >--}}
+{{--                            Hóa đơn 1</a--}}
+{{--                        >--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--                <ul class="action">--}}
+{{--                    <li class="action__item">admin</li>--}}
+{{--                    <li class="action__item">--}}
+{{--                        <div class="dropdown">--}}
+{{--                            <a--}}
+{{--                                class="btn"--}}
+{{--                                href="#"--}}
+{{--                                role="button"--}}
+{{--                                id="dropdownMenuLink"--}}
+{{--                                data-bs-toggle="dropdown"--}}
+{{--                                aria-expanded="false"--}}
+{{--                            >--}}
+{{--                                <i class="action__icon fas fa-bars"></i>--}}
+{{--                            </a>--}}
 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content" id="">
-                <!-- Orders -->
+{{--                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">--}}
+{{--                                <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>--}}
+{{--                                <li>--}}
+{{--                                    <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--            <div class="tab-content" id="">--}}
+{{--                <!-- Orders -->--}}
 
-                <div
-                    class="cart tables tab-pane fade show active"
-                    id="pills-home"
-                    role="tabpanel"
-                    aria-labelledby="pills-home-tab"
-                >
-                    <div class="nav__filter">
-                        <ul class="nav__list">
-                            <li class="nav__item">
-                                <a
-                                    href="javascript:void(0)"
-                                    data-group-id="1"
-                                    class="nav__link active-table"
-                                >Bàn 1 / Trong nhà</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="cart__list">
-                        <div class="cart__item">
-                            <div class="cart__trash">
-                                <i class="cart__icon fas fa-trash-alt"></i>
-                            </div>
+{{--                <div--}}
+{{--                    class="cart tables tab-pane fade show active"--}}
+{{--                    id="pills-home"--}}
+{{--                    role="tabpanel"--}}
+{{--                    aria-labelledby="pills-home-tab"--}}
+{{--                >--}}
+{{--                    <div class="nav__filter">--}}
+{{--                        <ul class="nav__list">--}}
+{{--                            <li class="nav__item">--}}
+{{--                                <a--}}
+{{--                                    href="javascript:void(0)"--}}
+{{--                                    data-group-id="1"--}}
+{{--                                    class="nav__link active-table"--}}
+{{--                                >Bàn 1 / Trong nhà</a--}}
+{{--                                >--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                    <div class="cart__list">--}}
+{{--                        <div class="cart__item">--}}
+{{--                            <div class="cart__trash">--}}
+{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+{{--                            </div>--}}
 
-                            <div class="cart__id">1</div>
-                            <div class="cart__name">Coca</div>
-                            <div class="cart__form">
-                                <button class="cart__decrease">-</button>
-                                <input class="cart__input" type="text" value="2"/>
-                                <button class="cart__increase">+</button>
-                            </div>
-                            <div class="cart__price">12000</div>
-                            <div class="cart__total">24000</div>
-                        </div>
-                        <div class="cart__item">
-                            <div class="cart__trash">
-                                <i class="cart__icon fas fa-trash-alt"></i>
-                            </div>
+{{--                            <div class="cart__id">1</div>--}}
+{{--                            <div class="cart__name">Coca</div>--}}
+{{--                            <div class="cart__form">--}}
+{{--                                <button class="cart__decrease">-</button>--}}
+{{--                                <input class="cart__input" type="text" value="2"/>--}}
+{{--                                <button class="cart__increase">+</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart__price">12000</div>--}}
+{{--                            <div class="cart__total">24000</div>--}}
+{{--                        </div>--}}
+{{--                        <div class="cart__item">--}}
+{{--                            <div class="cart__trash">--}}
+{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+{{--                            </div>--}}
 
-                            <div class="cart__id">2</div>
-                            <div class="cart__name">Expresso</div>
-                            <div class="cart__form">
-                                <button class="cart__decrease">-</button>
-                                <input
-                                    class="cart__input"
-                                    style="width: 30px"
-                                    type="text"
-                                    value="2"
-                                />
-                                <button class="cart__increase">+</button>
-                            </div>
-                            <div class="cart__price">10000</div>
-                            <div class="cart__total">20000</div>
-                        </div>
-                        <div class="cart__item">
-                            <div class="cart__trash">
-                                <i class="cart__icon fas fa-trash-alt"></i>
-                            </div>
+{{--                            <div class="cart__id">2</div>--}}
+{{--                            <div class="cart__name">Expresso</div>--}}
+{{--                            <div class="cart__form">--}}
+{{--                                <button class="cart__decrease">-</button>--}}
+{{--                                <input--}}
+{{--                                    class="cart__input"--}}
+{{--                                    style="width: 30px"--}}
+{{--                                    type="text"--}}
+{{--                                    value="2"--}}
+{{--                                />--}}
+{{--                                <button class="cart__increase">+</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart__price">10000</div>--}}
+{{--                            <div class="cart__total">20000</div>--}}
+{{--                        </div>--}}
+{{--                        <div class="cart__item">--}}
+{{--                            <div class="cart__trash">--}}
+{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+{{--                            </div>--}}
 
-                            <div class="cart__id">1</div>
-                            <div class="cart__name">Coca</div>
-                            <div class="cart__form">
-                                <button class="cart__decrease">-</button>
-                                <input class="cart__input" type="text" value="2"/>
-                                <button class="cart__increase">+</button>
-                            </div>
-                            <div class="cart__price">12000</div>
-                            <div class="cart__total">24000</div>
-                        </div>
-                        <div class="cart__item">
-                            <div class="cart__trash">
-                                <i class="cart__icon fas fa-trash-alt"></i>
-                            </div>
+{{--                            <div class="cart__id">1</div>--}}
+{{--                            <div class="cart__name">Coca</div>--}}
+{{--                            <div class="cart__form">--}}
+{{--                                <button class="cart__decrease">-</button>--}}
+{{--                                <input class="cart__input" type="text" value="2"/>--}}
+{{--                                <button class="cart__increase">+</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart__price">12000</div>--}}
+{{--                            <div class="cart__total">24000</div>--}}
+{{--                        </div>--}}
+{{--                        <div class="cart__item">--}}
+{{--                            <div class="cart__trash">--}}
+{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+{{--                            </div>--}}
 
-                            <div class="cart__id">2</div>
-                            <div class="cart__name">Expresso</div>
-                            <div class="cart__form">
-                                <button class="cart__decrease">-</button>
-                                <input
-                                    class="cart__input"
-                                    style="width: 30px"
-                                    type="text"
-                                    value="2"
-                                />
-                                <button class="cart__increase">+</button>
-                            </div>
-                            <div class="cart__price">10000</div>
-                            <div class="cart__total">20000</div>
-                        </div>
-                        <div class="cart__item">
-                            <div class="cart__trash">
-                                <i class="cart__icon fas fa-trash-alt"></i>
-                            </div>
+{{--                            <div class="cart__id">2</div>--}}
+{{--                            <div class="cart__name">Expresso</div>--}}
+{{--                            <div class="cart__form">--}}
+{{--                                <button class="cart__decrease">-</button>--}}
+{{--                                <input--}}
+{{--                                    class="cart__input"--}}
+{{--                                    style="width: 30px"--}}
+{{--                                    type="text"--}}
+{{--                                    value="2"--}}
+{{--                                />--}}
+{{--                                <button class="cart__increase">+</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart__price">10000</div>--}}
+{{--                            <div class="cart__total">20000</div>--}}
+{{--                        </div>--}}
+{{--                        <div class="cart__item">--}}
+{{--                            <div class="cart__trash">--}}
+{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+{{--                            </div>--}}
 
-                            <div class="cart__id">1</div>
-                            <div class="cart__name">Coca</div>
-                            <div class="cart__form">
-                                <button class="cart__decrease">-</button>
-                                <input class="cart__input" type="text" value="2"/>
-                                <button class="cart__increase">+</button>
-                            </div>
-                            <div class="cart__price">12000</div>
-                            <div class="cart__total">24000</div>
-                        </div>
-                    </div>
+{{--                            <div class="cart__id">1</div>--}}
+{{--                            <div class="cart__name">Coca</div>--}}
+{{--                            <div class="cart__form">--}}
+{{--                                <button class="cart__decrease">-</button>--}}
+{{--                                <input class="cart__input" type="text" value="2"/>--}}
+{{--                                <button class="cart__increase">+</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart__price">12000</div>--}}
+{{--                            <div class="cart__total">24000</div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <!-- Emty cart -->
-                    <div class="empty"></div>
+{{--                    <!-- Emty cart -->--}}
+{{--                    <div class="empty"></div>--}}
 
-                    <div class="bill">
-                        <div class="bill__content">
-                            <div class="bill__item bill__text">Tổng tiền</div>
-                            <div class="bill__item bill__quantity">2</div>
-                            <div class="bill__item bill__total">300000</div>
-                        </div>
-                        <div class="bill__action">
-                            <button
-                                class="bill__pay btn-success"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalPayment"
-                            >
-                                <i class="fas fa-dollar-sign"></i>
-                                Thanh Toán
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--                    <div class="bill">--}}
+{{--                        <div class="bill__content">--}}
+{{--                            <div class="bill__item bill__text">Tổng tiền</div>--}}
+{{--                            <div class="bill__item bill__quantity">2</div>--}}
+{{--                            <div class="bill__item bill__total">300000</div>--}}
+{{--                        </div>--}}
+{{--                        <div class="bill__action">--}}
+{{--                            <button--}}
+{{--                                class="bill__pay btn-success"--}}
+{{--                                data-bs-toggle="modal"--}}
+{{--                                data-bs-target="#modalPayment"--}}
+{{--                            >--}}
+{{--                                <i class="fas fa-dollar-sign"></i>--}}
+{{--                                Thanh Toán--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
 </div>
@@ -372,18 +388,20 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        const getViewTable = function (id) {
+        const getViewGroupTable = function (id) {
             $.ajax({
                 type: 'get',
                 url: "tables/" + id + "/viewTable",
                 dataType: 'json',
                 success: function (data) {
-                    $('#table-list').html('').append(data);
+                    $('.tables__list').html(data);
                     let table_id = localStorage.getItem('table_id');
                     $('.tables__item' + table_id).addClass('tables__focus');
                 }
             })
         }
+        //Active Khi reload web
+        $('.tables__item' + localStorage.getItem('table_id')).addClass('tables__focus');
 
         // Active wrap link
         const wrap_links = $('.wrap__link')
@@ -396,13 +414,25 @@
             })
         });
 
-// Gọi ajax thay đổi html tables list
+        // Gọi ajax thay đổi html tables list
         $('.wrap__link').on('click', function () {
             const groupId = $(this).attr('data-group-id');
-            getViewTable(groupId);
+            getViewGroupTable(groupId);
         })
-
-
+        //View cart
+        const viewCart = function (table_id){
+            $.ajax({
+                type: 'get',
+                url: "{{route('orders.index')}}"+'/'+table_id+'/viewCard',
+                success: function (data){
+                    $('#cart').html(data);
+                },
+                errors: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
+        }
+        viewCart(localStorage.getItem('table_id'))
         // Active wrap link và gọi ajax
         $('body').on('click', '.tables__item', function () {
             const tables__links = $('.tables__item')
@@ -413,14 +443,34 @@
             let id = $(this).attr('data-table-id');
             localStorage.setItem('table_id', id);
             let table_id = localStorage.getItem('table_id');
-            console.log(table_id);
-
+            viewCart(table_id);
             // $('#pills-home-tab').removeClass('active');
             // $('#pills-profile-tab').addClass('active');
             // $('#pills-home').removeClass('show');
             // $('#pills-home').removeClass('active');
             // $('#pills-profile').addClass('show');
             // $('#pills-profile').addClass('active');
+        })
+
+        $('body').on('click','.product__item',function (){
+            let product_id = $(this).attr('product-id');
+            let table_id = localStorage.getItem('table_id');
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'product_id': product_id,
+                    'table_id': table_id
+                },
+                url: "{{route('orders.add')}}",
+                success: function (data){
+                    console.log(data);
+                    viewCart(table_id);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
         })
 
 //    Active category_link
@@ -434,7 +484,6 @@
             const categoryId = $(this).attr('data-category-id');
             $(this).addClass('active-table')
             //   Gọi ajax để thay đổi html products
-
         })
 
         // Action
