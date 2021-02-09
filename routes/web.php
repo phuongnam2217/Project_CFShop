@@ -103,6 +103,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('/search', [OrderController::class, 'search']);
         Route::get('{id}/viewCard',[OrderController::class,'viewCart']);
         Route::post('add',[OrderController::class,'add'])->name('orders.add');
+        Route::put('{id}/delete',[OrderController::class,'delete'])->name('orders.delete');
+        Route::put('{id}/remove',[OrderController::class,'remove'])->name('orders.remove');
     });
 });
 
