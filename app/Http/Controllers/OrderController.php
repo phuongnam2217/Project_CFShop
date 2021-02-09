@@ -98,8 +98,55 @@ class OrderController extends Controller
 
             $table->order_id = $order->id;
             $table->save();
+            return response()->json();
         }
-        return response()->json($request->all());
     }
 
+    public function delete(Request $request,$productId){
+        $table = Table::findOrFail($request->table_id);
+        $order = Order::findOrFail($table->order_id);
+        $product = Product::findOrFail($productId);
+        $order_detail = DB::table('order_details')
+            ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->first();
+        $quantity = $order_detail->quantity - 1;
+        $total =  $order_detail->total - $product->price;
+        if(!$quantity == 0){
+            DB::table('order_details')
+                ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->update([
+                    'quantity'=> $quantity,
+                    'total'=> $total
+                ]);
+            $order->sub_total -= $product->price;
+            $order->save();
+
+        }else{
+            DB::table('order_details')
+                ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->delete();
+            $order->sub_total -= $product->price;
+            $order->save();
+            if(count($order->products) == 0){
+                $order->delete();
+                $table->order_id = null;
+                $table->save();
+            }
+        }
+
+    }
+    public function remove(Request $request,$productId)
+    {
+        $table = Table::findOrFail($request->table_id);
+        $order = Order::findOrFail($table->order_id);
+        $product = Product::findOrFail($productId);
+        $order_detail = DB::table('order_details')
+            ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->first();
+        $order->sub_total -= $order_detail->total;
+        $order_detail = DB::table('order_details')
+            ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->delete();
+        if(count($order->products) == 0){
+            $order->delete();
+            $table->order_id = null;
+            $table->save();
+        }
+        $order->save();
+    }
 }

@@ -451,7 +451,7 @@
             // $('#pills-profile').addClass('show');
             // $('#pills-profile').addClass('active');
         })
-
+        //Thêm sản phẩm vào order
         $('body').on('click','.product__item',function (){
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
@@ -472,8 +472,64 @@
                 }
             })
         })
-
-//    Active category_link
+        $('body').on('click','.cart__increase',function (){
+            let product_id = $(this).attr('product-id');
+            let table_id = localStorage.getItem('table_id');
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'product_id': product_id,
+                    'table_id': table_id
+                },
+                url: "{{route('orders.add')}}",
+                success: function (data){
+                    viewCart(table_id);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
+        })
+        //Giảm số lượng sản phẩm
+        $('body').on('click','.cart__decrease',function (){
+            let product_id = $(this).attr('product-id');
+            let table_id = localStorage.getItem('table_id');
+            $.ajax({
+                method: "put",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'table_id': table_id
+                },
+                url: "{{route('orders.index')}}"+'/'+product_id+'/delete',
+                success: function (data){
+                    viewCart(table_id);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
+        })
+        //Xóa sản phẩm trong order
+        $('body').on('click','.cart__trash',function (){
+            let product_id = $(this).attr('product-id');
+            let table_id = localStorage.getItem('table_id');
+            $.ajax({
+                method: "put",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'table_id': table_id
+                },
+                url: "{{route('orders.index')}}"+'/'+product_id+'/remove',
+                success: function (data){
+                    viewCart(table_id);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
+        })
+        //Active category_link
         const category_links = $('.category__link')
 
         $('.category__link').on('click', function () {

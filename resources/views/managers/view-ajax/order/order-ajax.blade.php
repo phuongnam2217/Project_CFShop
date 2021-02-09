@@ -62,16 +62,16 @@
         <div class="cart__list">
             @foreach($order->products as $item)
             <div class="cart__item">
-                <div class="cart__trash">
+                <div class="cart__trash" product-id="{{$item->id}}">
                     <i class="cart__icon fas fa-trash-alt"></i>
                 </div>
 
                 <div class="cart__id">{{$item->id}}</div>
                 <div class="cart__name">{{$item->name}}</div>
                 <div class="cart__form">
-                    <button class="cart__decrease">-</button>
+                    <button class="cart__decrease" product-id="{{$item->id}}" >-</button>
                     <input class="cart__input" type="text" value="{{$item->pivot->quantity}}"/>
-                    <button class="cart__increase">+</button>
+                    <button class="cart__increase" product-id="{{$item->id}}" >+</button>
                 </div>
                 <div class="cart__price">{{$item->pivot->priceEach}}</div>
                 <div class="cart__total">{{$item->pivot->total}}</div>
