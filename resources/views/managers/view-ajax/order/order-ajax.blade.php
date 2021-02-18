@@ -91,7 +91,8 @@
                                product-id="{{$item->id}}" {{$item->pivot->isMaking ? "checked":""}}>
                         @if($item->pivot->isMaking)
                             <div class="">
-                                {{\Carbon\Carbon::parse($item->pivot->release_at)->diffForHumans($item->pivot->created_at)}}
+                                {{!\Carbon\Carbon::setLocale('vi')}}
+                                {{\Carbon\Carbon::parse($item->pivot->release_at)->longAbsoluteDiffForHumans($item->pivot->created_at)}}
                             </div>
                         @endif
                     </div>
