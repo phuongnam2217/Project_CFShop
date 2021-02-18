@@ -474,6 +474,12 @@ img {
     cursor: pointer;
     color: var(--grey-color);
 }
+.cart__status{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .bill {
     height: 130px;

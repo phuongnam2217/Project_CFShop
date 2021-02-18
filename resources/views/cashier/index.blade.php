@@ -464,7 +464,6 @@
                 },
                 url: "{{route('orders.add')}}",
                 success: function (data){
-                    console.log(data);
                     viewCart(table_id);
                 },
                 error: function (xhr){
@@ -523,6 +522,29 @@
                 url: "{{route('orders.index')}}"+'/'+product_id+'/remove',
                 success: function (data){
                     viewCart(table_id);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON)
+                }
+            })
+        })
+        // Chang status order details
+        $('body').on('change','.cart__isMaking',function (){
+            let product_id = $(this).attr('product-id');
+            let table_id = localStorage.getItem('table_id');
+            let value = $(this).val();
+            $.ajax({
+                method: "put",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'table_id': table_id,
+                    'isMaking': value
+                },
+                url: "{{route('orders.index')}}"+'/'+product_id+'/changeStatus',
+                success: function (data){
+                    console.log(data)
+                    viewCart(table_id);
+
                 },
                 error: function (xhr){
                     console.log(xhr.responseJSON)

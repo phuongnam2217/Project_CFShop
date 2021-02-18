@@ -105,6 +105,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('add',[OrderController::class,'add'])->name('orders.add');
         Route::put('{id}/delete',[OrderController::class,'delete'])->name('orders.delete');
         Route::put('{id}/remove',[OrderController::class,'remove'])->name('orders.remove');
+        Route::put('{id}/changeStatus',[OrderController::class,'changeStatusOrderDetail'])->name('orders.changeStatus');
     });
 });
 
