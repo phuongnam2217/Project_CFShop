@@ -10,7 +10,7 @@
                 aria-controls="pills-home"
                 aria-selected="true"
             >
-               HD0000{{$order->id}} </a
+                HD0000{{$order->id}} </a
             >
         </li>
     </ul>
@@ -58,24 +58,44 @@
                     >
                 </li>
             </ul>
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a
+                        href="javascript:void(0)"
+                        data-group-id="1"
+                        class="nav__link"
+                    >Trạng thái: <span
+                            class="{{$order->status == 2 ? 'text-danger' : 'text-success'}}">{{$order->status == 2 ? 'Đang chờ' : 'Hoàn tất'}}</span></a
+                    >
+                </li>
+            </ul>
         </div>
         <div class="cart__list">
             @foreach($order->products as $item)
-            <div class="cart__item">
-                <div class="cart__trash" product-id="{{$item->id}}">
-                    <i class="cart__icon fas fa-trash-alt"></i>
-                </div>
+                <div class="cart__item">
+                    <div class="cart__trash" product-id="{{$item->id}}">
+                        <i class="cart__icon fas fa-trash-alt"></i>
+                    </div>
 
-                <div class="cart__id">{{$item->id}}</div>
-                <div class="cart__name">{{$item->name}}</div>
-                <div class="cart__form">
-                    <button class="cart__decrease" product-id="{{$item->id}}" >-</button>
-                    <input class="cart__input" type="text" value="{{$item->pivot->quantity}}"/>
-                    <button class="cart__increase" product-id="{{$item->id}}" >+</button>
+                    <div class="cart__id">{{$item->id}}</div>
+                    <div class="cart__name">{{$item->name}}</div>
+                    <div class="cart__form">
+                        <button class="cart__decrease" product-id="{{$item->id}}">-</button>
+                        <input class="cart__input" type="text" value="{{$item->pivot->quantity}}"/>
+                        <button class="cart__increase" product-id="{{$item->id}}">+</button>
+                    </div>
+                    <div class="cart__price">{{$item->pivot->priceEach}}</div>
+                    <div class="cart__total">{{$item->pivot->total}}</div>
+                    <div class="cart__status">
+                        <input type="checkbox" value="{{$item->pivot->isMaking}}" class="cart__isMaking"
+                               product-id="{{$item->id}}" {{$item->pivot->isMaking ? "checked":""}}>
+                        @if($item->pivot->isMaking)
+                            <div class="">
+                                {{\Carbon\Carbon::parse($item->pivot->release_at)->diffForHumans($item->pivot->created_at)}}
+                            </div>
+                        @endif
+                    </div>
                 </div>
-                <div class="cart__price">{{$item->pivot->priceEach}}</div>
-                <div class="cart__total">{{$item->pivot->total}}</div>
-            </div>
             @endforeach
             <div class="empty"></div>
         </div>
@@ -83,8 +103,8 @@
         <!-- Emty cart -->
         <div class="bill">
             <div class="bill__content">
-                <div class="bill__item bill__text">Tổng tiền: </div>
-{{--                <div class="bill__item bill__quantity">2</div>--}}
+                <div class="bill__item bill__text">Tổng tiền:</div>
+                {{--                <div class="bill__item bill__quantity">2</div>--}}
                 <div class="bill__item bill__total">{{$order->sub_total}}</div>
             </div>
             <div class="bill__action">

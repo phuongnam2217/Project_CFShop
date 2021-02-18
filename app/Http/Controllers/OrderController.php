@@ -8,6 +8,7 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Table;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -66,9 +67,12 @@ class OrderController extends Controller
                DB::table('order_details')
                    ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->update([
                        'quantity'=>$quantity,
-                       'total'=>$total
+                       'total'=>$total,
+                       'updated_at'=>Carbon::now(),
+                       'isMaking'=> false,
                    ]);
                $order->sub_total += $product->price;
+               $order->status = "2";
                $order->save();
            }else{
                DB::table('order_details')->insert([
@@ -77,8 +81,12 @@ class OrderController extends Controller
                    'priceEach'=>$product->price,
                    'quantity'=>1,
                    'total'=>$product->price,
+                   'created_at'=>Carbon::now(),
+                   'updated_at'=>Carbon::now(),
+                   'isMaking'=> false,
                ]);
                $order->sub_total += $product->price;
+               $order->status = "2";
                $order->save();
            }
         }else{
@@ -94,11 +102,11 @@ class OrderController extends Controller
                 'priceEach'=>$product->price,
                 'quantity'=>1,
                 'total'=>$product->price,
+                'created_at'=>Carbon::now(),
+                'updated_at'=>Carbon::now(),
             ]);
-
             $table->order_id = $order->id;
             $table->save();
-            return response()->json();
         }
     }
 
@@ -132,6 +140,7 @@ class OrderController extends Controller
         }
 
     }
+
     public function remove(Request $request,$productId)
     {
         $table = Table::findOrFail($request->table_id);
@@ -148,5 +157,42 @@ class OrderController extends Controller
             $table->save();
         }
         $order->save();
+    }
+
+    public function changeStatusOrderDetail(Request $request,$product_id)
+    {
+        $table = Table::findOrFail($request->table_id);
+        if($request->isMaking){
+            $order = Order::findOrFail($table->order_id);
+            $order->status = "2";
+            $order->save();
+            DB::table('order_details')
+                ->where([['order_id','=',$table->order_id],['product_id','=',$product_id]])->update([
+                    'isMaking'=> false,
+                'release_at'=>null
+            ]);
+            $order = Order::findOrFail($table->order_id);
+            return response()->json($order);
+         }else{
+            DB::table('order_details')
+                ->where([['order_id','=',$table->order_id],['product_id','=',$product_id]])->update([
+                    'isMaking'=> true,
+                    'release_at'=>Carbon::now()
+                ]);
+        }
+        $order_details = DB::table('order_details')
+            ->where('order_id',$table->order_id)->get();
+        $statusOrder = true;
+        foreach ($order_details as $item){
+            if(!$item->isMaking){
+                $statusOrder = false;
+            }
+        }
+        if($statusOrder){
+            $order = Order::findOrFail($table->order_id);
+            $order->status = "1";
+            $order->save();
+        }
+        return response()->json($statusOrder);
     }
 }
