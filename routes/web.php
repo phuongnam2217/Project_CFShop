@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -106,6 +107,11 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::put('{id}/delete',[OrderController::class,'delete'])->name('orders.delete');
         Route::put('{id}/remove',[OrderController::class,'remove'])->name('orders.remove');
         Route::put('{id}/changeStatus',[OrderController::class,'changeStatusOrderDetail'])->name('orders.changeStatus');
+    });
+
+    Route::prefix('invoice')->group(function (){
+        Route::get('/',[InvoiceController::class,'index'])->name('invoice.index');
+        Route::get('{id}',[InvoiceController::class,'show']);
     });
 });
 
