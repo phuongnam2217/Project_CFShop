@@ -142,11 +142,11 @@ class OrderController extends Controller
         $order->sub_total -= $order_detail->total;
         $order_detail = DB::table('order_details')
             ->where([['order_id','=',$order->id],['product_id','=',$product->id]])->delete();
+        $order->save();
         if(count($order->products) == 0){
             $order->delete();
             $table->order_id = null;
             $table->save();
         }
-        $order->save();
     }
 }

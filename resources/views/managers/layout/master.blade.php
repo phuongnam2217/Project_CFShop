@@ -81,7 +81,7 @@
             <a id="tables" class="element" href="{{route('table.index')}}">
                 <i class="fas fa fa-table"></i> Phòng bàn
             </a>
-            <a id="invoices" class="element" href="{{route('invoices')}}">
+            <a id="invoices" class="element" href="{{route('invoice.index')}}">
                 <i class="fas fa-file-invoice-dollar"></i> Hóa đơn
             </a>
             <a id="reports" class="element" href="{{route('reports')}}"><i class="fas fa-chart-pie"></i> Báo cáo</a>

@@ -22,9 +22,6 @@ class Product extends Model
         'menu_id',
     ];
 
-//    public function getProductImage () {
-//        return "https://quangvoc8.s3.amazonaws.com/".$this->image;
-//    }
 
     function category() {
         return $this->belongsTo(Category::class);
