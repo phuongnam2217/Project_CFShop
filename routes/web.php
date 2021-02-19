@@ -112,6 +112,8 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::prefix('invoice')->group(function (){
         Route::get('/',[InvoiceController::class,'index'])->name('invoice.index');
         Route::get('{id}',[InvoiceController::class,'show']);
+        Route::post('/search', [InvoiceController::class, 'search']);
+        Route::get('/time/{id}',[InvoiceController::class, 'showTime']);
     });
 });
 

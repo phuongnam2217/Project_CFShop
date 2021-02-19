@@ -115,7 +115,10 @@ img {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.wrap__link{
+    font-family: Roboto;
 
+}
 .wrap__item {
     margin-right: 10px;
     line-height: 36px;
@@ -165,6 +168,7 @@ img {
 
 .tables__content {
     margin-top: 0.5rem;
+    font-family: Roboto;
 }
 
 .tables__active {
@@ -202,7 +206,12 @@ img {
     -ms-flex-align: center;
     align-items: center;
 }
-
+.category__link {
+    font-family: Roboto;
+}
+.product__name {
+    font-family: Roboto;
+}
 .category__item {
     margin: 5px;
 }
@@ -343,7 +352,9 @@ img {
     color: black;
     margin-left: 24px;
 }
-
+.nav__link {
+    font-family: Roboto;
+}
 .nav__item {
     margin-right: 10px;
     line-height: 36px;
@@ -406,6 +417,7 @@ img {
 .cart__name {
     width: 150px;
     color: var(--black-color);
+    font-family: Roboto;
 }
 
 .cart__price {
