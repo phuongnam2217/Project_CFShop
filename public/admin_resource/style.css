@@ -209,3 +209,16 @@
     font-style: normal !important;
     box-shadow: 6px 3px 6px #bdc3c7;
 }
+
+.order-detail {
+    padding: 10px;
+}
+.order-detail div{
+    padding: 10px;
+}
+.table-order-detail{
+    float: right;
+    text-align: right;
+    width: 50%;
+    padding: 10px;
+}

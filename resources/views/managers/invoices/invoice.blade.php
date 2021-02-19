@@ -5,27 +5,40 @@
         <div class="body">
             <div class="search">
                 <div class="search-name">
-                    <form action="">
+                    <form id="searchform">
+                        @csrf
                         <label for="" class="search-name-text">Tìm kiếm</label>
-                        <input type="text" class="input" placeholder="Theo mã, tên hàng, .."/>
+                        <input type="text" id="search" name="search" class="input" placeholder="Theo mã hóa đơn, .."/>
                     </form>
                 </div>
-                <div class="search-name" style="height: 130px">
-                    <form action="">
-                        <p class="search-name-text">Theo thời gian</p>
-                        <div>
-                            <input type="checkbox"/>
-                            <label for="">Ngày</label>
+                {{--Theo thời gian--}}
+                <div class="search-name" style="height: 160px">
+                    <p class="search-name-text">Theo thời gian</p>
+                    <form action="" id="statusform">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="1" value="1">
+                            <label class="form-check-label" for="1">
+                                Ngày
+                            </label>
                         </div>
-                        <div><input type="checkbox"/> <label for="">Tuần</label></div>
-                        <div><input type="checkbox"/> <label for="">Tháng</label></div>
-                    </form>
-                </div>
-                <div class="search-name" style="height: 130px">
-                    <form action="">
-                        <p class="search-name-text">Trạng thái</p>
-                        <div><input type="checkbox"/> <label for="">Đang hoạt động</label></div>
-                        <div><input type="checkbox"/> <label for="">Ngừng hoạt động</label></div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="2" value="2">
+                            <label class="form-check-label" for="2">
+                                Tuần
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="3" value="3">
+                            <label class="form-check-label" for="3">
+                                Tháng
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="search" id="0" value="0" checked>
+                            <label class="form-check-label" for="0">
+                                Tất cả
+                            </label>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -36,33 +49,12 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Chi tiết hàng hóa</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>
-                        <div class="modal-body detailOrder">
-                            <div>
-                                <div>
-                                    <span>Tên hàng hóa:</span>
-                                    <span id="detailName"></span>
-                                </div>
-                                <div class="form-group">
-                                    <span>Nhóm hàng:</span>
-                                    <span id="detailTable_id"></span>
-                                </div>
-                                <div>
-                                    <span>Giá bán:</span>
-                                    <span id="detailTotal"></span>
-                                </div>
-                                <div>
-                                    <span>Discount:</span>
-                                    <span id="detailDiscount"></span>
-                                </div>
-                                <div>
-                                    <span>Trạng thái:</span>
-                                    <span id="detailActive"></span>
-                                </div>
-                            </div>
+                        <div class="modal-body detailOrder" id="order-detail-ajax">
+
                         </div>
                         <div class="modal-footer">
                         </div>
@@ -84,7 +76,7 @@
 
                     </div>
                 </div>
-                <div class="subTable">
+                <div class="subTable" id="table-order">
                     <table style="width: 100%; text-align: center;" class="table table-bordered">
                         <thead style="background-color: #DCF4FC">
                         <tr>
@@ -93,7 +85,7 @@
                             <th>Bàn</th>
                             <th>Tổng tiền</th>
                             <th>Trạng thái</th>
-                            <th>Action</th>
+                            <th>Chi tiết</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -139,16 +131,45 @@
                 $.ajax({
                     type: 'GET',
                     url: "{{route('invoice.index')}}" + "/" + id,
-                    success: function (data) {
-                        console.log(data);
+                    success: function (response) {
                         $('#detailOrder').modal('show');
 
-                        $('#detailName').html(data.order.id);
-
-                        $('#detailTable_id').html(data.order.table_id)
+                        $('#order-detail-ajax').html(response.view);
                     },
                     error: function (data) {
+                        console.log(data.responseJSON.message)
+                    }
+                })
+            });
 
+            //Search
+            $('#searchform').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/invoice/search",
+                    data: $('#searchform').serialize(),
+                    success: function (response) {
+                        $('#table-order').html(response.view);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseJSON.message)
+                    }
+                })
+            });
+
+            //Time Search
+            $('input[type="radio"]').click(function () {
+                let id = $(this).val();
+                console.log(id);
+                $.ajax({
+                    type: "get",
+                    url: "/invoice/time/" + id,
+                    success: function (response) {
+                        $('#table-order').html(response.view);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseJSON.message)
                     }
                 })
             })
