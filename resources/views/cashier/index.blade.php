@@ -574,7 +574,6 @@
             $('#modalPayment').show();
             $('.payment__content').addClass('payment__content-right');
         })
-
     })
 </script>
 </body>
