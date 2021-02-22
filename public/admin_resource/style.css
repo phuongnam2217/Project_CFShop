@@ -222,3 +222,11 @@
     width: 50%;
     padding: 10px;
 }
+
+.resource_link {
+    display: none;
+}
+
+.resource:hover .resource_link{
+    display: block;
+}

@@ -75,8 +75,11 @@
             <a id="products" class="element" href="{{route('product.index')}}">
                 <i class="fas fa-box-open"></i> Hàng hóa
             </a>
-            <a id="resources" class="element" href="{{route('resources')}}">
+            <a id="resources" class="element resource" href="{{route('resource.index')}}">
                 <i class="fas fa-people-carry"></i> Nguyên liệu
+            </a>
+            <a id="importProducts" class="element resource" href="{{route('importProduct.index')}}">
+                <i class="fas fa-people-carry"></i> Nhập hàng
             </a>
             <a id="tables" class="element" href="{{route('table.index')}}">
                 <i class="fas fa fa-table"></i> Phòng bàn
