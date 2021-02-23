@@ -87,7 +87,7 @@
             <a id="invoices" class="element" href="{{route('invoice.index')}}">
                 <i class="fas fa-file-invoice-dollar"></i> Hóa đơn
             </a>
-            <a id="reports" class="element" href="{{route('reports')}}"><i class="fas fa-chart-pie"></i> Báo cáo</a>
+            <a id="reports" class="element" href="{{route('reports.index')}}"><i class="fas fa-chart-pie"></i> Báo cáo</a>
             <a class="element cashier" href="{{route('orders.index')}}">
                 <i class="fas fa-scroll"></i> Thu ngân
             </a>

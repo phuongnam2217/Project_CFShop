@@ -7,6 +7,7 @@ use App\Http\Controllers\ImportProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -91,10 +92,6 @@ Route::middleware('auth')->prefix('/')->group(function (){
         return view('managers/invoices/invoice');
     })->name('invoices');
 
-    Route::get('reports', function () {
-        return view('managers/reports/report');
-    })->name('reports');
-
     Route::prefix('orders')->group(function (){
         Route::get('/',[OrderController::class,'index'])->name('orders.index');
         Route::get('/{id}',[OrderController::class,'showProduct']);
@@ -127,6 +124,11 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::post('/add',[ImportProductController::class, 'store']);
         Route::delete('/delete/{id}', [ImportProductController::class, 'delete']);
         Route::post('/search', [ImportProductController::class, 'search']);
+    });
+
+    Route::prefix('reports')->group(function (){
+    Route::get('/', [ReportController::class,'index'])->name('reports.index');
+        Route::get('/time/{id}',[ReportController::class, 'showTime']);
     });
 });
 
