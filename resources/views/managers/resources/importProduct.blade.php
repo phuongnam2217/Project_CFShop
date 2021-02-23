@@ -55,13 +55,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Số lượng</lable>
-                                                <input type="text" class="form-control stockProduct" name="quantity"
+                                                <input type="text" class="form-control quantityProduct" name="quantity"
                                                        placeholder="Số lượng ..">
-                                                <p class="text-danger quantityProduct"></p>
+                                                <p class="text-danger quantityImportProduct"></p>
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ghi chú</lable>
-                                                <input type="text" class="form-control stockProduct" name="note"
+                                                <input type="text" class="form-control noteProduct" name="note"
                                                        placeholder="Ghi chú ..">
                                                 <p class="text-danger noteProduct"></p>
                                             </div>
@@ -162,8 +162,17 @@
                         $('#importProduct-table-form').html(response.view);
                         swal("Success", "Thêm mới thành công !", "success");
                     },
-                    error: function (data) {
-                        console.log(data.responseJSON.message)
+                    error: function (xhr) {
+                        let error = xhr.responseJSON.errors;
+                        console.log(xhr.responseJSON.message)
+                        if (error.unit_price) {
+                            $(".unitPriceProduct").html(error.unit_price);
+                            $(".priceProduct").addClass("is-invalid");
+                        }
+                        if (error.quantity) {
+                            $(".quantityImportProduct").html(error.quantity);
+                            $(".quantityProduct").addClass("is-invalid");
+                        };
                     }
                 })
             });

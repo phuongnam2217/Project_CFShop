@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportProductRequest;
 use App\Models\ImportProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class ImportProductController extends Controller
         return view('managers.resources.importProduct', compact('importProducts','products'));
     }
 
-    public function store(Request $request) {
+    public function store(ImportProductRequest $request) {
         $importProduct = new ImportProduct();
 
         $importProduct->product_id = $request->product_id;
