@@ -610,11 +610,6 @@
                             $(".addPriceProduct").html(error.price);
                             $(".priceProduct").addClass("is-invalid");
                         };
-                        // if (error.stock) {
-                        //     $(".addStockProduct").html(error.stock);
-                        //     $(".stockProduct").addClass("is-invalid");
-                        // }
-                        // ;
                     }
                 })
             });

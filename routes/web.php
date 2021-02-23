@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
@@ -33,9 +34,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
 //    Logout
     Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
-    Route::get('/', function () {
-        return view('managers/home/home');
-    })->name('home');
+    Route::get('/' ,[HomeController::class,'index'])->name('home');
 
     Route::prefix('users')->group(function (){
         Route::get('/',[UserController::class,'index'])->name('users.index');

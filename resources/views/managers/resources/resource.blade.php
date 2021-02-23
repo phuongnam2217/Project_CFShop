@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <lable>Ghi chú</lable>
-                                    <input type="text" class="form-control name-category" name="note"
+                                    <input type="text" class="form-control" name="note"
                                            placeholder="Ghi chú ..">
                                     <p class="text-danger noteResource"></p>
                                 </div>
@@ -140,13 +140,13 @@
                                                 <lable>Giá nhập</lable>
                                                 <input type="text" class="form-control priceProduct" name="unit_price"
                                                        placeholder="Giá nhập ..">
-                                                <p class="text-danger unitPriceProduct"></p>
+                                                <p class="text-danger unitPriceResource"></p>
                                             </div>
                                             <div class="form-group">
                                                 <lable>Số lượng</lable>
-                                                <input type="text" class="form-control stockProduct" name="quantity"
+                                                <input type="text" class="form-control quantityProduct" name="quantity"
                                                        placeholder="Số lượng ..">
-                                                <p class="text-danger quantityProduct"></p>
+                                                <p class="text-danger quantityResource"></p>
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ghi chú</lable>
@@ -250,7 +250,8 @@
                         swal("Success", "Thêm mới thành công !", "success");
                     },
                     error: function (error) {
-                        console.log(error.responseJSON.message)
+                        $(".name-category").addClass("is-invalid");
+                        $(".addNameResource").html("* Tên nguyên liệu không được để trống !");
                     }
                 })
             });
@@ -299,8 +300,17 @@
                         $('#importResource-table-form').html(response.view);
                         swal("Success", "Thêm mới thành công !", "success");
                     },
-                    error: function (data) {
-                        console.log(data.responseJSON.message)
+                    error: function (xhr) {
+                        let error = xhr.responseJSON.errors;
+                        console.log(xhr.responseJSON.message)
+                        if (error.unit_price) {
+                            $(".unitPriceResource").html(error.unit_price);
+                            $(".priceProduct").addClass("is-invalid");
+                        }
+                        if (error.quantity) {
+                            $(".quantityResource").html(error.quantity);
+                            $(".quantityProduct").addClass("is-invalid");
+                        };
                     }
                 })
             });

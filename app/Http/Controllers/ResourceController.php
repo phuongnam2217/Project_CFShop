@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportResourceRequest;
 use App\Models\ImportResource;
 use App\Models\Resource;
 use App\Models\Unit;
@@ -39,7 +40,7 @@ class ResourceController extends Controller
         return response()->json(['view'=>$html]);
     }
 
-    public function addResource(Request $request) {
+    public function addResource(ImportResourceRequest $request) {
         $importResource = new ImportResource;
 
         $importResource->resource_id = $request->resource_id;
