@@ -195,4 +195,32 @@ class OrderController extends Controller
         }
         return response()->json($statusOrder);
     }
+
+    public function viewPayment($order_id,Request $request)
+    {
+        $table = Table::find($request->table_id);
+        $order = Order::findOrFail($order_id);
+        $html = view('managers.view-ajax.order.payment-ajax',compact('order','table'))->render();
+        return response()->json($html);
+    }
+
+    public function payment(Request $request,$id){
+        $table = Table::findOrFail($request->table_id);
+        $order = Order::findOrFail($id);
+        if($request->discount == 0){
+            $order->discount = null;
+            $order->total = $order->sub_total;
+            $order->check_out = Carbon::now();
+            $order->status = "0";
+            $order->save();
+        }else{
+            $order->discount = $request->discount;
+            $order->total = $order->sub_total*(1-$request->discount/100);
+            $order->check_out = Carbon::now();
+            $order->status = "0";
+            $order->save();
+        }
+        $table->order_id = null;
+        $table->save();
+    }
 }

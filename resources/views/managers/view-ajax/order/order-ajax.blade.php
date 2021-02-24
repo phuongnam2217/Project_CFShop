@@ -84,8 +84,8 @@
                         <input class="cart__input" type="text" value="{{$item->pivot->quantity}}"/>
                         <button class="cart__increase" product-id="{{$item->id}}">+</button>
                     </div>
-                    <div class="cart__price">{{$item->pivot->priceEach}}</div>
-                    <div class="cart__total">{{$item->pivot->total}}</div>
+                    <div class="cart__price">{{number_format($item->pivot->priceEach)}}</div>
+                    <div class="cart__total">{{number_format($item->pivot->total)}}</div>
                     <div class="cart__status">
                         <input type="checkbox" value="{{$item->pivot->isMaking}}" class="cart__isMaking"
                                product-id="{{$item->id}}" {{$item->pivot->isMaking ? "checked":""}}>
@@ -106,13 +106,14 @@
             <div class="bill__content">
                 <div class="bill__item bill__text">Tổng tiền:</div>
                 {{--                <div class="bill__item bill__quantity">2</div>--}}
-                <div class="bill__item bill__total">{{$order->sub_total}}</div>
+                <div class="bill__item bill__total">{{number_format($order->sub_total)}}</div>
             </div>
             <div class="bill__action">
                 <button
                     class="bill__pay btn-success"
                     data-bs-toggle="modal"
                     data-bs-target="#modalPayment"
+                    data-order="{{$order->id}}"
                 >
                     <i class="fas fa-dollar-sign"></i>
                     Thanh Toán
