@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImportProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GroupController;
@@ -31,9 +35,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
 //    Logout
     Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
-    Route::get('/', function () {
-        return view('managers/home/home');
-    })->name('home');
+    Route::get('/' ,[HomeController::class,'index'])->name('home');
 
     Route::prefix('users')->group(function (){
         Route::get('/',[UserController::class,'index'])->name('users.index');
@@ -86,17 +88,9 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::delete('/delete/{id}', [CategoryController::class, 'delete']);
     });
 
-    Route::get('resources', function () {
-        return view('managers/resources/resource');
-    })->name('resources');
-
     Route::get('invoices', function () {
         return view('managers/invoices/invoice');
     })->name('invoices');
-
-    Route::get('reports', function () {
-        return view('managers/reports/report');
-    })->name('reports');
 
     Route::prefix('orders')->group(function (){
         Route::get('/',[OrderController::class,'index'])->name('orders.index');
@@ -116,6 +110,29 @@ Route::middleware('auth')->prefix('/')->group(function (){
     Route::prefix('invoice')->group(function (){
         Route::get('/',[InvoiceController::class,'index'])->name('invoice.index');
         Route::get('{id}',[InvoiceController::class,'show']);
+        Route::post('/search', [InvoiceController::class, 'search']);
+        Route::get('/time/{id}',[InvoiceController::class, 'showTime']);
+    });
+
+    Route::prefix('resource')->group(function (){
+        Route::get('/',[ResourceController::class,'index'])->name('resource.index');
+        Route::post('/add',[ResourceController::class, 'store']);
+        Route::delete('/delete/{id}', [ResourceController::class, 'delete']);
+        Route::post('/addResource',[ResourceController::class, 'addResource']);
+        Route::delete('/destroy/{id}', [ResourceController::class, 'deleteResource']);
+        Route::post('/search', [ResourceController::class, 'search']);
+    });
+
+    Route::prefix('importProduct')->group(function (){
+        Route::get('/',[ImportProductController::class,'index'])->name('importProduct.index');
+        Route::post('/add',[ImportProductController::class, 'store']);
+        Route::delete('/delete/{id}', [ImportProductController::class, 'delete']);
+        Route::post('/search', [ImportProductController::class, 'search']);
+    });
+
+    Route::prefix('reports')->group(function (){
+    Route::get('/', [ReportController::class,'index'])->name('reports.index');
+        Route::get('/time/{id}',[ReportController::class, 'showTime']);
     });
 });
 
