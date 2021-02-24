@@ -353,14 +353,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <!-- If else payment -->
-                <div class="left__payment">
-                    <div class="left__payment-header">
-                        <i class="fas fa-table"></i>
-                        Bàn 1 - trong nhà
-                    </div>
-                </div>
-                <div class="right__payment"></div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success">Thanh toán</button>
@@ -566,13 +559,62 @@
 
         // Action
         $('#icon').on('click', function () {
-            console.log(1)
+
         })
 
         // Modal Payment
-        $('.bill__pay').on('click', function () {
+        $('body').on('click','.bill__pay', function () {
+            let order_id = $(this).attr('data-order')
+            let table_id = localStorage.getItem('table_id');
+            $.ajax({
+                type: "GET",
+                data: {'table_id': table_id},
+                url: "{{route('orders.index')}}"+"/"+order_id+"/viewPayment",
+                success: function (view){
+                    $('.payment__content').html(view);
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON.message)
+                }
+            })
             $('#modalPayment').show();
-            $('.payment__content').addClass('payment__content-right');
+        })
+
+        $('body').on('change','#discount',function (){
+            let sub_total = $('#sub_total').attr('data');
+            let discount = +$(this).val();
+            let total = sub_total - sub_total*discount/100
+            $('#total').html(total.toLocaleString('en-US',{currency : 'VND'}));
+            $('#customer').val(null);
+            $('#excess').html('');
+        })
+        $('body').on('change','#customer',function (){
+            let value = $(this).val();
+            let sub_total = $('#sub_total').attr('data');
+            let discount = +$('#discount').val();
+            let total = sub_total - sub_total*discount/100;
+            let excess = value - total;
+            $('#excess').html(excess.toLocaleString('en-US',{currency : 'VND'}));
+        })
+
+        $('body').on('click','#action_payment',function (){
+            let discount = +$('#discount').val();
+            let order = $(this).attr('data');
+            $.ajax({
+                type: "PUT",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'discount': discount,
+                    'table_id': localStorage.getItem('table_id')
+                },
+                url: "{{route('orders.index')}}"+"/"+order+"/payment",
+                success: function (data){
+                    location.reload()
+                },
+                error: function (xhr){
+                    console.log(xhr.responseJSON.message)
+                }
+            })
         })
     })
 </script>

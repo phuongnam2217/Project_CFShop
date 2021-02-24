@@ -561,7 +561,10 @@ img {
     font-size: 16px;
     white-space: normal;
 }
-
+/*Payment*/
+.payment__main{
+    display: flex;
+}
 .payment__content {
     width: 70%;
     right: -30%;
@@ -571,9 +574,45 @@ img {
     -webkit-transition: 0.5s;
     transition: 0.5s;
 }
-
+.payment__list{
+    display: flex;
+    flex-direction: column;
+}
+.payment__item{
+    display: flex;
+    margin-bottom: 12px;
+    justify-content: normal;
+}
+.payment__item div {
+    width: 25%;
+}
 .left__payment-header {
     color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.payment__item-total{
+    font-weight: bold;
+}
+.right__payment-item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.right__payment-item label{
+    width: 50%;
+}
+.right__payment-item span{
+    width: 50%;
+}
+
+#sub_total,#excess{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+#total{
+    color: #0090da;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 /*# sourceMappingURL=style.css.map */

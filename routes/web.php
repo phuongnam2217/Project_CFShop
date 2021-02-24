@@ -101,6 +101,10 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::put('{id}/delete',[OrderController::class,'delete'])->name('orders.delete');
         Route::put('{id}/remove',[OrderController::class,'remove'])->name('orders.remove');
         Route::put('{id}/changeStatus',[OrderController::class,'changeStatusOrderDetail'])->name('orders.changeStatus');
+
+        Route::get('{id}/viewPayment',[OrderController::class,'viewPayment'])->name('orders.viewPayment');
+        Route::put('{id}/payment',[OrderController::class,'payment'])->name('orders.payment');
+
     });
 
     Route::prefix('invoice')->group(function (){
