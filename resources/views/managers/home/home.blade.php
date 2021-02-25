@@ -45,12 +45,11 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            @foreach($hotProducts as $hotProduct)
+                            @foreach($hotProducts as $key => $hotProduct)
                                 <tr style="font-size: 20px">
-                                    @foreach($products as  $key => $product)
+                                    @foreach($products as $product)
                                         @if($product->id == $hotProduct->product_id)
-                                            <td><p>TOP {{$key}}: {{$product->name}}</p><img
+                                            <td><p>TOP {{$key+1}}: {{$product->name}}</p><img
                                                     style="width: 100px; height: 100px" src="{{$product->image}}"
                                                     alt=""></td>
                                             <td style="float: right">{{$hotProduct->qty}} sản phẩm</td>
@@ -80,7 +79,7 @@
                                 <tr>
                                     <td>{{$stockProduct->id}}</td>
                                     <td>{{$stockProduct->name}}</td>
-                                    <td>{{$stockProduct->price}}</td>
+                                    <td>{{number_format($stockProduct->price)}} đ</td>
                                     <td>{{$stockProduct->category->name}}</td>
                                     <td style="font-size: 16px; color: red;font-weight: bold">{{$stockProduct->stock}}</td>
                                 </tr>

@@ -226,6 +226,9 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div style="text-align: center" aria-label="Page Navigation">
+                        {{ $importResources->links() }}
+                    </div>
                 </div>
             </div>
         </div>

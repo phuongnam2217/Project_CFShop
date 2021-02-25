@@ -71,14 +71,8 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="wrap__form">
-                            <form action="">
-                                <div class="wrap__group"><input type="text" class="form-control wrap__input"
-                                                                placeholder="Tìm bàn"/></div>
-                            </form>
-                        </div>
                     </div>
-                    <div class="tables__list">
+                    <div class="tables__list" id="table-ajax">
                         @foreach($tables as $table)
                             <div
                                 class="tables__item tables__item{{$table->id}} {{$table->order_id ? 'tables__active':''}}"
@@ -108,6 +102,7 @@
                                 <a
                                     href="javascript:void(0)"
                                     data-category-id="1"
+                                    data-table-id="{{$table->id}}"
                                     class="category__link active-table"
                                 >Tất cả</a
                                 >
@@ -117,6 +112,7 @@
                                     <a
                                         href="javascript:void(0)"
                                         data-category-id="{{$category->id}}"
+                                        data-table-id="{{$table->id}}"
                                         class="category__link"
                                     >{{$category->name}}</a
                                     >
@@ -136,9 +132,9 @@
                         </div>
                     </div>
                     <!-- Product List -->
-                    <div class="product__list" id="product-category-list">
+                    <div class="product__list tables__list" id="product-category-list">
                         @foreach($products as $product)
-                            <div class="product__item detailProduct" table-id="{{$table->id}}" product-id="{{$product->id}}">
+                            <div class="product__item detailProduct" product-id="{{$product->id}}">
                                 <div style="height: 100px" class="product__img">
                                     <img src="{{$product->image}}" alt=""/>
                                 </div>
@@ -444,6 +440,7 @@
             // $('#pills-profile').addClass('show');
             // $('#pills-profile').addClass('active');
         })
+
         //Thêm sản phẩm vào order
         $('body').on('click','.product__item',function (){
             let product_id = $(this).attr('product-id');
@@ -457,6 +454,7 @@
                 },
                 url: "{{route('orders.add')}}",
                 success: function (data){
+                    $('#table-ajax').html(data.view);
                     viewCart(table_id);
                 },
                 error: function (xhr){
@@ -513,7 +511,8 @@
                     'table_id': table_id
                 },
                 url: "{{route('orders.index')}}"+'/'+product_id+'/remove',
-                success: function (data){
+                success: function (response){
+                    $('#table-ajax').html(response.view);
                     viewCart(table_id);
                 },
                 error: function (xhr){
@@ -521,7 +520,7 @@
                 }
             })
         })
-        // Chang status order details
+        // Change status order details
         $('body').on('change','.cart__isMaking',function (){
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');

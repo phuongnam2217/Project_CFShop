@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index() {
         $startDay = Carbon::now()->startOfDay();
         $endDay = Carbon::now()->endOfDay();
-        $invoices = Order::whereBetween('check_in',[$startDay,$endDay])->get();
+        $invoices = Order::whereBetween('check_in',[$startDay,$endDay])->where('status','0')->get();
         $count = count($invoices);
         $total = 0;
         $totalBuy = 0;
@@ -33,8 +33,8 @@ class HomeController extends Controller
 
         $hotProducts = DB::table('order_details')
             ->select('product_id',DB::raw('SUM(quantity) as qty'))
-            ->whereBetween('created_at',[$startDay,$endDay])
-            ->groupBy('product_id')->orderBy('quantity', 'DESC')
+            ->whereBetween('updated_at',[$startDay,$endDay])
+            ->groupBy('product_id')->orderBy('qty', 'DESC')
             ->limit(3)->get();
         $products = Product::all();
 
