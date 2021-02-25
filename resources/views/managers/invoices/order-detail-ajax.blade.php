@@ -56,11 +56,11 @@
     </tr>
     <tr>
         <td style="height:40px">Giảm giá hóa đơn:</td>
-        <td>{{$order->discount}}</td>
+        <td>{{$order->discount}} %</td>
     </tr>
     <tr style="font-size: 20px; font-style: italic">
         <td style="height:40px">Thành tiền:</td>
-        <td>{{number_format($order->sub_total)}} đ</td>
+        <td>{{number_format($order->total)}} đ</td>
     </tr>
     </tbody>
 </table>

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class InvoiceController extends Controller
 {
     public function index() {
-        $orders = Order::paginate(10);
+        $orders = Order::where('status','0')->paginate(10);
         $tables = Table::all();
         $products   = Product::all();
         return view('managers.invoices.invoice', compact('orders','tables','products'));

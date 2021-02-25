@@ -152,6 +152,9 @@ img {
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+.tables__list div {
+    margin: 5px;
+}
 
 .tables__item {
     text-align: center;

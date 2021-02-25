@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Table;
 use Carbon\Carbon;
+use Facade\Ignition\Tabs\Tab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +51,6 @@ class OrderController extends Controller
             $html = view('managers.view-ajax.order.order-ajax',compact('order','table'))->render();
             return response()->json($html);
         }
-
     }
 
     public function add(Request $request)
@@ -108,6 +108,10 @@ class OrderController extends Controller
             $table->order_id = $order->id;
             $table->save();
         }
+        $tables = Table::all();
+
+        $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
+        return response()->json(['view'=>$html]);
     }
 
     public function delete(Request $request,$productId){
@@ -156,7 +160,15 @@ class OrderController extends Controller
             $order->delete();
             $table->order_id = null;
             $table->save();
+            $tables = Table::all();
+            $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
+            return response()->json(['view'=>$html]);
         }
+
+//Mới nhất
+//        $tables = Table::all();
+//        $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
+//        return response()->json(['view'=>$html]);
     }
 
     public function changeStatusOrderDetail(Request $request,$product_id)

@@ -5,7 +5,6 @@
         <th>Thời gian</th>
         <th>Bàn</th>
         <th>Tổng tiền</th>
-        <th>Trạng thái</th>
         <th>Chi tiết</th>
     </tr>
     </thead>
@@ -21,7 +20,6 @@
                     @endif
                 @endforeach
                 <td>{{number_format($order->sub_total)}} đ</td>
-                <td>{{$order->status}}</td>
                 <td>
                     <a><i data-id="{{$order->id}}" class="fas fas fa-eye detailOrder"></i></a>
                 </td>

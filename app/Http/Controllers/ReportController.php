@@ -12,12 +12,12 @@ class ReportController extends Controller
 {
     public function index()
     {
-            $invoices = Order::all();
+            $invoices = Order::where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
             foreach ($invoices as $invoice) {
-                $total += $invoice->sub_total;
+                $total += $invoice->total;
                 foreach ($invoice->products as $product) {
                     $countProduct += $product->pivot->quantity;
                 }
@@ -42,12 +42,12 @@ class ReportController extends Controller
             $startDay = Carbon::now()->startOfDay();
             $endDay = Carbon::now()->endOfDay();
 
-            $invoices = Order::whereBetween('check_in', [$startDay, $endDay])->get();
+            $invoices = Order::whereBetween('check_in', [$startDay, $endDay])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
             foreach ($invoices as $invoice) {
-                $total += $invoice->sub_total;
+                $total += $invoice->total;
                 foreach ($invoice->products as $product) {
                     $countProduct += $product->pivot->quantity;
                 }
@@ -72,12 +72,12 @@ class ReportController extends Controller
             $startWeek = Carbon::now()->startOfWeek();
             $endWeek = Carbon::now()->endOfWeek();
 
-            $invoices = Order::whereBetween('check_in', [$startWeek, $endWeek])->get();
+            $invoices = Order::whereBetween('check_in', [$startWeek, $endWeek])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
             foreach ($invoices as $invoice) {
-                $total += $invoice->sub_total;
+                $total += $invoice->total;
                 foreach ($invoice->products as $product) {
                     $countProduct += $product->pivot->quantity;
                 }
@@ -102,12 +102,12 @@ class ReportController extends Controller
             $startMonth = Carbon::now()->startOfMonth();
             $endMonth = Carbon::now()->endOfMonth();
 
-            $invoices = Order::whereBetween('check_in', [$startMonth, $endMonth])->get();
+            $invoices = Order::whereBetween('check_in', [$startMonth, $endMonth])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
             foreach ($invoices as $invoice) {
-                $total += $invoice->sub_total;
+                $total += $invoice->total;
                 foreach ($invoice->products as $product) {
                     $countProduct += $product->pivot->quantity;
                 }
@@ -130,12 +130,12 @@ class ReportController extends Controller
 
 
         if ($id == 0) {
-            $invoices = Order::all();
+            $invoices = Order::where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
             foreach ($invoices as $invoice) {
-                $total += $invoice->sub_total;
+                $total += $invoice->total;
                 foreach ($invoice->products as $product) {
                     $countProduct += $product->pivot->quantity;
                 }

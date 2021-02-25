@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('body').on('click', '.category__link', function () {
         let id = $(this).attr('data-category-id');
+        console.log(id);
         $.ajax({
             type: 'GET',
             url: "orders" + "/" + id,

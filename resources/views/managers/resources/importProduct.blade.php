@@ -139,6 +139,9 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div style="text-align: center" aria-label="Page Navigation">
+                        {{ $importProducts->links() }}
+                    </div>
                 </div>
             </div>
         </div>
