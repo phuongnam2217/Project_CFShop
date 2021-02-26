@@ -46,7 +46,7 @@ class ReportController extends Controller
             $startDay = Carbon::now()->startOfDay();
             $endDay = Carbon::now()->endOfDay();
 
-            $invoices = Order::whereBetween('check_in', [$startDay, $endDay])->where('status','0')->get();
+            $invoices = Order::whereBetween('check_out', [$startDay, $endDay])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
@@ -76,7 +76,7 @@ class ReportController extends Controller
             $startWeek = Carbon::now()->startOfWeek();
             $endWeek = Carbon::now()->endOfWeek();
 
-            $invoices = Order::whereBetween('check_in', [$startWeek, $endWeek])->where('status','0')->get();
+            $invoices = Order::whereBetween('check_out', [$startWeek, $endWeek])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
@@ -106,7 +106,7 @@ class ReportController extends Controller
             $startMonth = Carbon::now()->startOfMonth();
             $endMonth = Carbon::now()->endOfMonth();
 
-            $invoices = Order::whereBetween('check_in', [$startMonth, $endMonth])->where('status','0')->get();
+            $invoices = Order::whereBetween('check_out', [$startMonth, $endMonth])->where('status','0')->get();
             $count = count($invoices);
             $total = 0;
             $countProduct = 0;
