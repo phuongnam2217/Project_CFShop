@@ -130,7 +130,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
     });
 
     Route::prefix('reports')->group(function (){
-    Route::get('/', [ReportController::class,'index'])->name('reports.index');
+        Route::get('/', [ReportController::class,'index'])->name('reports.index');
         Route::get('/time/{id}',[ReportController::class, 'showTime']);
     });
 });

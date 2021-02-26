@@ -12,6 +12,10 @@ class ReportController extends Controller
 {
     public function index()
     {
+        if (!$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
+        }
+
             $invoices = Order::where('status','0')->get();
             $count = count($invoices);
             $total = 0;
