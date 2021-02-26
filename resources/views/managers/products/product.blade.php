@@ -588,8 +588,8 @@
                     },
                     error: function (xhr) {
                         let error = xhr.responseJSON.errors;
-                        if (error.name) {
-                            $(".addNameProduct").html(error.name);
+                        if (error.name_product) {
+                            $(".addNameProduct").html(error.name_product);
                             $(".nameProduct").addClass("is-invalid");
                         }
                         if (error.price) {
