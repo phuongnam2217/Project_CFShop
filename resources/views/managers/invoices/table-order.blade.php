@@ -19,7 +19,7 @@
                         <td>{{$table->name}}</td>
                     @endif
                 @endforeach
-                <td>{{number_format($order->sub_total)}} đ</td>
+                <td>{{number_format($order->total)}} đ</td>
                 <td>
                     <a><i data-id="{{$order->id}}" class="fas fas fa-eye detailOrder"></i></a>
                 </td>
