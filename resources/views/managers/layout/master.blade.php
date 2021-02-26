@@ -65,7 +65,7 @@
     </div>
 </div>
 <div class="nav">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <a id="home" class="element" href="{{route('home')}}">
                 <i class="fas fas fa-eye"></i> Tổng quan
@@ -86,7 +86,7 @@
                 <i class="fas fa-file-invoice-dollar"></i> Hóa đơn
             </a>
             <a id="reports" class="element" href="{{route('reports.index')}}"><i class="fas fa-chart-pie"></i> Báo cáo</a>
-            <a class="element cashier" href="{{route('orders.index')}}">
+            <a class="element" href="{{route('orders.index')}}">
                 <i class="fas fa-scroll"></i> Thu ngân
             </a>
         </div>
