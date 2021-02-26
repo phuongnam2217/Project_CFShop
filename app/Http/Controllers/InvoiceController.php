@@ -47,7 +47,7 @@ class InvoiceController extends Controller
             $startDay = Carbon::now()->startOfDay();
             $endDay = Carbon::now()->endOfDay();
             $tables = Table::all();
-            $orders = Order::whereBetween('check_in',[$startDay,$endDay])->get();
+            $orders = Order::whereBetween('check_out',[$startDay,$endDay])->get();
 
             $html = view('managers.invoices.table-order', compact('orders','tables'))->render();
             return response()->json(['view'=>$html]);
@@ -56,7 +56,7 @@ class InvoiceController extends Controller
             $startWeek = Carbon::now()->startOfWeek();
             $endWeek = Carbon::now()->endOfWeek();
             $tables = Table::all();
-            $orders = Order::whereBetween('check_in',[$startWeek,$endWeek])->get();
+            $orders = Order::whereBetween('check_out',[$startWeek,$endWeek])->get();
 
             $html = view('managers.invoices.table-order', compact('orders','tables'))->render();
             return response()->json(['view'=>$html]);
@@ -65,7 +65,7 @@ class InvoiceController extends Controller
             $startMonth = Carbon::now()->startOfMonth();
             $endMonth = Carbon::now()->endOfMonth();
             $tables = Table::all();
-            $orders = Order::whereBetween('check_in',[$startMonth,$endMonth])->get();
+            $orders = Order::whereBetween('check_out',[$startMonth,$endMonth])->get();
 
             $html = view('managers.invoices.table-order', compact('orders','tables'))->render();
             return response()->json(['view'=>$html]);
