@@ -200,7 +200,7 @@
                                             {{ method_field('POST') }}
                                             <div class="form-group">
                                                 <lable>Tên hàng hóa</lable>
-                                                <input type="text" class="form-control nameProduct" name="name"
+                                                <input type="text" class="form-control nameProduct" name="name_product"
                                                        placeholder="Tên hàng hóa ..">
                                                 <p class="text-danger addNameProduct"></p>
                                             </div>

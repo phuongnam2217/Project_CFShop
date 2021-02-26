@@ -32,7 +32,7 @@ class ProductService implements ServiceInterface {
         // TODO: Implement add() method.
         $obj = new Product();
 
-        $obj->name = $request->name;
+        $obj->name = $request->name_product;
         $obj->price = $request->price;
         $obj->active = 1;
         $obj->isPortable = $request->isPortable;
