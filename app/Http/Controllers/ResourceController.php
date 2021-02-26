@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 class ResourceController extends Controller
 {
     public function index() {
+        if (!$this->userCan('admin') & !$this->userCan('stocker')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc kiểm kho mới được quyền truy cập!');
+        }
         $resources = Resource::all();
         $importResources = ImportResource::paginate(10);
         $units = Unit::all();

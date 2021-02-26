@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 class ImportProductController extends Controller
 {
     public function index() {
+        if (!$this->userCan('admin') & !$this->userCan('stocker')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc kiểm kho mới được quyền truy cập!');
+        }
+
         $products = Product::where('isPortable','1')->get();
         $importProducts = ImportProduct::paginate(10);
         return view('managers.resources.importProduct', compact('importProducts','products'));

@@ -17,9 +17,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"/>
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-{{--    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
 
-
+{{--    Favicon--}}
+    <link rel="shortcut icon" href="{{{ asset('image/logo.png') }}}">
     <!--  -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/>
 
@@ -32,7 +32,7 @@
 <body>
 <div class="header">
     <div class="header-logo">
-        <img src="https://fnb.kiotviet.vn/Content/img/kiotvietLogo.png" alt=""/>
+        <img style="width: 90px; height: 50px" src="{{asset('image/logo2.png')}}" alt=""/>
     </div>
     <div class="header-establish">
         <ul class="header-establish-element">
@@ -42,8 +42,6 @@
                         <i class="hide-mobile fas fa-cog"></i> Thiết lập
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-clipboard-list"></i> Thiết lập người
-                                dùng</a></li>
                         <li><a class="dropdown-item" href="{{route('users.index')}}"><i class="fas fa-users"></i> Quản
                                 lý người dùng</a>
                         </li>
@@ -303,6 +301,11 @@
             })
         })
     })
+</script>
+<script>
+    @if (session('alert'))
+    swal('Warning!',"{{ session('alert') }}", "warning");
+    @endif
 </script>
 @yield("js")
 @yield("ajax")

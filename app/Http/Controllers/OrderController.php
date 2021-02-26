@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
+        if (!$this->userCan('cashier') & !$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc thu ngân mới được quyền truy cập!');
+        }
         $products = Product::where('active', 'like', 1)->get();
         $tables = Table::where('active','1')->get();
         $groups = Group::all();

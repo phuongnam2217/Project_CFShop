@@ -11,6 +11,9 @@ use Yajra\DataTables\Facades\DataTables;
 class TableController extends Controller
 {
     public function index(Request $request) {
+        if (!$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
+        }
         if ($request->ajax()) {
             $data = Table::select('*');
             return DataTables::of($data)
@@ -82,6 +85,9 @@ class TableController extends Controller
     }
 
     public function delete($id){
+        if (!$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
+        }
         $table = Table::findOrFail($id);
         $table->delete();
         return response()->json("Xóa bàn thành công");

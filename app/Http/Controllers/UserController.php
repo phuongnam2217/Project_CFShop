@@ -17,6 +17,9 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        if (!$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
+        }
         if ($request->ajax()) {
             $data = User::select('*');
             return DataTables::of($data)

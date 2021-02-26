@@ -32,13 +32,13 @@ class ProductService implements ServiceInterface {
         // TODO: Implement add() method.
         $obj = new Product();
 
-//        $this->uploadFile($obj, $request);
         $obj->name = $request->name;
         $obj->price = $request->price;
         $obj->active = 1;
         $obj->isPortable = $request->isPortable;
         $obj->stock = $request->stock;
         $obj->image = $request->image;
+//        $this->uploadFile($obj, $request);
         $obj->category_id = $request->category_id;
         $obj->menu_id = $request->menu_id;
 

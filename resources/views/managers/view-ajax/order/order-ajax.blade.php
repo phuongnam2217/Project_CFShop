@@ -15,7 +15,7 @@
         </li>
     </ul>
     <ul class="action">
-        <li class="action__item">admin</li>
+        <li class="action__item" style="color: white; font-weight: bold">Quản lí</li>
         <li class="action__item">
             <div class="dropdown">
                 <a
@@ -29,7 +29,7 @@
                     <i class="action__icon fas fa-bars"></i>
                 </a>
 
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="padding: 10px; margin: 10px">
                     <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>
                     <li>
                         <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>

@@ -18,7 +18,6 @@ class CreateResourcesTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units');
-            $table->string('images');
             $table->string('note')->nullable();
         });
     }

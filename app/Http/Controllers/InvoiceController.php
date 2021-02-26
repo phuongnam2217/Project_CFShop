@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 class InvoiceController extends Controller
 {
     public function index() {
+        if (!$this->userCan('admin') & !$this->userCan('cashier')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc thu ngân mới được quyền truy cập!');
+        }
         $orders = Order::where('status','0')->paginate(10);
         $tables = Table::all();
         $products   = Product::all();

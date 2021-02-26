@@ -20,6 +20,9 @@ class ProductController extends Controller
     }
 
     public function index() {
+        if (!$this->userCan('admin')) {
+            return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
+        }
         $categories = Category::all();
         $products   = Product::paginate(10);
         $menus      = Menu::all();

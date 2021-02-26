@@ -11,14 +11,6 @@
                         <input type="text" id="search" name="search" class="input" placeholder="Theo tên hàng, .."/>
                     </form>
                 </div>
-                <div class="search-name" style="height: 130px">
-                    <form action="">
-                        <p class="search-name-text">Loại thực đơn</p>
-                        <div><input type="checkbox" name="type" value="1"/> <label for="">Đồ uống</label></div>
-                        <div><input type="checkbox" name="type" value="2"/> <label for="">Đồ ăn</label></div>
-                        <div><input type="checkbox" name="type" value="3"/> <label for="">Khác</label></div>
-                    </form>
-                </div>
                 <div class="search-group">
                     <form action="">
                         <label for="" class="search-name-text">Nhóm hàng</label>
@@ -31,7 +23,6 @@
                         @foreach($categories as $category)
                             <div>
                                 <label hidden>{{$category->id}}</label>
-                                <input type="checkbox"/>
                                 <label>{{$category->name}}</label>
                                 <a><i class="fas fa-trash-alt deletecategory"></i></a>
                                 <a><i class="fas fa-pencil-alt editcategory"></i></a>
@@ -336,11 +327,6 @@
                                                 <p class="text-danger updatePriceProduct"></p>
                                             </div>
                                             <div class="form-group" id="stock-product-update">
-                                                {{--                                                <lable>Tồn kho</lable>--}}
-                                                {{--                                                <input type="text" class="form-control stockProduct" id="stockProduct"--}}
-                                                {{--                                                       name="stock"--}}
-                                                {{--                                                       placeholder="Hàng dịch vụ để trống tồn kho ..">--}}
-                                                {{--                                                <p class="text-danger updateStockProduct"></p>--}}
                                             </div>
                                             <div class="form-group">
                                                 <lable>Nhóm hàng</lable>
@@ -722,6 +708,7 @@
 
                         $('#detailName').html(data.product.name);
                         $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
+                        $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
                         {{--                        <img style="width: 100px"--}}
                         {{--                             src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')--}}
                         {{--                                 https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg--}}
