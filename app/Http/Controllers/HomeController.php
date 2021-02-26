@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index() {
         $startDay = Carbon::now()->startOfDay();
         $endDay = Carbon::now()->endOfDay();
-        $invoices = Order::whereBetween('check_in',[$startDay,$endDay])->where('status','0')->get();
+        $invoices = Order::whereBetween('check_out',[$startDay,$endDay])->where('status','0')->get();
         $count = count($invoices);
         $total = 0;
         $totalBuy = 0;
