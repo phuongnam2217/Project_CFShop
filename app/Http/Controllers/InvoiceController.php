@@ -38,8 +38,8 @@ class InvoiceController extends Controller
     public function showTime($id){
         if($id == 0) {
             $tables = Table::all();
-            $orders = Order::paginate(10);
-
+            $orders = Order::where('status','0')->paginate(10);
+            
             $html = view('managers.invoices.table-order', compact('orders','tables'))->render();
             return response()->json(['view'=>$html]);
         }
