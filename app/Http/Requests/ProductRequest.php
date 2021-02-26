@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_product'=>'required',
+            'name'=>'required',
             'price'=>'required|numeric',
 //            'stock'=>'required|numeric',
         ];
@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'name_product.required' => '* Tên sản phẩm không được trống !',
+            'name.required' => '* Tên sản phẩm không được trống !',
             'price.required' => '* Giá sản phẩm không được để trống !',
             'price.numeric' => '* Giá sản phẩm phải là chữ số !',
 //            'stock.required' => '* Tồn kho không được để trống !',

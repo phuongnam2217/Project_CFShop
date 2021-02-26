@@ -200,7 +200,7 @@
                                             {{ method_field('POST') }}
                                             <div class="form-group">
                                                 <lable>Tên hàng hóa</lable>
-                                                <input type="text" class="form-control nameProduct" name="name_product"
+                                                <input type="text" class="form-control nameProduct" name="name"
                                                        placeholder="Tên hàng hóa ..">
                                                 <p class="text-danger addNameProduct"></p>
                                             </div>
@@ -588,8 +588,8 @@
                     },
                     error: function (xhr) {
                         let error = xhr.responseJSON.errors;
-                        if (error.name_product) {
-                            $(".addNameProduct").html(error.name_product);
+                        if (error.name) {
+                            $(".addNameProduct").html(error.name);
                             $(".nameProduct").addClass("is-invalid");
                         }
                         if (error.price) {
