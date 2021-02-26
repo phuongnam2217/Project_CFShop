@@ -13,7 +13,7 @@
         @foreach($orders as $order)
             <tr>
                 <td>HD0000{{$order->id}}</td>
-                <td>{{$order->check_in}}</td>
+                <td>{{$order->check_out}}</td>
                 @foreach($tables as $table)
                     @if($order->table_id == $table->id)
                         <td>{{$table->name}}</td>
