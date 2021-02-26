@@ -13,13 +13,13 @@
         @foreach($orders as $order)
             <tr>
                 <td>HD0000{{$order->id}}</td>
-                <td>{{$order->check_in}}</td>
+                <td>{{$order->check_out}}</td>
                 @foreach($tables as $table)
                     @if($order->table_id == $table->id)
                         <td>{{$table->name}}</td>
                     @endif
                 @endforeach
-                <td>{{number_format($order->sub_total)}} đ</td>
+                <td>{{number_format($order->total)}} đ</td>
                 <td>
                     <a><i data-id="{{$order->id}}" class="fas fas fa-eye detailOrder"></i></a>
                 </td>

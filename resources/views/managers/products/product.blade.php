@@ -368,11 +368,11 @@
                                     </div>
                                     <div class="modal-body detailProduct">
                                         <p hidden id="detailProduct_id">
-                                        <div style="float: left; width: 50%">
+                                        <div style="width: 50%; float: left; text-align: center">
                                             <div id="detailImage">
                                             </div>
                                         </div>
-                                        <div style="float: right; width: 50%">
+                                        <div style="width: 50%; float: right; text-align: center">
                                             <div style="font-size: 25px; font-weight: bold">
                                                 <span>Tên hàng hóa:</span>
                                                 <span id="detailName"></span>
@@ -708,7 +708,7 @@
 
                         $('#detailName').html(data.product.name);
                         $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
-                        $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
+                        // $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
                         {{--                        <img style="width: 100px"--}}
                         {{--                             src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')--}}
                         {{--                                 https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg--}}

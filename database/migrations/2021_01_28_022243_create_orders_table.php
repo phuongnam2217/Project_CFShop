@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('sub_total');
             $table->integer('discount')->nullable();
             $table->integer('total');
-            $table->timestamp('check_in');
+            $table->timestamp('check_in')->nullable();
             $table->date('check_out')->nullable();
             $table->enum('status', [0, 1, 2])->default(2);
         });
