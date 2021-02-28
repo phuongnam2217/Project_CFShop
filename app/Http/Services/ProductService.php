@@ -37,8 +37,8 @@ class ProductService implements ServiceInterface {
         $obj->active = 1;
         $obj->isPortable = $request->isPortable;
         $obj->stock = $request->stock;
-        $obj->image = $request->image;
-//        $this->uploadFile($obj, $request);
+//        $obj->image = $request->image;
+        $this->uploadFile($obj, $request);
         $obj->category_id = $request->category_id;
         $obj->menu_id = $request->menu_id;
 
@@ -53,21 +53,21 @@ class ProductService implements ServiceInterface {
     function update($request, $obj = null)
     {
         // TODO: Implement update() method.
-        if($request->isPortable == 2){
+        if($request->isPortable == 0){
             $obj->stock = null;
         } else {
             $obj->stock = $request->stock;
         }
         $obj->fill($request->all());
-//        $this->uploadFile($obj, $request);
+        $this->uploadFile($obj, $request);
         $this->productRepository->save($obj);
     }
 
-//    function uploadFile($obj, $request)
-//    {
-//        if ($request->hasFile('image')) {
-//            $path = Storage::disk('s3')->put('images', $request->image, 'public');
-//            $obj->image1 = $path;
-//        }
-//    }
+    function uploadFile($obj, $request)
+    {
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('s3')->put('images', $request->image, 'public');
+            $obj->image1 = $path;
+        }
+    }
 }

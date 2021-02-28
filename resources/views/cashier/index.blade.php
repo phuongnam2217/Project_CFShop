@@ -137,12 +137,13 @@
                         @foreach($products as $product)
                             <div class="product__item detailProduct" product-id="{{$product->id}}">
                                 <div style="height: 100px" class="product__img">
-                                    <img src="{{$product->image}}"
-                                         {{--src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
+                                    <img
+{{--                                        src="{{$product->image}}"--}}
+                                         src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
                                                     https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg
                                                   @else
                                                 {{$product->getProductImage()}}
-                                                @endif"--}} alt=""/>
+                                                @endif" alt=""/>
                                 </div>
                                 <div class="product__content">
                                     <p class="product__name">{{$product->name}}</p>
