@@ -50,12 +50,13 @@
                                     @foreach($products as $product)
                                         @if($product->id == $hotProduct->product_id)
                                             <td><p>TOP {{$key+1}}: {{$product->name}}</p><img
-                                                    style="width: 100px; height: 100px" src="{{$product->image}}"
-                                                {{--src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
+                                                    style="width: 100px; height: 100px"
+{{--                                                    src="{{$product->image}}"--}}
+                                                src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
                                                      https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg
                                                    @else
                                                  {{$product->getProductImage()}}
-                                                 @endif"--}}
+                                                 @endif"
                                                     alt=""></td>
                                             <td style="float: right">{{$hotProduct->qty}} sản phẩm</td>
                                         @endif
