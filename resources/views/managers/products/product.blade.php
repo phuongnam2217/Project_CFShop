@@ -214,7 +214,7 @@
                                                 <select name="isPortable" class="form-select" id="multi-selectbox"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
-                                                    <option value="2">Hàng dịch vụ</option>
+                                                    <option value="0">Hàng dịch vụ</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -316,7 +316,7 @@
                                                 <select name="isPortable" id="isPortableProduct" class="form-select"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
-                                                    <option value="2">Hàng dịch vụ</option>
+                                                    <option value="0">Hàng dịch vụ</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
