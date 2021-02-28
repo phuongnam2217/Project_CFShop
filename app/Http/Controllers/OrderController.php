@@ -29,11 +29,11 @@ class OrderController extends Controller
 
     public function showProduct($id) {
         if($id == 1){
-            $products = Product::where('active', 'like', 1)->get();
+            $products = Product::where('active', '=', 1)->get();
             $html = view('cashier.view.menu-detail-group', compact('products'))->render();
             return response()->json(['view'=>$html]);
         }
-        $products = Product::where('category_id', 'like', $id)->where('active', 'like', 1)->get();
+        $products = Product::where('category_id', '=', $id)->where('active', '=', 1)->get();
 
         $html = view('cashier.view.menu-detail-group', compact('products'))->render();
         return response()->json(['view'=>$html]);
