@@ -20,7 +20,7 @@ class OrderController extends Controller
         if (!$this->userCan('cashier') & !$this->userCan('admin')) {
             return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc thu ngân mới được quyền truy cập!');
         }
-        $products = Product::where('active', 'like', 1)->get();
+        $products = Product::all();
         $tables = Table::where('active','1')->get();
         $groups = Group::all();
         $categories = Category::all();
