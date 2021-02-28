@@ -54,7 +54,7 @@ class ProductController extends Controller
 
     public function search(Request $request) {
         $search = $request->input('search');
-        $products = Product::where('name', 'LIKE', '%'.$search.'%')->paginate(10);
+        $products = Product::where('name', 'like', '%'.$search.'%')->paginate(10);
 
         $html = view('managers.products.product-table-form', compact('products'))->render();
         return response()->json(['view'=>$html]);
@@ -77,7 +77,7 @@ class ProductController extends Controller
         if($id == 2){
             return $this->returnView();
         }
-        $products = Product::where('active', 'like', $id)->paginate(10);
+        $products = Product::where('active', '=', $id)->paginate(10);
         $html = view('managers.products.product-table-form', compact('products'))->render();
         return response()->json(['view'=>$html]);
     }
