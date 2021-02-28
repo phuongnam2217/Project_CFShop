@@ -571,15 +571,9 @@
             $('#addformproduct').on('submit', function (e) {
                 e.preventDefault();
 
-                // <div class="form-group">
-                //     <lable>Tồn kho</lable>
-                //     <input type="text" class="form-control stockProduct" name="stock"
-                //            placeholder="Tồn kho ..">
-                //         <p class="text-danger addStockProduct"></p>
-                // </div>
                 $.ajax({
                     type: "POST",
-                    url: "/product/add",
+                    url: "{{route('product.store')}}",
                     data: $('#addformproduct').serialize(),
                     success: function (response) {
                         $('#addProduct').modal('hide');
@@ -587,6 +581,7 @@
                         swal("Success", "Thêm mới thành công !", "success");
                     },
                     error: function (xhr) {
+                        console.log(xhr.responseJSON.message);
                         let error = xhr.responseJSON.errors;
                         if (error.name) {
                             $(".addNameProduct").html(error.name);
