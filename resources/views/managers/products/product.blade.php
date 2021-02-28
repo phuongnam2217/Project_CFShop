@@ -680,7 +680,7 @@
                         $('#detailStock').html(data.product.stock);
                         $('#detailCategory_id').html(data.category.name);
                         $('#detailMenu_id').html(data.product.menu_id === 1 ? "Đồ uống" : data.product.menu_id === 2 ? "Đồ ăn" : "Khác");
-                        $('#detailActive').html(data.product.active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh");
+                        $('#detailActive').html(data.product.active === true ? "Đang kinh doanh" : "Ngừng kinh doanh");
                         console.log(data.product.active);
                         if (data.product.active === 1) {
                             $("#detailActive").removeClass("inactive-style").addClass("active-style");
