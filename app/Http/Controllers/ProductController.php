@@ -54,7 +54,7 @@ class ProductController extends Controller
 
     public function search(Request $request) {
         $search = $request->input('search');
-        $products = Product::where('name', 'like', "%".$search."%")->paginate(10);
+        $products = Product::where('name', 'like', "%{$search}%")->paginate(10);
 
         $html = view('managers.products.product-table-form', compact('products'))->render();
         return response()->json(['view'=>$html]);
