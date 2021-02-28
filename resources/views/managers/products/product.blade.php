@@ -651,11 +651,6 @@
                             $(".priceProduct").addClass("is-invalid");
                         }
                         ;
-                        // if (error.stock) {
-                        //     $(".updateStockProduct").html("* Tồn kho không được để trống !");
-                        //     $(".stockProduct").addClass("is-invalid");
-                        // }
-                        // ;
                     }
                 })
             });
@@ -669,7 +664,7 @@
                     url: "{{route('product.index')}}" + "/" + id,
                     success: function (data) {
                         $('#detailProduct').modal('show');
-
+                        console.log(data.product);
                         $('#detailName').html(data.product.name);
                         $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
                         // $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
