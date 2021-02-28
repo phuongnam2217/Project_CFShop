@@ -134,6 +134,7 @@
                     </div>
                     <!-- Product List -->
                     <div class="product__list tables__list" id="product-category-list">
+                        {{dd($products)}}
                         @foreach($products as $product)
                             <div class="product__item detailProduct" product-id="{{$product->id}}">
                                 <div style="height: 100px" class="product__img">
