@@ -67,6 +67,7 @@ class ProductService implements ServiceInterface {
     {
         if ($request->hasFile('image')) {
             $path = Storage::disk('s3')->put('images', $request->image, 'public');
+
             $obj->image = $path;
         }
     }
