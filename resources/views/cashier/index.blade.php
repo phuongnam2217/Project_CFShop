@@ -142,7 +142,7 @@
                                          src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
                                                     https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg
                                                   @else
-                                                {{$product->getProductImage()}}
+                                                    {{$product->getProductImage()}}
                                                 @endif" alt=""/>
                                 </div>
                                 <div class="product__content">
