@@ -591,7 +591,7 @@
                         swal("Success", "Xóa sản phẩm thành công!", "success");
                     },
                     error: function (error) {
-                        alert("Data not save !");
+                        swal("Warning", "Sản phẩm đã tồn tại giao dịch, nếu xóa sẽ ảnh hưởng doanh thu, vui lòng chọn Ngừng kinh doanh!", "warning");
                     }
                 })
             });
@@ -666,15 +666,11 @@
                         $('#detailProduct').modal('show');
                         console.log(data.product);
                         $('#detailName').html(data.product.name);
-                        $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
-                        // $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
-                        {{--                        <img style="width: 100px"--}}
-                        {{--                             src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')--}}
-                        {{--                                 https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg--}}
-                        {{--@else--}}
-                        {{--                             {{$product->getProductImage()}}--}}
-                        {{--                             @endif"--}}
-                        {{--                             class="img-border-radius avatar-40 img-fluid">--}}
+                        if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
+                            $('#detailImage').html('<img style="width: 100%" src="' + 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg' + '" alt="">');
+                        } else {
+                            $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
+                        }
                         $('#detailIsPortable').html(data.product.isPortable === 1 ? "Hàng hóa" : "Dịch vụ");
                         $('#detailPrice').html(new Intl.NumberFormat().format(data.product.price) + " đ");
                         $('#detailStock').html(data.product.stock);
