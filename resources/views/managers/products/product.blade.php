@@ -666,7 +666,7 @@
                         $('#detailProduct').modal('show');
                         console.log(data.product.image);
                         $('#detailName').html(data.product.name);
-                        if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
+                        if(data.product.image === null) {
                             $('#detailImage').html('<img style="width: 100%" src="' + 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg' + '" alt="">');
                         } else {
                             $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
