@@ -140,8 +140,8 @@
                                     <img
 {{--                                        src="{{$product->image}}"--}}
                                          src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
-                                                    https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg
-                                                  @else
+                                                https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg
+                                                @else
                                                     {{$product->getProductImage()}}
                                                 @endif" alt=""/>
                                 </div>
