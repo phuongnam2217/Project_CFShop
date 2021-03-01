@@ -28,23 +28,21 @@ class ChangePasswordRequest extends FormRequest
     {
         $user = User::find(Auth::user()->id);
         return [
-            'password' => 'required|confirmed|min:6',
             'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
                 if (!Hash::check($value, $user->password)) {
                     return $fail(__('Mật khẩu hiên tại của bạn không đúng.'));
                 }
             }],
-            'passwordConfirm'=>'required|same:password'
+            'password' => 'required|confirmed|min:6'
         ];
     }
     public function messages()
     {
         return [
-            'password.required'=>'Mật khẩu không được để trống',
-            'password.min'=>'Mật khẩu không được nhở hơn 6 kí tự',
-            'passwordConfirm.required'=>'Mật khẩu không được để trống',
-            'passwordConfirm.same'=>'Mật khẩu không giống nhau',
-            'current_password.required'=>'Mật khẩu hiện tại không được để trống'
+            'password.required'=>'* Mật khẩu không được để trống',
+            'password.min'=>'* Mật khẩu không được nhở hơn 6 kí tự',
+            'password.confirmed'=>'* Mật khẩu không giống nhau',
+            'current_password.required'=>'* Mật khẩu hiện tại không được để trống'
         ];
     }
 }

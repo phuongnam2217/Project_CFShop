@@ -167,7 +167,7 @@
                                             <div class="text-center text-danger password-err"></div>
                                             <label>Nhập lại mật khẩu mới</label>
                                             <div class="form-group pass_show">
-                                                <input id="profile-passwordConfirm" name="passwordConfirm" type="password" value="" class="form-control"
+                                                <input id="profile-passwordConfirm" name="password_confirmation" type="password" value="" class="form-control"
                                                        placeholder="Nhập lại mật khẩu mới">
                                             </div>
                                             <div class="text-center text-danger password-confirm-err"></div>
@@ -274,6 +274,7 @@
         //Đổi mật khẩu profile
         $('#password-form').on('submit',function (e){
             e.preventDefault();
+            console.log('REQUEST', $('#password-form').serialize());
             $.ajax({
                 method: "POST",
                 data: $('#password-form').serialize(),
@@ -292,10 +293,6 @@
                     if(errors.password){
                         $('.password-err').html(errors.password)
                         $('#profile-password').addClass('is-invalid')
-                    }
-                    if(errors.passwordConfirm){
-                        $('.password-confirm-err').html(errors.passwordConfirm);
-                        $('#profile-passwordConfirm').addClass('is-invalid');
                     }
                 }
             })
