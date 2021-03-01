@@ -277,8 +277,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
-                                                <input type="text" class="form-control" id="imageProduct" name="image">
-                                                {{--                                                <input name="image" type="file" id="imageProduct" class="form-control">--}}
+{{--                                                <input type="text" class="form-control" id="imageProduct" name="image">--}}
+                                                <input name="image" type="file" id="imageProduct" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
