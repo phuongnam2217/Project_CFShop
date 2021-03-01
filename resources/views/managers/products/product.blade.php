@@ -664,7 +664,7 @@
                     url: "{{route('product.index')}}" + "/" + id,
                     success: function (data) {
                         $('#detailProduct').modal('show');
-                        console.log(data.product);
+                        console.log(data.product.image);
                         $('#detailName').html(data.product.name);
                         if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
                             $('#detailImage').html('<img style="width: 100%" src="' + 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg' + '" alt="">');
