@@ -723,8 +723,7 @@
             $(document).ready(function () {
                 $('#multi-selectbox').change(function () {
                     let id = $('#multi-selectbox').val();
-                    console.log(id);
-                    if (id === 1) {
+                    if (id == 1) {
                         $('#stock-product').html("<lable>Tồn kho</lable>" +
                             '<input placeholder="Tồn kho ..." id="stock-product-input" type="text" class="form-control stockProduct" name="stock">' +
                             '<p class="text-danger addStockProduct"></p>');
@@ -736,8 +735,7 @@
             $(document).ready(function () {
                 $('#isPortableProduct').change(function () {
                     let id = $('#isPortableProduct').val();
-                    console.log(id);
-                    if (id === 1) {
+                    if (id == 1) {
                         $('#stock-product-update').html("<lable>Tồn kho</lable>" +
                             '<input placeholder="Tồn kho ..." id="stockProduct" type="text" class="form-control stockProduct" name="stock">' +
                             '<p class="text-danger updatePriceProduct"></p>');
