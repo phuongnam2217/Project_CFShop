@@ -20,7 +20,7 @@ class OrderController extends Controller
         if (!$this->userCan('cashier') & !$this->userCan('admin')) {
             return redirect()->back()->with('alert', 'Chỉ có ADMIN hoặc thu ngân mới được quyền truy cập!');
         }
-        $products = Product::where('active', 'like', 1)->get();
+        $products = Product::where('active', '=', 1)->get();
         $tables = Table::where('active','1')->get();
         $groups = Group::all();
         $categories = Category::all();
@@ -29,11 +29,11 @@ class OrderController extends Controller
 
     public function showProduct($id) {
         if($id == 1){
-            $products = Product::where('active', 'like', 1)->get();
+            $products = Product::where('active', '=', 1)->get();
             $html = view('cashier.view.menu-detail-group', compact('products'))->render();
             return response()->json(['view'=>$html]);
         }
-        $products = Product::where('category_id', 'like', $id)->where('active', 'like', 1)->get();
+        $products = Product::where('category_id', '=', $id)->where('active', '=', 1)->get();
 
         $html = view('cashier.view.menu-detail-group', compact('products'))->render();
         return response()->json(['view'=>$html]);
@@ -167,11 +167,6 @@ class OrderController extends Controller
             $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
             return response()->json(['view'=>$html]);
         }
-
-//Mới nhất
-//        $tables = Table::all();
-//        $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
-//        return response()->json(['view'=>$html]);
     }
 
     public function changeStatusOrderDetail(Request $request,$product_id)

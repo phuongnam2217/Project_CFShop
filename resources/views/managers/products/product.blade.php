@@ -16,7 +16,6 @@
                         <label for="" class="search-name-text">Nhóm hàng</label>
                         <div style="float: right; color: #0090da; cursor: pointer" data-bs-toggle="modal"
                              data-bs-target="#addCategory"><i class="fas fa-plus-circle"></i></div>
-                        <input type="text" class="input" placeholder="Theo tên nhóm hàng, ..."/>
                     </form>
                     <br/>
                     <form action="" id="category-table-form">
@@ -146,38 +145,7 @@
                         <h2>Hàng hóa</h2>
                     </div>
                     <div>
-                        <!-- Export -->
-                        <div class="mybutton">
-                            <i class="fas fa-fw fa-file-export"></i> Export
-                        </div>
-
-                        <!-- Import -->
-                        <div class="mybutton" data-bs-toggle="modal" data-bs-target="#import">
-                            <i class="fas fa-fw fa-file-import"></i> Import
-                        </div>
-                        <div class="modal fade" id="import" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Import hàng hóa</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Add -->
+                                <!-- Add -->
                         <div class="mybutton" role="group">
                             <div data-bs-toggle="modal" data-bs-target="#addProduct">
                                 <i class="fas fa-plus"></i> Thêm mới
@@ -194,7 +162,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form id="addformproduct">
+                                    <form id="addformproduct" enctype="multipart/form-data" >
                                         <div class="modal-body">
                                             {{ csrf_field() }}
                                             {{ method_field('POST') }}
@@ -206,15 +174,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
-                                                <input type="text" class="form-control" name="image">
-                                                {{--                                                <input name="image" type="file" class="form-control">--}}
+{{--                                                <input type="text" class="form-control" name="image">--}}
+                                                <input name="image" type="file" id="image_product" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
                                                 <select name="isPortable" class="form-select" id="multi-selectbox"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
-                                                    <option value="2">Hàng dịch vụ</option>
+                                                    <option value="0">Hàng dịch vụ</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -294,10 +262,10 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form id="updateformproduct">
+                                    <form id="updateformproduct" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             {{ csrf_field() }}
-                                            {{ method_field('PUT') }}
+                                            {{ method_field('POST') }}
                                             <input type="hidden" class="form-control" name="id" id="editProduct_id">
                                             <div class="form-group">
                                                 <lable>Tên hàng hóa</lable>
@@ -308,15 +276,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
-                                                <input type="text" class="form-control" id="imageProduct" name="image">
-                                                {{--                                                <input name="image" type="file" id="imageProduct" class="form-control">--}}
+                                                <input name="image" type="file" id="image_updateProduct" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
                                                 <select name="isPortable" id="isPortableProduct" class="form-select"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
-                                                    <option value="2">Hàng dịch vụ</option>
+                                                    <option value="0">Hàng dịch vụ</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -470,7 +437,6 @@
         $(document).ready(function () {
             $("#products").addClass("active");
         });
-
         $(document).ready(function () {
             // Category Ajax
             $('#addform').on('submit', function (e) {
@@ -491,24 +457,17 @@
                     }
                 })
             });
-
             $('body').on('click', '.deletecategory', function () {
                 $('#categoryDeleteModal').modal('show');
-
                 $div = $(this).closest('div')
-
                 var data = $div.children("label").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#delete_id').val(data[0]);
             })
-
             $('#deleteFormId').on('submit', function (e) {
                 e.preventDefault();
-
                 var id = $('#delete_id').val();
-
                 $.ajax({
                     type: "DELETE",
                     url: "/category/delete/" + id,
@@ -530,25 +489,18 @@
                     }
                 })
             });
-
             $('body').on('click', '.editcategory', function () {
                 $('#categoryEditModal').modal('show');
-
                 $div = $(this).closest('div')
-
                 var data = $div.children("label").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#edit_id').val(data[0]);
                 $('#name').val(data[1]);
             })
-
             $('#editFormId').on('submit', function (e) {
                 e.preventDefault();
-
                 var id = $('#edit_id').val();
-
                 $.ajax({
                     type: "PUT",
                     url: "/category/update/" + id,
@@ -566,21 +518,26 @@
                     }
                 })
             });
-
             //  Product Ajax
             $('#addformproduct').on('submit', function (e) {
                 e.preventDefault();
+                let fd = new FormData();
+                let formSerialization = ($('#addformproduct').serializeArray());
+                let files = (document.querySelector('#image_product').files);
+                let file = files.length ? files[0] : null;
 
-                // <div class="form-group">
-                //     <lable>Tồn kho</lable>
-                //     <input type="text" class="form-control stockProduct" name="stock"
-                //            placeholder="Tồn kho ..">
-                //         <p class="text-danger addStockProduct"></p>
-                // </div>
+                fd.append('image', file);
+
+                formSerialization.forEach(obj => {
+                    fd.append(obj.name, obj.value);
+                })
+
                 $.ajax({
                     type: "POST",
                     url: "/product/add",
-                    data: $('#addformproduct').serialize(),
+                    data: fd,
+                    processData: false,
+                    contentType: false,
                     success: function (response) {
                         $('#addProduct').modal('hide');
                         $('#product-table-form').html(response.view);
@@ -599,24 +556,18 @@
                     }
                 })
             });
-
             $('body').on('click', '.deleteProduct', function () {
                 $('#productDeleteModal').modal('show');
-
                 $tr = $(this).closest('tr');
-
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#product_id').val(data[0]);
             })
-
             $('#deleteFormProduct').on('submit', function (e) {
                 e.preventDefault();
 
                 var id = $('#product_id').val();
-
                 $.ajax({
                     type: "DELETE",
                     url: "/product/delete/" + id,
@@ -627,14 +578,12 @@
                         swal("Success", "Xóa sản phẩm thành công!", "success");
                     },
                     error: function (error) {
-                        alert("Data not save !");
+                        swal("Warning!", "Sản phẩm đang tồn tại trong giao dịch !", "warning");
                     }
                 })
             });
-
             $('body').on('click', '.updateProduct', function () {
                 $('#updateProduct').modal('show');
-
                 let id = $(this).attr('isPortableUpdate');
                 console.log(id);
                 if (id == 1) {
@@ -644,12 +593,10 @@
                 } else {
                     $('#stock-product-update').html(" ");
                 }
-
                 $tr = $(this).closest('tr')
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#editProduct_id').val(data[0]);
                 $('#nameProduct').val(data[2]);
                 $('#imageProduct').val(data[3]);
@@ -660,16 +607,26 @@
                 $('#menuProduct_id').val(data[8]);
                 $('#activeProduct').val(data[10]);
             });
-
             $('#updateformproduct').on('submit', function (e) {
                 e.preventDefault();
+                let fd = new FormData();
+                let formSerialization = ($('#updateformproduct').serializeArray());
+                let files = (document.querySelector('#image_updateProduct').files);
+                console.log(files);
+                let file = files.length ? files[0] : null;
 
+                fd.append('image', file);
+
+                formSerialization.forEach(obj => {
+                    fd.append(obj.name, obj.value);
+                })
                 var id = $('#editProduct_id').val();
-
                 $.ajax({
-                    type: "PUT",
+                    type: "POST",
                     url: "/product/update/" + id,
-                    data: $('#updateformproduct').serialize(),
+                    data: fd,
+                    processData: false,
+                    contentType: false,
                     success: function (response) {
                         $('#updateProduct').modal('hide');
                         $('#product-table-form').html(response.view);
@@ -687,54 +644,39 @@
                             $(".priceProduct").addClass("is-invalid");
                         }
                         ;
-                        // if (error.stock) {
-                        //     $(".updateStockProduct").html("* Tồn kho không được để trống !");
-                        //     $(".stockProduct").addClass("is-invalid");
-                        // }
-                        // ;
                     }
                 })
             });
-
             $('body').on('click', '.detailProduct', function () {
                 let id = $(this).attr('data-id');
-
                 console.log(id)
                 $.ajax({
                     type: 'GET',
                     url: "{{route('product.index')}}" + "/" + id,
                     success: function (data) {
                         $('#detailProduct').modal('show');
-
                         $('#detailName').html(data.product.name);
-                        $('#detailImage').html('<img style="width: 100%" src="' + data.product.image + '" alt="">');
-                        $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
-                        {{--                        <img style="width: 100px"--}}
-                        {{--                             src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')--}}
-                        {{--                                 https://miro.medium.com/max/2834/0*f81bU2qWpP51WWWC.jpg--}}
-                        {{--@else--}}
-                        {{--                             {{$product->getProductImage()}}--}}
-                        {{--                             @endif"--}}
-                        {{--                             class="img-border-radius avatar-40 img-fluid">--}}
+                        if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
+                            $('#detailImage').html('<img style="width: 100%" src="' + "https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg" + '" alt="">');
+                        } else {
+                            $('#detailImage').html('<img style="width: 100%" src="' + "https://quangvoc8.s3.amazonaws.com/" + data.product.image + '" alt="">');
+                        }
                         $('#detailIsPortable').html(data.product.isPortable === 1 ? "Hàng hóa" : "Dịch vụ");
                         $('#detailPrice').html(new Intl.NumberFormat().format(data.product.price) + " đ");
                         $('#detailStock').html(data.product.stock);
                         $('#detailCategory_id').html(data.category.name);
                         $('#detailMenu_id').html(data.product.menu_id === 1 ? "Đồ uống" : data.product.menu_id === 2 ? "Đồ ăn" : "Khác");
-                        $('#detailActive').html(data.product.active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh");
-                        console.log(data.product.active);
-                        if (data.product.active === 1) {
+                        $('#detailActive').html(data.product.active ? "Đang kinh doanh" : "Ngừng kinh doanh");
+                        if (data.product.active) {
                             $("#detailActive").removeClass("inactive-style").addClass("active-style");
                         } else {
                             $("#detailActive").removeClass("active-style").addClass("inactive-style");
                         }
                     },
                     error: function (data) {
-
                     }
                 })
             })
-
             //Search
             $('#searchform').on('submit', function (e) {
                 e.preventDefault();
@@ -750,7 +692,6 @@
                     }
                 })
             });
-
             //Status
             $('input[type="radio"]').click(function () {
                 let id = $(this).val();
@@ -766,9 +707,7 @@
                     }
                 })
             })
-
             //Menu - not yet
-
             //Active
             $('body').on('click', '.activeProduct', function () {
                 let id = $(this).attr('active-id');
@@ -780,7 +719,6 @@
                     }
                 })
             })
-
             //Portable
             $(document).ready(function () {
                 $('#multi-selectbox').change(function () {
