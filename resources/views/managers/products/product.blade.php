@@ -578,7 +578,7 @@
                         swal("Success", "Xóa sản phẩm thành công!", "success");
                     },
                     error: function (error) {
-                        alert("Data not save !");
+                        swal("Warning!", "Sản phẩm đang tồn tại trong giao dịch !", "warning");
                     }
                 })
             });
