@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="_token" content="{{ csrf_token() }}">
-    <title>Document</title>
+    <title>CoffeeShop</title>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
@@ -102,7 +102,7 @@
                             <li class="category__item">
                                 <a
                                     href="javascript:void(0)"
-                                    data-category-id="1"
+                                    data-category-id="0"
                                     data-table-id="{{$table->id}}"
                                     class="category__link active-table"
                                 >Tất cả</a

@@ -28,7 +28,7 @@ class OrderController extends Controller
     }
 
     public function showProduct($id) {
-        if($id == 1){
+        if($id == 0){
             $products = Product::where('active', '=', 1)->get();
             $html = view('cashier.view.menu-detail-group', compact('products'))->render();
             return response()->json(['view'=>$html]);
