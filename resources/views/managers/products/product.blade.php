@@ -16,7 +16,6 @@
                         <label for="" class="search-name-text">Nhóm hàng</label>
                         <div style="float: right; color: #0090da; cursor: pointer" data-bs-toggle="modal"
                              data-bs-target="#addCategory"><i class="fas fa-plus-circle"></i></div>
-                        <input type="text" class="input" placeholder="Theo tên nhóm hàng, ..."/>
                     </form>
                     <br/>
                     <form action="" id="category-table-form">
@@ -146,7 +145,7 @@
                         <h2>Hàng hóa</h2>
                     </div>
                     <div>
-                        <!-- Add -->
+                                <!-- Add -->
                         <div class="mybutton" role="group">
                             <div data-bs-toggle="modal" data-bs-target="#addProduct">
                                 <i class="fas fa-plus"></i> Thêm mới
@@ -163,7 +162,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form id="addformproduct">
+                                    <form id="addformproduct" enctype="multipart/form-data" >
                                         <div class="modal-body">
                                             {{ csrf_field() }}
                                             {{ method_field('POST') }}
@@ -176,7 +175,7 @@
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
 {{--                                                <input type="text" class="form-control" name="image">--}}
-                                                <input name="image" type="file" class="form-control">
+                                                <input name="image" type="file" id="image_product" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
@@ -263,10 +262,10 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form id="updateformproduct">
+                                    <form id="updateformproduct" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             {{ csrf_field() }}
-                                            {{ method_field('PUT') }}
+                                            {{ method_field('POST') }}
                                             <input type="hidden" class="form-control" name="id" id="editProduct_id">
                                             <div class="form-group">
                                                 <lable>Tên hàng hóa</lable>
@@ -277,8 +276,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
-{{--                                                <input type="text" class="form-control" id="imageProduct" name="image">--}}
-                                                <input name="image" type="file" id="imageProduct" class="form-control">
+                                                <input name="image" type="file" id="image_updateProduct" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
@@ -337,11 +335,11 @@
                                     </div>
                                     <div class="modal-body detailProduct">
                                         <p hidden id="detailProduct_id">
-                                        <div style="width: 50%; float: left; text-align: center">
+                                        <div style="float: left; width: 50%">
                                             <div id="detailImage">
                                             </div>
                                         </div>
-                                        <div style="width: 50%; float: right; text-align: center">
+                                        <div style="float: right; width: 50%">
                                             <div style="font-size: 25px; font-weight: bold">
                                                 <span>Tên hàng hóa:</span>
                                                 <span id="detailName"></span>
@@ -439,7 +437,6 @@
         $(document).ready(function () {
             $("#products").addClass("active");
         });
-
         $(document).ready(function () {
             // Category Ajax
             $('#addform').on('submit', function (e) {
@@ -460,24 +457,17 @@
                     }
                 })
             });
-
             $('body').on('click', '.deletecategory', function () {
                 $('#categoryDeleteModal').modal('show');
-
                 $div = $(this).closest('div')
-
                 var data = $div.children("label").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#delete_id').val(data[0]);
             })
-
             $('#deleteFormId').on('submit', function (e) {
                 e.preventDefault();
-
                 var id = $('#delete_id').val();
-
                 $.ajax({
                     type: "DELETE",
                     url: "/category/delete/" + id,
@@ -499,25 +489,18 @@
                     }
                 })
             });
-
             $('body').on('click', '.editcategory', function () {
                 $('#categoryEditModal').modal('show');
-
                 $div = $(this).closest('div')
-
                 var data = $div.children("label").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#edit_id').val(data[0]);
                 $('#name').val(data[1]);
             })
-
             $('#editFormId').on('submit', function (e) {
                 e.preventDefault();
-
                 var id = $('#edit_id').val();
-
                 $.ajax({
                     type: "PUT",
                     url: "/category/update/" + id,
@@ -535,22 +518,32 @@
                     }
                 })
             });
-
             //  Product Ajax
             $('#addformproduct').on('submit', function (e) {
                 e.preventDefault();
+                let fd = new FormData();
+                let formSerialization = ($('#addformproduct').serializeArray());
+                let files = (document.querySelector('#image_product').files);
+                let file = files.length ? files[0] : null;
+
+                fd.append('image', file);
+
+                formSerialization.forEach(obj => {
+                    fd.append(obj.name, obj.value);
+                })
 
                 $.ajax({
                     type: "POST",
-                    url: "{{route('product.store')}}",
-                    data: $('#addformproduct').serialize(),
+                    url: "/product/add",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
                     success: function (response) {
                         $('#addProduct').modal('hide');
                         $('#product-table-form').html(response.view);
                         swal("Success", "Thêm mới thành công !", "success");
                     },
                     error: function (xhr) {
-                        console.log(xhr.responseJSON.message);
                         let error = xhr.responseJSON.errors;
                         if (error.name) {
                             $(".addNameProduct").html(error.name);
@@ -563,24 +556,18 @@
                     }
                 })
             });
-
             $('body').on('click', '.deleteProduct', function () {
                 $('#productDeleteModal').modal('show');
-
                 $tr = $(this).closest('tr');
-
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#product_id').val(data[0]);
             })
-
             $('#deleteFormProduct').on('submit', function (e) {
                 e.preventDefault();
 
                 var id = $('#product_id').val();
-
                 $.ajax({
                     type: "DELETE",
                     url: "/product/delete/" + id,
@@ -591,14 +578,12 @@
                         swal("Success", "Xóa sản phẩm thành công!", "success");
                     },
                     error: function (error) {
-                        swal("Warning", "Sản phẩm đã tồn tại giao dịch, nếu xóa sẽ ảnh hưởng doanh thu, vui lòng chọn Ngừng kinh doanh!", "warning");
+                        alert("Data not save !");
                     }
                 })
             });
-
             $('body').on('click', '.updateProduct', function () {
                 $('#updateProduct').modal('show');
-
                 let id = $(this).attr('isPortableUpdate');
                 console.log(id);
                 if (id == 1) {
@@ -608,12 +593,10 @@
                 } else {
                     $('#stock-product-update').html(" ");
                 }
-
                 $tr = $(this).closest('tr')
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-
                 $('#editProduct_id').val(data[0]);
                 $('#nameProduct').val(data[2]);
                 $('#imageProduct').val(data[3]);
@@ -624,16 +607,26 @@
                 $('#menuProduct_id').val(data[8]);
                 $('#activeProduct').val(data[10]);
             });
-
             $('#updateformproduct').on('submit', function (e) {
                 e.preventDefault();
+                let fd = new FormData();
+                let formSerialization = ($('#updateformproduct').serializeArray());
+                let files = (document.querySelector('#image_updateProduct').files);
+                console.log(files);
+                let file = files.length ? files[0] : null;
 
+                fd.append('image', file);
+
+                formSerialization.forEach(obj => {
+                    fd.append(obj.name, obj.value);
+                })
                 var id = $('#editProduct_id').val();
-
                 $.ajax({
-                    type: "PUT",
+                    type: "POST",
                     url: "/product/update/" + id,
-                    data: $('#updateformproduct').serialize(),
+                    data: fd,
+                    processData: false,
+                    contentType: false,
                     success: function (response) {
                         $('#updateProduct').modal('hide');
                         $('#product-table-form').html(response.view);
@@ -654,39 +647,37 @@
                     }
                 })
             });
-
             $('body').on('click', '.detailProduct', function () {
                 let id = $(this).attr('data-id');
+                console.log(id)
                 $.ajax({
                     type: 'GET',
                     url: "{{route('product.index')}}" + "/" + id,
                     success: function (data) {
                         $('#detailProduct').modal('show');
-                        console.log(data.product.image);
                         $('#detailName').html(data.product.name);
-                        if(data.product.image === null) {
-                            $('#detailImage').html('<img style="width: 100%" src="' + 'https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg' + '" alt="">');
+                        if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
+                            $('#detailImage').html('<img style="width: 100%" src="' + "https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg" + '" alt="">');
                         } else {
-                            $('#detailImage').html('<img style="width: 100%" src="' + 'https://quangvoc8.s3.amazonaws.com/' + data.product.image + '" alt="">');
+                            $('#detailImage').html('<img style="width: 100%" src="' + "https://quangvoc8.s3.amazonaws.com/" + data.product.image + '" alt="">');
                         }
                         $('#detailIsPortable').html(data.product.isPortable === 1 ? "Hàng hóa" : "Dịch vụ");
                         $('#detailPrice').html(new Intl.NumberFormat().format(data.product.price) + " đ");
                         $('#detailStock').html(data.product.stock);
                         $('#detailCategory_id').html(data.category.name);
                         $('#detailMenu_id').html(data.product.menu_id === 1 ? "Đồ uống" : data.product.menu_id === 2 ? "Đồ ăn" : "Khác");
-                        $('#detailActive').html(data.product.active ? "Đang kinh doanh" : "Ngừng kinh doanh");
-                        if (data.product.active) {
+                        $('#detailActive').html(data.product.active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh");
+                        console.log(data.product.active);
+                        if (data.product.active === 1) {
                             $("#detailActive").removeClass("inactive-style").addClass("active-style");
                         } else {
                             $("#detailActive").removeClass("active-style").addClass("inactive-style");
                         }
                     },
                     error: function (data) {
-
                     }
                 })
             })
-
             //Search
             $('#searchform').on('submit', function (e) {
                 e.preventDefault();
@@ -702,7 +693,6 @@
                     }
                 })
             });
-
             //Status
             $('input[type="radio"]').click(function () {
                 let id = $(this).val();
@@ -718,9 +708,7 @@
                     }
                 })
             })
-
             //Menu - not yet
-
             //Active
             $('body').on('click', '.activeProduct', function () {
                 let id = $(this).attr('active-id');
@@ -732,7 +720,6 @@
                     }
                 })
             })
-
             //Portable
             $(document).ready(function () {
                 $('#multi-selectbox').change(function () {

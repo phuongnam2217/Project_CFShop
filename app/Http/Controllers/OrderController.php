@@ -167,11 +167,6 @@ class OrderController extends Controller
             $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
             return response()->json(['view'=>$html]);
         }
-
-//Mới nhất
-//        $tables = Table::all();
-//        $html = view('managers.view-ajax.table.table-ajax', compact('tables'))->render();
-//        return response()->json(['view'=>$html]);
     }
 
     public function changeStatusOrderDetail(Request $request,$product_id)

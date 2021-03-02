@@ -37,7 +37,6 @@ class ProductService implements ServiceInterface {
         $obj->active = 1;
         $obj->isPortable = $request->isPortable;
         $obj->stock = $request->stock;
-//        $obj->image = $request->image;
         $this->uploadFile($obj, $request);
         $obj->category_id = $request->category_id;
         $obj->menu_id = $request->menu_id;
@@ -67,7 +66,6 @@ class ProductService implements ServiceInterface {
     {
         if ($request->hasFile('image')) {
             $path = Storage::disk('s3')->put('images', $request->image, 'public');
-
             $obj->image = $path;
         }
     }
