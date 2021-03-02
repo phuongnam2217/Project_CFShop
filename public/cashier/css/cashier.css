@@ -195,7 +195,7 @@ img {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    height: 37px;
+    height: auto;
 }
 
 .category__list {
@@ -208,6 +208,7 @@ img {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    margin: auto;
 }
 .category__link {
     font-family: Roboto;
