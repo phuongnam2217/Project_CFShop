@@ -666,9 +666,8 @@
                         $('#detailStock').html(data.product.stock);
                         $('#detailCategory_id').html(data.category.name);
                         $('#detailMenu_id').html(data.product.menu_id === 1 ? "Đồ uống" : data.product.menu_id === 2 ? "Đồ ăn" : "Khác");
-                        $('#detailActive').html(data.product.active === 1 ? "Đang kinh doanh" : "Ngừng kinh doanh");
-                        console.log(data.product.active);
-                        if (data.product.active === 1) {
+                        $('#detailActive').html(data.product.active ? "Đang kinh doanh" : "Ngừng kinh doanh");
+                        if (data.product.active) {
                             $("#detailActive").removeClass("inactive-style").addClass("active-style");
                         } else {
                             $("#detailActive").removeClass("active-style").addClass("inactive-style");
