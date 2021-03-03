@@ -60,7 +60,7 @@
                                                 <p class="text-danger quantityImportProduct"></p>
                                             </div>
                                             <div class="form-group">
-                                                <lable>Ghi chú</lable>
+                                                <lable>Ghi chú nhập hàng</lable>
                                                 <input type="text" class="form-control noteProduct" name="note"
                                                        placeholder="Ghi chú ..">
                                                 <p class="text-danger noteProductImport"></p>
