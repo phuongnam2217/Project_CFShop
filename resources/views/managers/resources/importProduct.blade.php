@@ -167,7 +167,7 @@
                     },
                     error: function (xhr) {
                         let error = xhr.responseJSON.errors;
-                        console.log(xhr.responseJSON.message)
+                        console.log(error);
                         if (error.unit_price) {
                             $(".unitPriceProduct").html(error.unit_price);
                             $(".priceProduct").addClass("is-invalid");
