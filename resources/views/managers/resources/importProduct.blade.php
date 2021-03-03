@@ -177,8 +177,8 @@
                             $(".quantityProduct").addClass("is-invalid");
                         };
                         if (error.note) {
-                            $(".noteProduct").html(error.note);
-                            $(".noteProductImport").addClass("is-invalid");
+                            $(".noteProductImport").html(error.note);
+                            $(".noteProduct").addClass("is-invalid");
                         };
                     }
                 })
