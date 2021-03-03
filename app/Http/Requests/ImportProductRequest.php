@@ -26,6 +26,7 @@ class ImportProductRequest extends FormRequest
         return [
             'unit_price' => 'required|numeric',
             'quantity' => 'required|numeric',
+            'note' => 'required'
         ];
     }
 
@@ -36,6 +37,7 @@ class ImportProductRequest extends FormRequest
             'unit_price.numeric' => '* Giá nhập phải là chữ số !',
             'quantity.required' => '* Số lượng sản phẩm không được để trống !',
             'quantity.numeric' => '* Số lượng sản phẩm phải là chữ số !',
+            'note.required' => '* Ghi chú không được để trống !'
         ];
     }
 }

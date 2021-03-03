@@ -63,7 +63,7 @@
                                                 <lable>Ghi chú</lable>
                                                 <input type="text" class="form-control noteProduct" name="note"
                                                        placeholder="Ghi chú ..">
-                                                <p class="text-danger noteProduct"></p>
+                                                <p class="text-danger noteProductImport"></p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -175,6 +175,10 @@
                         if (error.quantity) {
                             $(".quantityImportProduct").html(error.quantity);
                             $(".quantityProduct").addClass("is-invalid");
+                        };
+                        if (error.note) {
+                            $(".noteProduct").html(error.note);
+                            $(".noteProductImport").addClass("is-invalid");
                         };
                     }
                 })
