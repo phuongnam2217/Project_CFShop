@@ -8,8 +8,11 @@ THÀNH VIÊN:
 
 Các công cụ sử dụng:
 •	HTML/CSS/JS
+
 •	Boostrap/MySQL
+
 •	Framework LARAVEL
+
 •	Jquery/AJAX
 
 Link Backlog: https://docs.google.com/spreadsheets/d/1NotVuyUixeo79x-zA5uzbTFKlwPSPZugLRTIRlmwoyo/edit#gid=0
