@@ -17,6 +17,7 @@ Các công cụ sử dụng:
 •	Jquery/AJAX
 
 Link Backlog: https://docs.google.com/spreadsheets/d/1NotVuyUixeo79x-zA5uzbTFKlwPSPZugLRTIRlmwoyo/edit#gid=0
+
 Link Trello: https://trello.com/b/uWgl1Vv0/96er
 # Link dự án: http://codegymlunch.herokuapp.com/
 (tên đăng nhập: admin, mật khẩu: 123456)
