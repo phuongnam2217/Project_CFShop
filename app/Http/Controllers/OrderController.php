@@ -235,8 +235,10 @@ class OrderController extends Controller
         foreach ($order->products as $item) {
             $productID = $item->pivot->product_id;
             $product = Product::findOrFail($productID);
-            $product->stock -= $item->pivot->quantity;
-            $product->save();
+            if($product->isPortable == 1) {
+                $product->stock -= $item->pivot->quantity;
+                $product->save();
+            }
         }
     }
 }
