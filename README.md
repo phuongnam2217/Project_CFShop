@@ -1,62 +1,19 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+CaseStudyLaravel - Scrum
+CaseStudy: Ứng dung quản lý quán cà phê Q&N
+CHỦ ĐỀ : Một ứng dụng dùng trên máy tính một tiệm cà phê nhỏ framework Laravel Các ngôn ngữ sử dụng:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+HTML, CSS, PHP, JS, Jquery/AJAX, Bootstrap4 và Laravel để viết trang. Các chức năng chính của dự án:
+Database dữ liệu được lưu lại trên mysql:
+Sẽ kết nối với trang Admin để chủ shop có thể thêm, sửa, xóa sản phẩm và xem doanh thu cũng như những order của khách hàng đặt online, xác nhận, hủy đơn, xem thông tin khách đã đặt và đưa dữ liệu ngược về database.
+Sẽ kết nối với trang web chính bán hàng để khách hàng có thể xem, chọn sản phẩm và tạo đơn order về database và trang dashboard.
+Trang quản lí dashboard để chủ shop và nhân viên cửa hàng có thể đăng nhập vào:
+Có phần login đăng nhập theo tài khoản được tạo trước tài khoản admin của chủ shop có thể thêm, sửa, xóa sản phẩm và tạo tài khoản nhân viên.
+Quản lí category, product, user, customers, ...
+Thêm một vài tính năng như xem tồn kho, xác nhận đơn hàng của từng khách hàng theo phân quyền, nhân viên không được xóa bất cứ sản phẩm hay thông tin nào.
+Trang chủ nơi khách hàng xem sản phẩm:
+Nơi khách hàng có thể vào xem sản phẩm, xem thông tin của hàng, liên hệ với nhân viên, để lại thông tin, tạo đơn, chọn sản phẩm vào giỏ hàng và thêm, bớt sản phẩm ở đó.
+Gồm Navbar, footer, top đồng hồ bán chạy, top đồng hồ xem nhiều, giỏ hàng, các trang chi tiết sản phẩm ...
+Trang chủ: +Navbar. +Sản phẩmlượt xem nhiều nhất. +Sản phẩm bán chạy. +Các nhóm hàng và bài viết về DANGQUANGWATCH. +Footer
+Trang chi tiết sản phẩm: +Navbar. +Chi tiết sản phẩm, thêm vào giỏ hàng +Các sản phẩm liên quan (cùng nhóm hàng) +Có các nhóm hàng khác để khách hàng tiện theo dõi +Footer
+Trang chi tiết nhóm hàng: +Navbar. +Chi tiết sản phẩm theo nhóm hàng, tổng 6 nhóm hàng. +Các sản phẩm liên quan (cùng nhóm hàng) +Footer
+Giỏ hàng: +Navbar. +Bảng thông tin, số lượng, hình ảnh, tên, giá, tổng giá của các sản phẩm đã mua, có thể điều chỉnh lại số lượng. +Nhập thông tin người dùng để đặt hàng. +Footer
