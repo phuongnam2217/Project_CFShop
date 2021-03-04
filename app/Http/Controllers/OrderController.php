@@ -232,5 +232,11 @@ class OrderController extends Controller
         }
         $table->order_id = null;
         $table->save();
+        foreach ($order->products as $item) {
+            $productID = $item->pivot->product_id;
+            $product = Product::findOrFail($productID);
+            $product->stock -= $item->pivot->quantity;
+            $product->save();
+        }
     }
 }
