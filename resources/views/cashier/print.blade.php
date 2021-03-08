@@ -43,7 +43,7 @@
     <div class="row">
         <div class="row">
             <div class="col-md-6">
-                <strong style="font-size: 20px; font-style: italic">Cảm ơn quí khách và hẹn gặp lại !</strong> &ensp;
+                <strong style="font-size: 20px; font-style: italic">Cảm ơn quí khách và hẹn gặp lại !!!</strong> &ensp;
             </div>
         </div>
     </div>
