@@ -62,5 +62,6 @@
 </div>
 <div class="modal-footer">
     <button type="button" data="{{$order->id}}" id="action_payment" class="btn btn-success">Thanh toán</button>
+    <button type="button" data="{{$order->id}}" id="action_print" class="btn btn-success">In hoa don</button>
 </div>
 

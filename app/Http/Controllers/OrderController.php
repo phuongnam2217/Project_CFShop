@@ -241,4 +241,35 @@ class OrderController extends Controller
             }
         }
     }
+
+    public function print(Request $request, $id) {
+        $table = Table::findOrFail($request->table_id);
+        $order = Order::findOrFail($id);
+        if($request->discount == 0){
+            $order->discount = null;
+            $order->total = $order->sub_total;
+            $order->check_out = Carbon::now();
+            $order->status = "0";
+            $order->save();
+        }else{
+            $order->discount = $request->discount;
+            $order->total = $order->sub_total*(1-$request->discount/100);
+            $order->check_out = Carbon::now();
+            $order->status = "0";
+            $order->save();
+        }
+        $table->order_id = null;
+        $table->save();
+        foreach ($order->products as $item) {
+            $productID = $item->pivot->product_id;
+            $product = Product::findOrFail($productID);
+            if($product->isPortable == 1) {
+                $product->stock -= $item->pivot->quantity;
+                $product->save();
+            }
+        }
+//        return view('cashier.print',compact('order'));
+        $html = view('cashier.print',compact('order'))->render();
+        return response()->json($html);
+    }
 }

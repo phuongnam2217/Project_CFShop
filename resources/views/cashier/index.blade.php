@@ -621,6 +621,26 @@
                 }
             })
         })
+
+        $('body').on('click', '#action_print', function () {
+            let discount = +$('#discount').val();
+            let order = $(this).attr('data');
+            $.ajax({
+                type: "PUT",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'discount': discount,
+                    'table_id': localStorage.getItem('table_id')
+                },
+                url: "{{route('orders.index')}}" + "/" + order + "/print",
+                success: function (data) {
+                    $('body').html(data);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseJSON.message)
+                }
+            })
+        })
     })
 </script>
 </body>
