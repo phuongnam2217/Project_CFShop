@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="_token" content="{{ csrf_token() }}">
-    <title>Document</title>
+    <title>CoffeeShop</title>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
@@ -102,7 +102,7 @@
                             <li class="category__item">
                                 <a
                                     href="javascript:void(0)"
-                                    data-category-id="1"
+                                    data-category-id="0"
                                     data-table-id="{{$table->id}}"
                                     class="category__link active-table"
                                 >Tất cả</a
@@ -139,10 +139,10 @@
                                 <div style="height: 120px" class="product__img">
                                     <img style="height: 120px"
                                          src="@if($product->getProductImage() == 'https://quangvoc8.s3.amazonaws.com/')
-                                                https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg
-                                                @else
-                                                    {{$product->getProductImage()}}
-                                                @endif" alt=""/>
+                                             https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg
+@else
+                                         {{$product->getProductImage()}}
+                                         @endif" alt=""/>
                                 </div>
                                 <div class="product__content">
                                     <p class="product__name">{{$product->name}}</p>
@@ -157,178 +157,178 @@
 
         <div class="col-6" class="header" id="cart">
             <!-- header__left -->
-{{--            <div class="header__left">--}}
-{{--                <ul class="header__left__list">--}}
-{{--                    <li class="nav-item header__left__item" role="presentation">--}}
-{{--                        <a--}}
-{{--                            class="nav-link active header__left__link"--}}
-{{--                            id="pills-home-tab"--}}
-{{--                            data-bs-toggle="pill"--}}
-{{--                            href="javascript:void(0)"--}}
-{{--                            role="tab"--}}
-{{--                            aria-controls="pills-home"--}}
-{{--                            aria-selected="true"--}}
-{{--                        >--}}
-{{--                            Hóa đơn 1</a--}}
-{{--                        >--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--                <ul class="action">--}}
-{{--                    <li class="action__item">admin</li>--}}
-{{--                    <li class="action__item">--}}
-{{--                        <div class="dropdown">--}}
-{{--                            <a--}}
-{{--                                class="btn"--}}
-{{--                                href="#"--}}
-{{--                                role="button"--}}
-{{--                                id="dropdownMenuLink"--}}
-{{--                                data-bs-toggle="dropdown"--}}
-{{--                                aria-expanded="false"--}}
-{{--                            >--}}
-{{--                                <i class="action__icon fas fa-bars"></i>--}}
-{{--                            </a>--}}
+            {{--            <div class="header__left">--}}
+            {{--                <ul class="header__left__list">--}}
+            {{--                    <li class="nav-item header__left__item" role="presentation">--}}
+            {{--                        <a--}}
+            {{--                            class="nav-link active header__left__link"--}}
+            {{--                            id="pills-home-tab"--}}
+            {{--                            data-bs-toggle="pill"--}}
+            {{--                            href="javascript:void(0)"--}}
+            {{--                            role="tab"--}}
+            {{--                            aria-controls="pills-home"--}}
+            {{--                            aria-selected="true"--}}
+            {{--                        >--}}
+            {{--                            Hóa đơn 1</a--}}
+            {{--                        >--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--                <ul class="action">--}}
+            {{--                    <li class="action__item">admin</li>--}}
+            {{--                    <li class="action__item">--}}
+            {{--                        <div class="dropdown">--}}
+            {{--                            <a--}}
+            {{--                                class="btn"--}}
+            {{--                                href="#"--}}
+            {{--                                role="button"--}}
+            {{--                                id="dropdownMenuLink"--}}
+            {{--                                data-bs-toggle="dropdown"--}}
+            {{--                                aria-expanded="false"--}}
+            {{--                            >--}}
+            {{--                                <i class="action__icon fas fa-bars"></i>--}}
+            {{--                            </a>--}}
 
-{{--                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">--}}
-{{--                                <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>--}}
-{{--                                <li>--}}
-{{--                                    <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--            <div class="tab-content" id="">--}}
-{{--                <!-- Orders -->--}}
+            {{--                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">--}}
+            {{--                                <li><a class="dropdown-item" href="{{route('home')}}">Quản lí</a></li>--}}
+            {{--                                <li>--}}
+            {{--                                    <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>--}}
+            {{--                                </li>--}}
+            {{--                            </ul>--}}
+            {{--                        </div>--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--            </div>--}}
+            {{--            <div class="tab-content" id="">--}}
+            {{--                <!-- Orders -->--}}
 
-{{--                <div--}}
-{{--                    class="cart tables tab-pane fade show active"--}}
-{{--                    id="pills-home"--}}
-{{--                    role="tabpanel"--}}
-{{--                    aria-labelledby="pills-home-tab"--}}
-{{--                >--}}
-{{--                    <div class="nav__filter">--}}
-{{--                        <ul class="nav__list">--}}
-{{--                            <li class="nav__item">--}}
-{{--                                <a--}}
-{{--                                    href="javascript:void(0)"--}}
-{{--                                    data-group-id="1"--}}
-{{--                                    class="nav__link active-table"--}}
-{{--                                >Bàn 1 / Trong nhà</a--}}
-{{--                                >--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                    <div class="cart__list">--}}
-{{--                        <div class="cart__item">--}}
-{{--                            <div class="cart__trash">--}}
-{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
-{{--                            </div>--}}
+            {{--                <div--}}
+            {{--                    class="cart tables tab-pane fade show active"--}}
+            {{--                    id="pills-home"--}}
+            {{--                    role="tabpanel"--}}
+            {{--                    aria-labelledby="pills-home-tab"--}}
+            {{--                >--}}
+            {{--                    <div class="nav__filter">--}}
+            {{--                        <ul class="nav__list">--}}
+            {{--                            <li class="nav__item">--}}
+            {{--                                <a--}}
+            {{--                                    href="javascript:void(0)"--}}
+            {{--                                    data-group-id="1"--}}
+            {{--                                    class="nav__link active-table"--}}
+            {{--                                >Bàn 1 / Trong nhà</a--}}
+            {{--                                >--}}
+            {{--                            </li>--}}
+            {{--                        </ul>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="cart__list">--}}
+            {{--                        <div class="cart__item">--}}
+            {{--                            <div class="cart__trash">--}}
+            {{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+            {{--                            </div>--}}
 
-{{--                            <div class="cart__id">1</div>--}}
-{{--                            <div class="cart__name">Coca</div>--}}
-{{--                            <div class="cart__form">--}}
-{{--                                <button class="cart__decrease">-</button>--}}
-{{--                                <input class="cart__input" type="text" value="2"/>--}}
-{{--                                <button class="cart__increase">+</button>--}}
-{{--                            </div>--}}
-{{--                            <div class="cart__price">12000</div>--}}
-{{--                            <div class="cart__total">24000</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="cart__item">--}}
-{{--                            <div class="cart__trash">--}}
-{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
-{{--                            </div>--}}
+            {{--                            <div class="cart__id">1</div>--}}
+            {{--                            <div class="cart__name">Coca</div>--}}
+            {{--                            <div class="cart__form">--}}
+            {{--                                <button class="cart__decrease">-</button>--}}
+            {{--                                <input class="cart__input" type="text" value="2"/>--}}
+            {{--                                <button class="cart__increase">+</button>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="cart__price">12000</div>--}}
+            {{--                            <div class="cart__total">24000</div>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="cart__item">--}}
+            {{--                            <div class="cart__trash">--}}
+            {{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+            {{--                            </div>--}}
 
-{{--                            <div class="cart__id">2</div>--}}
-{{--                            <div class="cart__name">Expresso</div>--}}
-{{--                            <div class="cart__form">--}}
-{{--                                <button class="cart__decrease">-</button>--}}
-{{--                                <input--}}
-{{--                                    class="cart__input"--}}
-{{--                                    style="width: 30px"--}}
-{{--                                    type="text"--}}
-{{--                                    value="2"--}}
-{{--                                />--}}
-{{--                                <button class="cart__increase">+</button>--}}
-{{--                            </div>--}}
-{{--                            <div class="cart__price">10000</div>--}}
-{{--                            <div class="cart__total">20000</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="cart__item">--}}
-{{--                            <div class="cart__trash">--}}
-{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
-{{--                            </div>--}}
+            {{--                            <div class="cart__id">2</div>--}}
+            {{--                            <div class="cart__name">Expresso</div>--}}
+            {{--                            <div class="cart__form">--}}
+            {{--                                <button class="cart__decrease">-</button>--}}
+            {{--                                <input--}}
+            {{--                                    class="cart__input"--}}
+            {{--                                    style="width: 30px"--}}
+            {{--                                    type="text"--}}
+            {{--                                    value="2"--}}
+            {{--                                />--}}
+            {{--                                <button class="cart__increase">+</button>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="cart__price">10000</div>--}}
+            {{--                            <div class="cart__total">20000</div>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="cart__item">--}}
+            {{--                            <div class="cart__trash">--}}
+            {{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+            {{--                            </div>--}}
 
-{{--                            <div class="cart__id">1</div>--}}
-{{--                            <div class="cart__name">Coca</div>--}}
-{{--                            <div class="cart__form">--}}
-{{--                                <button class="cart__decrease">-</button>--}}
-{{--                                <input class="cart__input" type="text" value="2"/>--}}
-{{--                                <button class="cart__increase">+</button>--}}
-{{--                            </div>--}}
-{{--                            <div class="cart__price">12000</div>--}}
-{{--                            <div class="cart__total">24000</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="cart__item">--}}
-{{--                            <div class="cart__trash">--}}
-{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
-{{--                            </div>--}}
+            {{--                            <div class="cart__id">1</div>--}}
+            {{--                            <div class="cart__name">Coca</div>--}}
+            {{--                            <div class="cart__form">--}}
+            {{--                                <button class="cart__decrease">-</button>--}}
+            {{--                                <input class="cart__input" type="text" value="2"/>--}}
+            {{--                                <button class="cart__increase">+</button>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="cart__price">12000</div>--}}
+            {{--                            <div class="cart__total">24000</div>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="cart__item">--}}
+            {{--                            <div class="cart__trash">--}}
+            {{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+            {{--                            </div>--}}
 
-{{--                            <div class="cart__id">2</div>--}}
-{{--                            <div class="cart__name">Expresso</div>--}}
-{{--                            <div class="cart__form">--}}
-{{--                                <button class="cart__decrease">-</button>--}}
-{{--                                <input--}}
-{{--                                    class="cart__input"--}}
-{{--                                    style="width: 30px"--}}
-{{--                                    type="text"--}}
-{{--                                    value="2"--}}
-{{--                                />--}}
-{{--                                <button class="cart__increase">+</button>--}}
-{{--                            </div>--}}
-{{--                            <div class="cart__price">10000</div>--}}
-{{--                            <div class="cart__total">20000</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="cart__item">--}}
-{{--                            <div class="cart__trash">--}}
-{{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
-{{--                            </div>--}}
+            {{--                            <div class="cart__id">2</div>--}}
+            {{--                            <div class="cart__name">Expresso</div>--}}
+            {{--                            <div class="cart__form">--}}
+            {{--                                <button class="cart__decrease">-</button>--}}
+            {{--                                <input--}}
+            {{--                                    class="cart__input"--}}
+            {{--                                    style="width: 30px"--}}
+            {{--                                    type="text"--}}
+            {{--                                    value="2"--}}
+            {{--                                />--}}
+            {{--                                <button class="cart__increase">+</button>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="cart__price">10000</div>--}}
+            {{--                            <div class="cart__total">20000</div>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="cart__item">--}}
+            {{--                            <div class="cart__trash">--}}
+            {{--                                <i class="cart__icon fas fa-trash-alt"></i>--}}
+            {{--                            </div>--}}
 
-{{--                            <div class="cart__id">1</div>--}}
-{{--                            <div class="cart__name">Coca</div>--}}
-{{--                            <div class="cart__form">--}}
-{{--                                <button class="cart__decrease">-</button>--}}
-{{--                                <input class="cart__input" type="text" value="2"/>--}}
-{{--                                <button class="cart__increase">+</button>--}}
-{{--                            </div>--}}
-{{--                            <div class="cart__price">12000</div>--}}
-{{--                            <div class="cart__total">24000</div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+            {{--                            <div class="cart__id">1</div>--}}
+            {{--                            <div class="cart__name">Coca</div>--}}
+            {{--                            <div class="cart__form">--}}
+            {{--                                <button class="cart__decrease">-</button>--}}
+            {{--                                <input class="cart__input" type="text" value="2"/>--}}
+            {{--                                <button class="cart__increase">+</button>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="cart__price">12000</div>--}}
+            {{--                            <div class="cart__total">24000</div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
 
-{{--                    <!-- Emty cart -->--}}
-{{--                    <div class="empty"></div>--}}
+            {{--                    <!-- Emty cart -->--}}
+            {{--                    <div class="empty"></div>--}}
 
-{{--                    <div class="bill">--}}
-{{--                        <div class="bill__content">--}}
-{{--                            <div class="bill__item bill__text">Tổng tiền</div>--}}
-{{--                            <div class="bill__item bill__quantity">2</div>--}}
-{{--                            <div class="bill__item bill__total">300000</div>--}}
-{{--                        </div>--}}
-{{--                        <div class="bill__action">--}}
-{{--                            <button--}}
-{{--                                class="bill__pay btn-success"--}}
-{{--                                data-bs-toggle="modal"--}}
-{{--                                data-bs-target="#modalPayment"--}}
-{{--                            >--}}
-{{--                                <i class="fas fa-dollar-sign"></i>--}}
-{{--                                Thanh Toán--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--                    <div class="bill">--}}
+            {{--                        <div class="bill__content">--}}
+            {{--                            <div class="bill__item bill__text">Tổng tiền</div>--}}
+            {{--                            <div class="bill__item bill__quantity">2</div>--}}
+            {{--                            <div class="bill__item bill__total">300000</div>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="bill__action">--}}
+            {{--                            <button--}}
+            {{--                                class="bill__pay btn-success"--}}
+            {{--                                data-bs-toggle="modal"--}}
+            {{--                                data-bs-target="#modalPayment"--}}
+            {{--                            >--}}
+            {{--                                <i class="fas fa-dollar-sign"></i>--}}
+            {{--                                Thanh Toán--}}
+            {{--                            </button>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </div>
     </div>
 </div>
@@ -415,14 +415,14 @@
             getViewGroupTable(groupId);
         })
         //View cart
-        const viewCart = function (table_id){
+        const viewCart = function (table_id) {
             $.ajax({
                 type: 'get',
-                url: "{{route('orders.index')}}"+'/'+table_id+'/viewCard',
-                success: function (data){
+                url: "{{route('orders.index')}}" + '/' + table_id + '/viewCard',
+                success: function (data) {
                     $('#cart').html(data);
                 },
-                errors: function (xhr){
+                errors: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
@@ -448,7 +448,7 @@
         })
 
         //Thêm sản phẩm vào order
-        $('body').on('click','.product__item',function (){
+        $('body').on('click', '.product__item', function () {
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
             $.ajax({
@@ -459,16 +459,16 @@
                     'table_id': table_id
                 },
                 url: "{{route('orders.add')}}",
-                success: function (data){
+                success: function (data) {
                     $('#table-ajax').html(data.view);
                     viewCart(table_id);
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
         })
-        $('body').on('click','.cart__increase',function (){
+        $('body').on('click', '.cart__increase', function () {
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
             $.ajax({
@@ -479,16 +479,16 @@
                     'table_id': table_id
                 },
                 url: "{{route('orders.add')}}",
-                success: function (data){
+                success: function (data) {
                     viewCart(table_id);
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
         })
         //Giảm số lượng sản phẩm
-        $('body').on('click','.cart__decrease',function (){
+        $('body').on('click', '.cart__decrease', function () {
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
             $.ajax({
@@ -497,17 +497,17 @@
                     "_token": "{{ csrf_token() }}",
                     'table_id': table_id
                 },
-                url: "{{route('orders.index')}}"+'/'+product_id+'/delete',
-                success: function (data){
+                url: "{{route('orders.index')}}" + '/' + product_id + '/delete',
+                success: function (data) {
                     viewCart(table_id);
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
         })
         //Xóa sản phẩm trong order
-        $('body').on('click','.cart__trash',function (){
+        $('body').on('click', '.cart__trash', function () {
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
             $.ajax({
@@ -516,18 +516,18 @@
                     "_token": "{{ csrf_token() }}",
                     'table_id': table_id
                 },
-                url: "{{route('orders.index')}}"+'/'+product_id+'/remove',
-                success: function (response){
+                url: "{{route('orders.index')}}" + '/' + product_id + '/remove',
+                success: function (response) {
                     $('#table-ajax').html(response.view);
                     viewCart(table_id);
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
         })
         // Change status order details
-        $('body').on('change','.cart__isMaking',function (){
+        $('body').on('change', '.cart__isMaking', function () {
             let product_id = $(this).attr('product-id');
             let table_id = localStorage.getItem('table_id');
             let value = $(this).val();
@@ -538,13 +538,13 @@
                     'table_id': table_id,
                     'isMaking': value
                 },
-                url: "{{route('orders.index')}}"+'/'+product_id+'/changeStatus',
-                success: function (data){
+                url: "{{route('orders.index')}}" + '/' + product_id + '/changeStatus',
+                success: function (data) {
                     console.log(data)
                     viewCart(table_id);
 
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON)
                 }
             })
@@ -568,41 +568,41 @@
         })
 
         // Modal Payment
-        $('body').on('click','.bill__pay', function () {
+        $('body').on('click', '.bill__pay', function () {
             let order_id = $(this).attr('data-order')
             let table_id = localStorage.getItem('table_id');
             $.ajax({
                 type: "GET",
                 data: {'table_id': table_id},
-                url: "{{route('orders.index')}}"+"/"+order_id+"/viewPayment",
-                success: function (view){
+                url: "{{route('orders.index')}}" + "/" + order_id + "/viewPayment",
+                success: function (view) {
                     $('.payment__content').html(view);
                 },
-                error: function (xhr){
+                error: function (xhr) {
                     console.log(xhr.responseJSON.message)
                 }
             })
             $('#modalPayment').show();
         })
 
-        $('body').on('change','#discount',function (){
+        $('body').on('change', '#discount', function () {
             let sub_total = $('#sub_total').attr('data');
             let discount = +$(this).val();
-            let total = sub_total - sub_total*discount/100
-            $('#total').html(total.toLocaleString('en-US',{currency : 'VND'}));
+            let total = sub_total - sub_total * discount / 100
+            $('#total').html(total.toLocaleString('en-US', {currency: 'VND'}));
             $('#customer').val(null);
             $('#excess').html('');
         })
-        $('body').on('change','#customer',function (){
+        $('body').on('change', '#customer', function () {
             let value = $(this).val();
             let sub_total = $('#sub_total').attr('data');
             let discount = +$('#discount').val();
-            let total = sub_total - sub_total*discount/100;
+            let total = sub_total - sub_total * discount / 100;
             let excess = value - total;
-            $('#excess').html(excess.toLocaleString('en-US',{currency : 'VND'}));
+            $('#excess').html(excess.toLocaleString('en-US', {currency: 'VND'}));
         })
 
-        $('body').on('click','#action_payment',function (){
+        $('body').on('click', '#action_payment', function () {
             let discount = +$('#discount').val();
             let order = $(this).attr('data');
             $.ajax({
@@ -612,11 +612,31 @@
                     'discount': discount,
                     'table_id': localStorage.getItem('table_id')
                 },
-                url: "{{route('orders.index')}}"+"/"+order+"/payment",
-                success: function (data){
+                url: "{{route('orders.index')}}" + "/" + order + "/payment",
+                success: function (data) {
                     location.reload()
                 },
-                error: function (xhr){
+                error: function (xhr) {
+                    console.log(xhr.responseJSON.message)
+                }
+            })
+        })
+
+        $('body').on('click', '#action_print', function () {
+            let discount = +$('#discount').val();
+            let order = $(this).attr('data');
+            $.ajax({
+                type: "PUT",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'discount': discount,
+                    'table_id': localStorage.getItem('table_id')
+                },
+                url: "{{route('orders.index')}}" + "/" + order + "/print",
+                success: function (data) {
+                    $('body').html(data);
+                },
+                error: function (xhr) {
                     console.log(xhr.responseJSON.message)
                 }
             })

@@ -68,13 +68,7 @@
                     <div>
                         <h2>Hóa đơn</h2>
                     </div>
-                    <div>
-                        <!-- Export -->
-                        <div class="mybutton">
-                            <i class="fas fa-fw fa-file-export"></i> Export
-                        </div>
 
-                    </div>
                 </div>
                 <div class="subTable" id="table-order">
                     <table style="width: 100%; text-align: center;" class="table table-bordered">

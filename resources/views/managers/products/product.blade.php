@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
-                                                <select name="isPortable" class="form-select" id="multi-selectbox"
+                                                <select name="isPortable" class="form-select" id="multi_selectbox"
                                                         aria-label="Default select example">
                                                     <option value="1">Hàng tồn kho</option>
                                                     <option value="0">Hàng dịch vụ</option>
@@ -277,6 +277,7 @@
                                             <div class="form-group">
                                                 <lable>Ảnh</lable>
                                                 <input name="image" type="file" id="image_updateProduct" class="form-control">
+                                                <input hidden type="text" name="image" class="form-control" id="imageProduct">
                                             </div>
                                             <div class="form-group">
                                                 <lable>Loại hàng hóa</lable>
@@ -612,9 +613,7 @@
                 let fd = new FormData();
                 let formSerialization = ($('#updateformproduct').serializeArray());
                 let files = (document.querySelector('#image_updateProduct').files);
-                console.log(files);
-                let file = files.length ? files[0] : null;
-
+                let file = files.length ? files[0] : document.getElementById("imageProduct").value;
                 fd.append('image', file);
 
                 formSerialization.forEach(obj => {
@@ -656,7 +655,7 @@
                     success: function (data) {
                         $('#detailProduct').modal('show');
                         $('#detailName').html(data.product.name);
-                        if(data.product.image === 'https://quangvoc8.s3.amazonaws.com/') {
+                        if(data.product.image === null) {
                             $('#detailImage').html('<img style="width: 100%" src="' + "https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg" + '" alt="">');
                         } else {
                             $('#detailImage').html('<img style="width: 100%" src="' + "https://quangvoc8.s3.amazonaws.com/" + data.product.image + '" alt="">');
@@ -721,8 +720,9 @@
             })
             //Portable
             $(document).ready(function () {
-                $('#multi-selectbox').change(function () {
-                    let id = $('#multi-selectbox').val();
+                $('#multi_selectbox').change(function () {
+                    let id = $('#multi_selectbox').val();
+                    console.log(id);
                     if (id == 1) {
                         $('#stock-product').html("<lable>Tồn kho</lable>" +
                             '<input placeholder="Tồn kho ..." id="stock-product-input" type="text" class="form-control stockProduct" name="stock">' +

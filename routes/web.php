@@ -103,6 +103,7 @@ Route::middleware('auth')->prefix('/')->group(function (){
         Route::put('{id}/changeStatus',[OrderController::class,'changeStatusOrderDetail'])->name('orders.changeStatus');
         Route::get('{id}/viewPayment',[OrderController::class,'viewPayment'])->name('orders.viewPayment');
         Route::put('{id}/payment',[OrderController::class,'payment'])->name('orders.payment');
+        Route::put('{id}/print', [OrderController::class,'print'])->name('orders.print');
 
     });
 

@@ -60,10 +60,10 @@
                                                 <p class="text-danger quantityImportProduct"></p>
                                             </div>
                                             <div class="form-group">
-                                                <lable>Ghi chú</lable>
+                                                <lable>Ghi chú nhập hàng</lable>
                                                 <input type="text" class="form-control noteProduct" name="note"
                                                        placeholder="Ghi chú ..">
-                                                <p class="text-danger noteProduct"></p>
+                                                <p class="text-danger noteProductImport"></p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -167,7 +167,7 @@
                     },
                     error: function (xhr) {
                         let error = xhr.responseJSON.errors;
-                        console.log(xhr.responseJSON.message)
+                        console.log(error);
                         if (error.unit_price) {
                             $(".unitPriceProduct").html(error.unit_price);
                             $(".priceProduct").addClass("is-invalid");
@@ -175,6 +175,10 @@
                         if (error.quantity) {
                             $(".quantityImportProduct").html(error.quantity);
                             $(".quantityProduct").addClass("is-invalid");
+                        };
+                        if (error.note) {
+                            $(".noteProductImport").html(error.note);
+                            $(".noteProduct").addClass("is-invalid");
                         };
                     }
                 })
