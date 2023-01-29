@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <title>login form</title>
     <link rel="stylesheet" href="{{asset('account_rescource/css/account.css')}}">
     <link rel="shortcut icon" href="{{{ asset('image/logo.png') }}}">
