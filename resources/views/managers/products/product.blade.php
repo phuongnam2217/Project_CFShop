@@ -658,7 +658,7 @@
                         if(data.product.image === null) {
                             $('#detailImage').html('<img style="width: 100%" src="' + "https://png.pngtree.com/png-clipart/20190705/original/pngtree-coffee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4258003.jpg" + '" alt="">');
                         } else {
-                            $('#detailImage').html('<img style="width: 100%" src="' + "https://quangvoc8.s3.amazonaws.com/" + data.product.image + '" alt="">');
+                            $('#detailImage').html('<img style="width: 100%" src="' + "https://cfshop2.s3.us-east-2.amazonaws.com/" + data.product.image + '" alt="">');
                         }
                         $('#detailIsPortable').html(data.product.isPortable === 1 ? "Hàng hóa" : "Dịch vụ");
                         $('#detailPrice').html(new Intl.NumberFormat().format(data.product.price) + " đ");

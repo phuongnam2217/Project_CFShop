@@ -36,7 +36,7 @@ class Product extends Model
     }
 
     public function getProductImage() {
-        return "https://quangvoc8.s3.amazonaws.com/".$this->image;
+        return "https://cfshop2.s3.us-east-2.amazonaws.com/".$this->image;
     }
 
     public $timestamps = false;
