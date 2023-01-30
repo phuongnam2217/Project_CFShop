@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Roles;
+use App\Models\Table;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,35 +22,25 @@ class UserController extends Controller
             return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
         }
         if ($request->ajax()) {
-            $data = User::select('*');
-            return DataTables::of($data)
-                ->addColumn('status',function ($row){
-                    $active = '<span data-id="'.$row->id.'" class="changeActive badge '.($row->active ? 'bg-success': 'bg-danger').'">' . ($row->active ? 'Đang hoạt động': 'Ngưng hoạt động') . '</span>';
-                    return $active;
-                })
-                ->addColumn('role_id',function ($row){
-                    $role = '<span class="badge bg-success">' . $row->role->name . '</span>';
-                  return $role;
-                })
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit edit-user"><i class="fas fa-pencil-alt"></i></a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete-user"><i class="fas fa-trash-alt"></i></a>';
-
-                    return $btn;
-                })
-                ->editColumn('active','{{$active == 1 ? "Đang hoạt động": "Không hoạt động"}}')
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('name')) {
-                        $query->where('name', 'like', "%{$request->get('name')}%");
+            $users = User::select('*');
+            $users =  $users->where(function ($query) use ($request) {
+                if ($request->has('name')) {
+                    $query->where('name', 'like', "%{$request->get('name')}%");
+                }
+                if ($request->has('active')) {
+                    if($request->get('active') == '2'){
+                        $query->whereIn('active',[0,1]);
+                    }else{
+                        $query->where('active','=',"{$request->get('active')}");
                     }
-                })
-                ->rawColumns(['role_id','status','action'])
-                ->make(true);
+                }
+            })->get();
+            $html = view('managers.users.user-table',compact('users'))->render();
+            return response()->json(['view'=>$html]);
         }
         $roles = Roles::all();
-        return view('managers.users.users',compact('roles'));
+        $users = User::all();
+        return view('managers.users.users',compact('roles','users'));
     }
 
 

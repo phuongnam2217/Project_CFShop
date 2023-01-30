@@ -2,20 +2,20 @@
 @section('content')
     <div class="body">
         <div class="search">
-            <div class="search-name">
-                <form id="search-form">
+            <form action="GET" id="search-form">
+                @csrf
+                <div class="search-name">
                     <label for="" class="search-name-text">Tìm kiếm</label>
                     <input name="name" type="text" class="input" placeholder="Theo tên người dùng, .."/>
-                </form>
-            </div>
-            <div class="search-name" style="height: 130px">
-                <form action="GET" id="search-form">
-                    @csrf
+
+                </div>
+                <div class="search-name" style="height: 130px">
                     <p class="search-name-text">Trạng thái</p>
-                    <div><input type="checkbox"/> <label for="">Đang hoạt động</label></div>
-                    <div><input type="checkbox"/> <label for="">Ngừng hoạt động</label></div>
-                </form>
-            </div>
+                    <div><input type="radio" name="active" value="2"/> <label for="">Tất cả</label></div>
+                    <div><input type="radio" name="active" value="1"/> <label for="">Đang hoạt động</label></div>
+                    <div><input type="radio" name="active" value="0"/> <label for="">Ngừng hoạt động</label></div>
+                </div>
+            </form>
         </div>
         <div class="table">
             <div class="subHeader">
@@ -96,25 +96,43 @@
 
                 </div>
             </div>
-            <div class="card">
-                <table class="data-table display nowrap dataTable dtr-inline collapsed">
-                    <thead>
-                    <tr>
-                        <th style="width: 30px">STT</th>
-                        <th style="width: 100px">Tên người dùng</th>
-                        <th>Tên đăng nhập</th>
-                        <th>Vai trò</th>
-                        <th>Trạng thái</th>
-                        <th style="width: 280px">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div class="subTable">
+                <div class="card">
+                    <table class="data-table display nowrap dataTable dtr-inline collapsed">
+                        <thead>
+                        <tr>
+                            <th style="width: 30px">STT</th>
+                            <th style="width: 100px">Tên người dùng</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Vai trò</th>
+                            <th>Trạng thái</th>
+                            <th style="width: 280px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($users)
+                            @foreach($users as $key => $user)
+                                <tr>
+                                <td>{{++$key}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->username}}</td>
+                                <td><span class="badge bg-success">{{$user->role->name}}</span></td>
+                                <td>
+                                    <span class="badge {{$user->active ? 'bg-success' : 'bg-danger'}}">{{$user->active ? 'Đang hoạt động': 'Ngưng hoạt động'}}</span>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$user->id}}" data-original-title="Edit" class="edit edit-user"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$user->id}}" data-original-title="Delete" class="delete-user"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                        <tfoot>
 
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -128,31 +146,19 @@
                 }
             });
 
-            var table = $('.data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                searching: false,
-                retrieve: true,
-                ajax: {
-                    url: '{{route('users.index')}}',
-                    data: function (d) {
-                        d.name = $('input[name=name]').val();
-                        d.email = $('input[name=email]').val();
-                    }
-                },
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'username', name: 'username'},
-                    {data: 'role_id', name: 'role_id'},
-                    {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-                ]
-            });
+
 
             $('#search-form').on('submit change', function (e) {
                 e.preventDefault();
-                table.draw();
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('users.index')}}",
+                    data: $('#search-form').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.subTable').html(data.view)
+                    },
+                })
             })
 
             //Hiện form thêm mới người dùng
@@ -212,8 +218,16 @@
                         data: $('#userForm').serialize(),
                         dataType: 'JSON',
                         success: function (data) {
+                            $.ajax({
+                                type: "GET",
+                                url: "{{route('users.index')}}",
+                                data: $('#search-form').serialize(),
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('.subTable').html(data.view)
+                                },
+                            })
                             $('#modalUser').modal('hide');
-                            table.draw();
                             swal('Success!', data, "success");
                         },
                         error: function (xhr) {
@@ -255,8 +269,16 @@
                         data: $('#userForm').serialize(),
                         dataType: 'JSON',
                         success: function (data) {
+                            $.ajax({
+                                type: "GET",
+                                url: "{{route('users.index')}}",
+                                data: $('#search-form').serialize(),
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('.subTable').html(data.view)
+                                },
+                            })
                             $('#modalUser').modal('hide');
-                            table.draw();
                             swal("Success!", data, "success");
                         },
                         error: function (xhr) {
@@ -305,7 +327,15 @@
                             url: '{{route('users.index')}}' + '/' + id + "/delete",
                             dataType: 'JSON',
                             success: function (data) {
-                                table.draw();
+                                $.ajax({
+                                    type: "GET",
+                                    url: "{{route('users.index')}}",
+                                    data: $('#search-form').serialize(),
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        $('.subTable').html(data.view)
+                                    },
+                                })
                                 swal(data, {
                                     icon: "success",
                                 });
@@ -334,7 +364,15 @@
                             url: "{{route('users.index')}}"+"/"+id+"/changeActive",
                             dataType: "json",
                             success: function (data){
-                                table.draw();
+                                $.ajax({
+                                    type: "GET",
+                                    url: "{{route('users.index')}}",
+                                    data: $('#search-form').serialize(),
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        $('.subTable').html(data.view)
+                                    },
+                                })
                                 swal(data, {
                                     icon: "success",
                                 });

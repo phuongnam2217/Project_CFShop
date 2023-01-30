@@ -6,6 +6,7 @@ use App\Http\Requests\TableRequest;
 use App\Models\Group;
 use App\Models\Table;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class TableController extends Controller
@@ -14,31 +15,13 @@ class TableController extends Controller
         if (!$this->userCan('admin')) {
             return redirect()->back()->with('alert', 'Chỉ có ADMIN mới được quyền truy cập!');
         }
-        if ($request->ajax()) {
-            $data = Table::select('*');
-            return DataTables::of($data)
-                ->addColumn('status',function ($row){
-                    $active = '<span data-id="'.$row->id.'" class="changeActive badge '.($row->active ? 'bg-success': 'bg-danger').'">' . ($row->active ? 'Đang hoạt động': 'Ngưng hoạt động') . '</span>';
-                    return $active;
-                })
-                ->addColumn('group_id',function ($row){
-                    $role = '<span class="">' . $row->group->name . '</span>';
-                    return $role;
-                })
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit edit-table"><i class="fas fa-pencil-alt"></i></a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete-table"><i class="fas fa-trash-alt"></i></a>';
-
-                    return $btn;
-                })
-                ->filter(function ($query) use ($request) {
+        if($request->ajax()){
+            $tables = Table::select('*');
+            $tables =  $tables->where(function ($query) use ($request) {
                     if ($request->has('name')) {
                         $query->where('name', 'like', "%{$request->get('name')}%");
                     }
                     if ($request->has('group_id')) {
-//                        $query->where('group_id','=',"{$request->get('group_id')}");
                         $query->whereIn('group_id',$request->get('group_id'));
                     }
                     if ($request->has('active')) {
@@ -48,11 +31,10 @@ class TableController extends Controller
                             $query->where('active','=',"{$request->get('active')}");
                         }
                     }
-                })
-                ->rawColumns(['group_id','status','action'])
-                ->make(true);
+                })->get();
+            $html = view('managers.view-ajax.table.table-form',compact('tables'))->render();
+            return response()->json(['view'=>$html]);
         }
-
         $groups = Group::all();
         $tables = Table::all();
         return view('managers.tables.table', compact('groups', 'tables'));
@@ -65,7 +47,7 @@ class TableController extends Controller
         $table->chair = $request->chair;
         $table->group_id = $request->group_id;
         $table->save();
-        return response()->json("Thêm bàn thành công");
+        return response()->json(['view' => $this->getViewTableAdmin(), 'status'=>'Thêm bàn thành công']);
     }
 
 
@@ -81,7 +63,7 @@ class TableController extends Controller
         $table->chair = $request->chair;
         $table->group_id = $request->group_id;
         $table->save();
-        return response()->json("Thêm bàn thành công");
+        return response()->json(['view' => $this->getViewTableAdmin(), 'status'=>'Cập nhật bàn thành công']);
     }
 
     public function delete($id){
@@ -90,14 +72,14 @@ class TableController extends Controller
         }
         $table = Table::findOrFail($id);
         $table->delete();
-        return response()->json("Xóa bàn thành công");
+        return response()->json(['view' => $this->getViewTableAdmin(), 'status'=>'Cập nhật bàn thành công']);
     }
 
     public function changeActive($id){
         $table = Table::findOrFail($id);
         $table->active = !$table->active;
         $table->save();
-        return response()->json("Thay đổi trạng thái thành công");
+        return response()->json(['view' => $this->getViewTableAdmin(), 'status'=>'Thay đổi trạng thái thành công']);
     }
 
     public function getViewTable($group_id){
@@ -109,5 +91,11 @@ class TableController extends Controller
         $tables = Table::where('group_id',$group_id)->where('active','1')->get();
         $html = view('managers.view-ajax.table.table-ajax',compact('tables'))->render();
         return response()->json($html);
+    }
+
+    public function getViewTableAdmin(){
+        $tables = Table::all();
+        $html = view('managers.view-ajax.table.table-form',compact('tables'))->render();
+        return $html;
     }
 }

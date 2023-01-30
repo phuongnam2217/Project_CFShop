@@ -170,11 +170,29 @@
                                 <th>Nhóm bàn</th>
                                 <th>Số ghế</th>
                                 <th>Trạng thái</th>
-                                <th style="width: 150px">Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-
+                            @if($tables)
+                                @foreach($tables as $key => $table )
+                                    <tr>
+                                        <td hidden>{{$table->id}}</td>
+                                        <td>{{++$key}}</td>
+                                        <td>{{$table->name}}</td>
+                                        <td>{{$table->note}}</td>
+                                        <td>{{$table->group_id}}</td>
+                                        <td>{{$table->chair}}</td>
+                                        <td>
+                                            <span data-id="{{$table->id}}" class="changeActive badge {{($table->active ?'bg-success': 'bg-danger' )}}"> {{$table->active ? 'Đang hoạt động': 'Ngưng hoạt động'}}</span>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$table->id}}" data-original-title="Edit" class="edit edit-table"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$table->id}}" data-original-title="Delete" class="delete-table"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                             <tfoot>
 
@@ -205,35 +223,18 @@
                 return +$(this).val();
             }).get(); // <----
             console.log(searchIDs);
-            var table = $('.data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                searching: false,
-                retrieve: true,
-                ajax: {
-                    url: '{{route('table.index')}}',
-                    data: function (d) {
-                       d.name = $(':input[name="name"]').val();
-                        d.active = $(':input[name="active"]:checked').val();
-                        d.group_id = $(".group:checked").map(function(){
-                            return +$(this).val();
-                        }).get();
-                    }
-                },
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'note', name: 'note'},
-                    {data: 'group_id', name: 'group_id'},
-                    {data: 'chair', name: 'chair'},
-                    {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-                ]
-            });
             //Search
             $('#search-form').on('submit change keyup', function (e) {
                 e.preventDefault();
-                table.draw();
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('table.index')}}",
+                    data: $('#search-form').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.subTable').html(data.view)
+                    },
+                })
             })
             //Show Modal Create
             $('#create-table').click(function () {
@@ -266,9 +267,12 @@
                         data: $('#table-form').serialize(),
                         dataType: 'json',
                         success: function (data) {
-                            table.draw();
+                            console.log(data)
+                            $('.subTable').html(data.view)
                             $('#addTable').modal('hide');
-                            swal('Success!', data, "success");
+                            swal(data.status, {
+                                icon: "success",
+                            });
                         },
                         error: function (xhr) {
                             let errors = xhr.responseJSON.errors;
@@ -291,9 +295,19 @@
                         data: $('#table-form').serialize(),
                         dataType: 'json',
                         success: function (data) {
-                            table.draw();
+                            $.ajax({
+                                type: "GET",
+                                url: "{{route('table.index')}}",
+                                data: $('#search-form').serialize(),
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('.subTable').html(data.view)
+                                },
+                            })
                             $('#addTable').modal('hide');
-                            swal('Success!', data, "success");
+                            swal(data.status, {
+                                icon: "success",
+                            });
                         },
                         error: function (xhr) {
                             let errors = xhr.responseJSON.errors;
@@ -329,7 +343,6 @@
                     type: "GET",
                     url: "{{route('table.index')}}" + "/" + id,
                     success: function (data) {
-                        console.log(data);
                         $('#name-table').val(data.name)
                         $('#id-table').val(data.id);
                         $('#chair-table').val(data.chair);
@@ -360,10 +373,19 @@
                             type: 'get',
                             url: "{{route("table.index")}}" + "/" + id + "/delete",
                             success: function (data) {
-                                table.draw()
-                                swal(data, {
+                                // $('.subTable').html(data.view)
+                                swal(data.status, {
                                     icon: "success",
                                 });
+                                $.ajax({
+                                    type: "GET",
+                                    url: "{{route('table.index')}}",
+                                    data: $('#search-form').serialize(),
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        $('.subTable').html(data.view)
+                                    },
+                                })
                             }
                         })
                     }
@@ -385,8 +407,16 @@
                                 type: "get",
                                 url: "{{route('table.index')}}" + "/" + id + "/changeActive",
                                 success: function (data) {
-                                    table.draw();
-                                    swal(data, {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "{{route('table.index')}}",
+                                        data: $('#search-form').serialize(),
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            $('.subTable').html(data.view)
+                                        },
+                                    })
+                                    swal(data.status, {
                                         icon: "success",
                                     });
                                 }
