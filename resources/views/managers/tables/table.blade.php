@@ -213,7 +213,7 @@
                 ajax: {
                     url: '{{route('table.index')}}',
                     data: function (d) {
-                        d.name = $(':input[name="name"]').val();
+                       d.name = $(':input[name="name"]').val();
                         d.active = $(':input[name="active"]:checked').val();
                         d.group_id = $(".group:checked").map(function(){
                             return +$(this).val();

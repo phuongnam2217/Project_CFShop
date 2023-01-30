@@ -17,7 +17,7 @@
           crossorigin="anonymous"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"/>
-    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 
 {{--    Favicon--}}
     <link rel="shortcut icon" href="{{{ asset('image/logo.png') }}}">
