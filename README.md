@@ -49,7 +49,7 @@ Việc lên kế hoạch vẫn còn nhiều task thiếu cần bổ sung nhưng 
 # Hoàn thiện sản phẩm
 Deploy sản phẩm, chỉnh sửa một số vấn đề và chuẩn bị các tài liệu.
  
-Link ứng dụng: http://codegymlunch.herokuapp.com/
+Link ứng dụng: https://projectcfshop-production.up.railway.app/
 (tên đăng nhập: admin, mật khẩu: 123456)
 
 # Kinh nghiệm học được qua dự án
