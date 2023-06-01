@@ -19,7 +19,7 @@ Các công cụ sử dụng:
 Link Backlog: https://docs.google.com/spreadsheets/d/1NotVuyUixeo79x-zA5uzbTFKlwPSPZugLRTIRlmwoyo/edit#gid=0
 
 Link Trello: https://trello.com/b/uWgl1Vv0/96er
-# Link dự án: https://projectcfshop-production.up.railway.app/
+# Link dự án:[ https://projectcfshop-production.up.railway.app/](https://projectcfshop-production-16b1.up.railway.app/)
 (tên đăng nhập: admin, mật khẩu: 123456)
 
 # Lên kế hoạch:
@@ -49,7 +49,7 @@ Việc lên kế hoạch vẫn còn nhiều task thiếu cần bổ sung nhưng 
 # Hoàn thiện sản phẩm
 Deploy sản phẩm, chỉnh sửa một số vấn đề và chuẩn bị các tài liệu.
  
-Link ứng dụng: https://projectcfshop-production.up.railway.app/
+Link ứng dụng: [https://projectcfshop-production.up.railway.app/](https://projectcfshop-production-16b1.up.railway.app/)
 (tên đăng nhập: admin, mật khẩu: 123456)
 
 # Kinh nghiệm học được qua dự án
